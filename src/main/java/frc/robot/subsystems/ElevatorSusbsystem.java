@@ -10,7 +10,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.*;
-//import frc.robot.RobotMap.RobotName;
 
 /**
  * Subsystem handling movement of the elevator.

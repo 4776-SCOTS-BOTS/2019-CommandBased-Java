@@ -42,6 +42,7 @@ public class CheesyDrive extends Command {
     Robot.driveTrain.cheesyDrive(forward, turn, Robot.oi.getDriverButton(XBox.RIGHT_BUMPER_BUTTON));
     SmartDashboard.putBoolean("GoingReverse", reverse);
     //System.out.println(Robot.jeVois.getXAvg(false) +" "+-Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS));
+
   }
 
   // Make this return true when this Command no longer needs to run execute()

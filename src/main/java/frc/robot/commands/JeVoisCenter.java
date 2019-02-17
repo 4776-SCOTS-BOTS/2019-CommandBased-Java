@@ -7,8 +7,10 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.*;
 
 /**
@@ -42,12 +44,12 @@ public class JeVoisCenter extends Command {
       System.out.println("ERROR in JeVoisCenter: Using the second camera is selected, but there is no second camera! This command will be ended.");
       end();
     }
-    target = RobotMap.JeVois.CAMERA_WIDTH / 2;
+    target = RobotMap.JeVois.CAMERA_WIDTH / 2; //target = 160
     //P = RobotMap.JeVois.PID_P;
     P = 0.0045;
-    I = RobotMap.JeVois.PID_I;
-    D = RobotMap.JeVois.PID_D;
-    multiplier = 2;
+    I = 0.0; //RobotMap.JeVois.PID_I;
+    D = 0.0; //RobotMap.JeVois.PID_D;
+    multiplier = 1.2;
     integral = 0;
     previousError = 0;
     a = 0.6;
@@ -64,12 +66,13 @@ public class JeVoisCenter extends Command {
     timer.start();
     currentTime = 0;
     accurate = false;
+    multiplier = Preferences.getInstance().getDouble("M", 5);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double error = target - Robot.jeVois.getXAvg(secondCam); //error = target - actual
+    double error = target - Robot.jeVois.getXAvg(secondCam); //error = target - actual (target=160)
     integral += error * 0.02;
     double derivative = (error - previousError) / 0.02;
     double turnPower = multiplier*P*error + I*integral + D*derivative;
@@ -82,22 +85,22 @@ public class JeVoisCenter extends Command {
     if (Math.abs(target - Robot.jeVois.getXAvg(secondCam)) < threshold && !accurate) {
       accurate = true;
       currentTime = timer.get();
-      System.out.println("STARTED ACCURACY!!!!!!!!!!!Y");
+      System.out.println("STARTED ACCURACY!!!!!!!!!!");
     }
     if (Math.abs(target - Robot.jeVois.getXAvg(secondCam)) > threshold && accurate) {
       accurate = false;
-      System.out.println("FAILEEDDEDEDDEDDE!!!!!! ACCURACY!!!!!!!!!!!Y");
+      System.out.println("FAILED!!!!!! ACCURACY!!!!!!!!!!!");
     }
     //System.out.println("TIME: " + currentTime + turnPower);
-    System.out.println("X:" + Robot.jeVois.getXAvg(false));
+    System.out.println("X:" + Robot.jeVois.getXAvg(false) + " power: " + turnPower);
   } 
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     //return Math.abs(target - Robot.jeVois.getXAvg(secondCam)) < threshold;
-    return false;
-    //return (accurate && (timer.get() - currentTime) > centerTime);
+    //return false;
+    return (accurate && (timer.get() - currentTime) > centerTime);//for use in turn then drive
   }
 
   // Called once after isFinished returns true

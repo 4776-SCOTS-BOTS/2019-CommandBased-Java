@@ -43,7 +43,7 @@ public class OI {
     driverJoystick = new Joystick(XBox.DRIVER);
     autoAllignButton = new JoystickButton(driverJoystick, XBox.A_BUTTON);
     //autoAllignButton.whileHeld(new RampToTape());
-    autoAllignButton.whileHeld(new AutoTapeAllign());
+    autoAllignButton.whileHeld(new AutoTapeAllign());//turn then ramp
     //autoAllignButton.whileHeld(new JeVoisCenter());
     rampButton = new JoystickButton(driverJoystick, XBox.B_BUTTON);
     rampButton.whenPressed(new RampToTape());

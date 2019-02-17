@@ -34,8 +34,8 @@ public class Robot extends TimedRobot {
   public static ShoulderSubsystem shoulder;
 
   public static OI oi;
-  public static boolean readData = false;
-  private boolean debugJeVois = false;
+  public static boolean readData;
+  private boolean debugJeVois;
 
   Command autonomousCommand;
   SendableChooser<Command> chooser = new SendableChooser<>();
@@ -48,20 +48,15 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     System.out.println("BEGINNING_ROBOT_INIT!");
     readData = false; //Reading data every loop is VERY performance heavy, so make sure readData is off when not needed!
-    debugJeVois = false;
+    debugJeVois = true;
 
     //SUBSYSTEMS:
     driveTrain = new DriveTrainSubsystem(currentRobot);
-    System.out.println("BEGINNING_ROBOT_INIT!");
     //jeVois = new JeVoisSubsystem(); //Blank subsystem for jevois
     jeVois = new JeVoisSubsystem(false); //Actual subsystem for jevois - boolean= use two cameras?
-    System.out.println("creating elevator!");
     elevator = new ElevatorSusbsystem(currentRobot); //0=dont use
-    System.out.println("creating intake!");
     intake = new IntakeSubsystem(currentRobot);
-    System.out.println("creating shoulder!");
     shoulder = new ShoulderSubsystem(currentRobot);
-    System.out.println("creatign oit!");
     oi = new OI(true);
 
     //Create chooser tool for different autonomouses
@@ -84,7 +79,8 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putData("Current Commands Running", Scheduler.getInstance());
     if (debugJeVois) { //display data on the jevois for debugging purposes
       jeVois.safeRead();
-      jeVois.newPrint();
+      //jeVois.newPrint();
+      System.out.println("X:" + jeVois.getXAvg(false));
     }
     if (readData && !debugJeVois) {
       jeVois.safeRead();
