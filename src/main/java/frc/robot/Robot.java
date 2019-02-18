@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import frc.robot.OI.*;
@@ -25,14 +26,14 @@ import frc.robot.subsystems.*;
  * project.
  */
 public class Robot extends TimedRobot {
-  private RobotName currentRobot = RobotName.OldCompBot;
+  private RobotName currentRobot = RobotName.PracticeBot;
 
   public static JeVoisSubsystem jeVois;
   public static DriveTrainSubsystem driveTrain;
   public static ElevatorSusbsystem elevator;
   public static IntakeSubsystem intake;
   public static ShoulderSubsystem shoulder;
-
+  Potentiometer p = new AnalogPotentiometer(0);
   public static OI oi;
   public static boolean readData;
   private boolean debugJeVois;
@@ -48,12 +49,12 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     System.out.println("BEGINNING_ROBOT_INIT!");
     readData = false; //Reading data every loop is VERY performance heavy, so make sure readData is off when not needed!
-    debugJeVois = true;
+    debugJeVois = false;
 
     //SUBSYSTEMS:
     driveTrain = new DriveTrainSubsystem(currentRobot);
     //jeVois = new JeVoisSubsystem(); //Blank subsystem for jevois
-    jeVois = new JeVoisSubsystem(false); //Actual subsystem for jevois - boolean= use two cameras?
+    jeVois = new JeVoisSubsystem(); //Actual subsystem for jevois - boolean= use two cameras?
     elevator = new ElevatorSusbsystem(currentRobot); //0=dont use
     intake = new IntakeSubsystem(currentRobot);
     shoulder = new ShoulderSubsystem(currentRobot);
@@ -157,6 +158,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    System.out.println("POTENTIOMETER: " + p.get());
     Scheduler.getInstance().run(); 
     //elevator.setPower(oi.getDriverAxis(XBox.RIGHT_Y_AXIS));   
   }

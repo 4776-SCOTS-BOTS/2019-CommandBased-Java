@@ -43,7 +43,7 @@ public class ShoulderSubsystem extends Subsystem {
       }
       break;
       case PracticeBot: {
-        shoulderMotor = new PWMVictorSPX(RobotMap.PracticeBot.SHOULDER_PWM);
+        //shoulderMotor = new PWMVictorSPX(RobotMap.PracticeBot.SHOULDER_PWM);
       }
       case TestBoard: {
         //Don't assign the driveWheels to anything since there aren't any motors

@@ -43,8 +43,9 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
       }
       break;
       case PracticeBot: {
-        driveWheels = new DifferentialDrive(new VictorSP(RobotMap.PracticeBot.LEFT_DRIVE_PWM), new VictorSP(RobotMap.PracticeBot.RIGHT_DRIVE_PWM));
+        driveWheels = new DifferentialDrive(new PWMVictorSPX(RobotMap.PracticeBot.LEFT_DRIVE_PWM), new PWMVictorSPX(RobotMap.PracticeBot.RIGHT_DRIVE_PWM));
       }
+      break;
       case TestBoard: {
         //Don't assign the driveWheels to anything since there aren't any motors
         driveWheels = null;
@@ -92,7 +93,7 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
    * Stop <b>all</b> movement of the drive wheels.
    */
   public void stop() {
-    driveWheels.tankDrive(0, 0);
+    driveWheels.stopMotor();
   }
 
   @Override
