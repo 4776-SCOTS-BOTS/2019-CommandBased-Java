@@ -27,9 +27,10 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
   }
   *///END OF REQUIREMENTS
 
-
+  //Blank Subsystem: Do not create anything
   public DriveTrainSubsystem () {
-    //this(RobotName.CompBot);
+    this(RobotName.TestBoard);
+    System.out.println("Blank Subsystem for DriveTrainSubsystem was instantiated (as TestBoard).");
   }
   public DriveTrainSubsystem (RobotName robotName) {
     //Instantiate the driveTrain based on which robot we are using
@@ -44,6 +45,8 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
       break;
       case PracticeBot: {
         driveWheels = new DifferentialDrive(new PWMVictorSPX(RobotMap.PracticeBot.LEFT_DRIVE_PWM), new PWMVictorSPX(RobotMap.PracticeBot.RIGHT_DRIVE_PWM));
+        //System.out.println("DRIVETRAINSUBSYSTEM: Left Motor: " + RobotMap.PracticeBot.LEFT_DRIVE_PWM + ", Right Motor: " + RobotMap.PracticeBot.RIGHT_DRIVE_PWM);
+        //System.out.println("DRIVEWHEELS: ");
       }
       break;
       case TestBoard: {
@@ -63,6 +66,7 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
       }
       break;
     }
+    System.out.println(robotName + "\'s DriveTrainSubsystem correctly instantiated.");
   }
   /**
    * Tank Drive on the DriveTrainSubsystem.
@@ -81,19 +85,23 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
     driveWheels.arcadeDrive(ySpeed, xTurn);
   }
   /**
-   * Cheesy Drive on the <b>DriveTrainSubsystem</b> (also known as curvature drive or car drive).
+   * Cheesy Drive on the <b>DriveTrainSubsystem</b> (also known as <i>curvature drive</i> or <i>car drive</i>).
    * @param ySpeed - Forward speed of the robot (-1.0 to 1.0).
    * @param xTurn - Amount to turn the robot (-1.0 to 1.0).
    * @param isQuickTurn - Transforms into arcade drive to allow for quick turning.
    */
   public void cheesyDrive(double ySpeed, double xTurn, boolean isQuickTurn) {
     driveWheels.curvatureDrive(ySpeed, xTurn, isQuickTurn);
+    //System.out.println("Drivetrain is cheesydriving.");
+    //System.out.println(driveWheels.isAlive());
   }
   /**
    * Stop <b>all</b> movement of the drive wheels.
    */
   public void stop() {
-    driveWheels.stopMotor();
+    driveWheels.tankDrive(0, 0);
+    //driveWheels.stopMotor();
+    //System.out.println("Drivetrain has been stopped.");
   }
 
   @Override

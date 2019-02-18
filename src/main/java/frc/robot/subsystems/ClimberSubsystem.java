@@ -20,12 +20,15 @@ public class ClimberSubsystem extends Subsystem {
   Solenoid rearLeftCylinder;
   Solenoid rearRightCylinder;
 
+  //Blank Constructor: Do not use anything
   public ClimberSubsystem () {
-    this(RobotMap.RobotName.CompBot);
+    //this(RobotMap.RobotName.CompBot);
+    this(RobotMap.RobotName.TestBoard);
+    System.out.println("Blank Subsystem for ClimberSubsystem was instantiated (as TestBoard).");
   }
 
-  public ClimberSubsystem (RobotMap.RobotName name) {
-    switch (name) {
+  public ClimberSubsystem (RobotMap.RobotName robotName) {
+    switch (robotName) {
       case CompBot: {
         frontLeftCylinder = new Solenoid(RobotMap.CompBot.CLIMBER_FRONT_LEFT_PORT);
         frontRightCylinder = new Solenoid(RobotMap.CompBot.CLIMBER_FRONT_RIGHT_PORT);
@@ -57,6 +60,7 @@ public class ClimberSubsystem extends Subsystem {
         rearRightCylinder = null;
       }break;
     }
+    System.out.println(robotName + "\'s ClimberSubsystem correctly instantiated.");
   }
 
   @Override

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.JeVoisData;
 import frc.robot.RobotMap;
+import frc.robot.RobotMap.RobotName;
 
 //import org.json.simple.JSONObject;
 
@@ -120,13 +121,43 @@ public class JeVoisSubsystem extends Subsystem{// implements PIDSource{
   public int getBytes() {
     return jeVoisCam0.getBytesReceived();
   }
-  
+  public JeVoisSubsystem (RobotName robotName) {
+    switch(robotName) {
+      case CompBot: {
+        //this();
+      }
+      break;
+      case PracticeBot: {
+        //this();
+      }
+      break;
+      case OldCompBot: {
+        //this(false);
+        createSystem(false);
+      }
+      break;
+      case Steve: {
+        //this();
+      }
+      break;
+      default: {
+        //this();
+      }
+    }
+    System.out.println(robotName + "\'s JeVoisSubsystem correctly instantiated.");
+  }
   //Default Constructor: Use main constructor with only 1 camera
   public JeVoisSubsystem () {
     //this(false);
+    this(RobotName.TestBoard);
+    System.out.println("Blank Subsystem for JeVoisSubsystem was instantiated (as TestBoard).");
   }
-  //Main Contstructor: Create 1 or 2 cameras
+  //Main Constructor runs main "constructor"
   public JeVoisSubsystem (boolean _doubleCams) {
+    createSystem(_doubleCams);
+  }
+  //Main "Contstructor": Create 1 or 2 cameras
+  public void createSystem (boolean _doubleCams) {
     doubleCams = _doubleCams;
     reconnect(false);
     if (_doubleCams)
@@ -141,7 +172,7 @@ public class JeVoisSubsystem extends Subsystem{// implements PIDSource{
         try {
           jeVoisCam1 = new SerialPort(RobotMap.JeVois.BAUD_RATE, SerialPort.Port.kUSB);
         } catch (Exception e) {
-          System.out.println("ERROR in JeVoisSubsystem: Failed to connect \'jeVoisCam1\' in attempt #" + i);
+          System.out.println("ERROR in JeVoisSubsystem: Failed to connect \'jeVoisCam1\' in attempt #" + (i + 1));
           jeVoisCam1 = null;
         }
         if (jeVoisCam1 != null) break;

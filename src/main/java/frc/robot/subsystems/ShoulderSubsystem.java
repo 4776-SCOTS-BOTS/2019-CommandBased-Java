@@ -23,8 +23,10 @@ public class ShoulderSubsystem extends Subsystem {
     shoulderMotor.set(power);
   }
 
+  //Blank constructor: Do not use anything
   public ShoulderSubsystem () {
-    
+    this(RobotMap.RobotName.TestBoard);
+    System.out.println("Blank Subsystem for ShoulderSubsystem was instantiated (as TestBoard).");
   }
 
   public ShoulderSubsystem(RobotMap.RobotName robotName) {
@@ -57,6 +59,7 @@ public class ShoulderSubsystem extends Subsystem {
       }
       break;
     }
+    System.out.println(robotName + "\'s ShoulderSubsystem correctly instantiated.");
   }
 
   public void setFacingSide (boolean faceBack) {

@@ -52,7 +52,9 @@ public class RobotMap {
     CLIMBER_FRONT_LEFT_PORT = 0, //Pneumatic cylinders to climb (PORT = PCM's PWM)
     CLIMBER_FRONT_RIGHT_PORT = 0, //Pneumatic cylinders to climb (PORT = PCM's PWM)
     CLIMBER_REAR_LEFT_PORT = 0, //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    CLIMBER_REAR_RIGHT_PORT = 0; //Pneumatic cylinders to climb (PORT = PCM's PWM)
+    CLIMBER_REAR_RIGHT_PORT = 0, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+    LEFT_VACUUM = 0, //Left side of suction cup motor
+    RIGHT_VACUUM = 0; //Right side of suction cup motor
   }
   /**
    * Contained in this class are constants used for Steve, the programming robot.
@@ -72,9 +74,9 @@ public class RobotMap {
   public final class PracticeBot {
     public static final int 
     LEFT_DRIVE_PWM = 11, //Motors operating left side of the chassis
-    RIGHT_DRIVE_PWM = 13, //Motors operating right side of the chassis
-    LEFT_ELEVATOR_PWM = 12, //Motor that operates left elevator up and down
-    RIGHT_ELEVATOR_PWM = 14, //Motor that operates right elevator up and down
+    RIGHT_DRIVE_PWM = 12, //Motors operating right side of the chassis
+    LEFT_ELEVATOR_PWM = 13, //Motor that operates left elevator up and down
+    RIGHT_ELEVATOR_PWM = 16, //Motor that operates right elevator up and down
     SHOULDER_PWM = -99, //Motor that rotates the arm to face the front and back
     INTAKE_WHEELS_PWM = 15, //Wheels picking up cargo on the stationary intake
     CLIMBING_WHEELS_PWM = -99, //Wheels on the rear pneumatic climbing cylinders (PORT = PCM's PWM)
@@ -83,7 +85,8 @@ public class RobotMap {
     CLIMBER_FRONT_LEFT_PORT = 0,//SUPPOSED TO BE 0! //Pneumatic cylinders to climb (PORT = PCM's PWM)
     CLIMBER_FRONT_RIGHT_PORT = 3, //Pneumatic cylinders to climb (PORT = PCM's PWM)
     CLIMBER_REAR_LEFT_PORT = 1, //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    CLIMBER_REAR_RIGHT_PORT = 2; //Pneumatic cylinders to climb (PORT = PCM's PWM)
+    CLIMBER_REAR_RIGHT_PORT = 2, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+    HATCH_VACUUM = 1; //Suction cup motors
   }
   /**
    * Contained in this class are constants used for the old competition robot (for FIRST Power Up).

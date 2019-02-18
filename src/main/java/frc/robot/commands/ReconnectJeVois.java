@@ -13,7 +13,7 @@ import frc.robot.Robot;
 public class ReconnectJeVois extends Command {
   boolean connectSecondCam;
   public ReconnectJeVois(boolean secondCam) {
-    requires(Robot.jeVois);
+    //requires(Robot.jeVois);
     connectSecondCam = secondCam;
   }
 
@@ -21,7 +21,7 @@ public class ReconnectJeVois extends Command {
   @Override
   protected void initialize() {
     System.out.println("STARTING RECONNECTION PROCESS");
-    Robot.jeVois.reconnect(connectSecondCam);
+    //Robot.jeVois.reconnect(connectSecondCam);
   }
 
   // Called repeatedly when this Command is scheduled to run

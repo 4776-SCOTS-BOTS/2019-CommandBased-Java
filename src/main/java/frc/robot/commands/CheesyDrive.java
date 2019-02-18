@@ -32,7 +32,6 @@ public class CheesyDrive extends Command {
   protected void initialize() {
     //Robot.readData = true;
   }
-
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
