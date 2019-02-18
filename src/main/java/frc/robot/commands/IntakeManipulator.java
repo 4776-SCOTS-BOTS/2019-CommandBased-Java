@@ -27,12 +27,13 @@ public class IntakeManipulator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intake.setSpeed(Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS));
-    if (Robot.oi.getManipulatorPOV() == XBox.TOP_POV) {
+    //Robot.intake.setSpeed(Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS));
+    Robot.intake.vacuum(Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS));
+    /*if (Robot.oi.getManipulatorPOV() == XBox.TOP_POV) {
       Robot.intake.setClosed(false);
     } else if (Robot.oi.getManipulatorPOV() == XBox.BOTTOM_POV) {
       Robot.intake.setClosed(true);
-    }
+    }*/
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import frc.robot.OI.*;
@@ -25,8 +26,7 @@ import frc.robot.subsystems.*;
  * project.
  */
 public class Robot extends TimedRobot {
-  private RobotName currentRobot = RobotName.OldCompBot;
-
+  private RobotName currentRobot = RobotName.PracticeBot;
   public static JeVoisSubsystem jeVois;
   public static DriveTrainSubsystem driveTrain;
   public static ElevatorSusbsystem elevator;
@@ -46,17 +46,26 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    System.out.println("BEGINNING_ROBOT_INIT!");
+    System.out.println("BEGINNING_ROBOT_INIT - Instantiating subystems for \'" + currentRobot + "\'!");
     readData = false; //Reading data every loop is VERY performance heavy, so make sure readData is off when not needed!
     debugJeVois = true;
 
-    //SUBSYSTEMS:
+    //SUBSYSTEMS: (Please note: when switching robots, change the currentRobot variable, not the subsystem constructors)
     driveTrain = new DriveTrainSubsystem(currentRobot);
+    //driveTrain = new DriveTrainSubsystem();//blank subsystem
+
+    jeVois = new JeVoisSubsystem(currentRobot); //Proper subsystem (doesn't require different constructors for different robots)
     //jeVois = new JeVoisSubsystem(); //Blank subsystem for jevois
-    jeVois = new JeVoisSubsystem(false); //Actual subsystem for jevois - boolean= use two cameras?
-    elevator = new ElevatorSusbsystem(currentRobot); //0=dont use
+    //jeVois = new JeVoisSubsystem(false); //Actual subsystem for jevois - boolean= use two cameras?
+
+    //elevator = new ElevatorSusbsystem(currentRobot);
+    elevator = new ElevatorSusbsystem();//blank subsystem
+
     intake = new IntakeSubsystem(currentRobot);
-    shoulder = new ShoulderSubsystem(currentRobot);
+    //intake = new IntakeSubsystem();//blank subsystem
+
+    //shoulder = new ShoulderSubsystem(currentRobot);
+    shoulder = new ShoulderSubsystem();//blank subsystem
     oi = new OI(true);
 
     //Create chooser tool for different autonomouses
@@ -64,6 +73,8 @@ public class Robot extends TimedRobot {
     chooser.addOption("Basic Autonomous", new TestCommand());
     //Display the chooser tool on the SmartDashboard
     SmartDashboard.putData("Auto Mode:", chooser);
+    IntakeManipulator im = new IntakeManipulator();
+    SmartDashboard.putData(im);
   }
 
   /**
@@ -77,13 +88,14 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     //SmartDashboard.putData("Current Commands Running", Scheduler.getInstance());
+    
     if (debugJeVois) { //display data on the jevois for debugging purposes
-      jeVois.safeRead();
+      //jeVois.safeRead();
       //jeVois.newPrint();
-      System.out.println("X:" + jeVois.getXAvg(false));
+      //System.out.println("X:" + jeVois.getXAvg(false));
     }
     if (readData && !debugJeVois) {
-      jeVois.safeRead();
+      //jeVois.safeRead();
     }
   }
 
@@ -157,6 +169,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    //System.out.println("TeleopRunning");
     Scheduler.getInstance().run(); 
     //elevator.setPower(oi.getDriverAxis(XBox.RIGHT_Y_AXIS));   
   }

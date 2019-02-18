@@ -62,16 +62,16 @@ public class RampToTape extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double error = target - Robot.jeVois.getXAvg(secondCam); //error = target - actual
-    integral += error * 0.02;
-    double derivative = (error - previousError) / 0.02;
-    double turnPower = P*error + I*integral + D*derivative;
-    currentPower = a * Math.exp(-b * Robot.jeVois.getSideW(true, false)) + c;
+    //double error = target - Robot.jeVois.getXAvg(secondCam); //error = target - actual
+    //integral += error * 0.02;
+    //double derivative = (error - previousError) / 0.02;
+    //double turnPower = P*error + I*integral + D*derivative;
+    //currentPower = a * Math.exp(-b * Robot.jeVois.getSideW(true, false)) + c;
 
-    Robot.driveTrain.cheesyDrive(-currentPower, d * Math.min(min, Math.max(-min, -turnPower)), false); //Clamp turnPower to prevent motor problems
+    //Robot.driveTrain.cheesyDrive(-currentPower, d * Math.min(min, Math.max(-min, -turnPower)), false); //Clamp turnPower to prevent motor problems
     //Robot.driveTrain.tankDrive(Math.min(min, Math.max(-min, turnPower)), Math.min(min, Math.max(-min, -turnPower)));
     //System.out.println(turnPower);
-    System.out.println(Robot.jeVois.getWAvg(false) + " " + currentPower + " " + turnPower);
+    //System.out.println(Robot.jeVois.getWAvg(false) + " " + currentPower + " " + turnPower);
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -22,8 +22,10 @@ public class ElevatorSusbsystem extends Subsystem {
   boolean useCargo;
   RobotMap.ElevatorHeight currentHeight;
 
+  //Blank Constructor: Do not create anything for this subsytem.
   public ElevatorSusbsystem () {
-    this(RobotMap.RobotName.CompBot);
+    this(RobotMap.RobotName.TestBoard);
+    System.out.println("Blank Subsystem for ElevatorSubsystem was instantiated (as TestBoard).");
   }
   public boolean getUseCargo () {
     return useCargo;
@@ -79,6 +81,7 @@ public class ElevatorSusbsystem extends Subsystem {
       }
       break;
     }
+    System.out.println(robotName + "\'s ElevatorSubsystem correctly instantiated.");
   }
 
   @Override
