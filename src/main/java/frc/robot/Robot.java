@@ -4,15 +4,14 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-//Version: Feb 18, 2019
+//Version: Feb 19, 2018 
 package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 //import frc.robot.OI.*;
 import frc.robot.RobotMap.*;
 import frc.robot.commands.*;
@@ -73,8 +72,8 @@ public class Robot extends TimedRobot {
     chooser.addOption("Basic Autonomous", new TestCommand());
     //Display the chooser tool on the SmartDashboard
     SmartDashboard.putData("Auto Mode:", chooser);
-    IntakeManipulator im = new IntakeManipulator();
-    SmartDashboard.putData(im);
+    Command data = new TestCommand();
+    SmartDashboard.putData(data);
   }
 
   /**

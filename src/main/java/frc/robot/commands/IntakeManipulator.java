@@ -28,7 +28,9 @@ public class IntakeManipulator extends Command {
   @Override
   protected void execute() {
     //Robot.intake.setSpeed(Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS));
-    Robot.intake.vacuum(Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS));
+    //Robot.intake.vacuum(Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS));
+    //Robot.intake.setClosed();
+    
     /*if (Robot.oi.getManipulatorPOV() == XBox.TOP_POV) {
       Robot.intake.setClosed(false);
     } else if (Robot.oi.getManipulatorPOV() == XBox.BOTTOM_POV) {

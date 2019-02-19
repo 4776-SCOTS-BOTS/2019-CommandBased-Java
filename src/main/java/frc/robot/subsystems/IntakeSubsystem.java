@@ -17,6 +17,7 @@ import frc.robot.commands.*;
  * Subsystem handling control of the intake.
  */
 public class IntakeSubsystem extends Subsystem {
+  Compressor compressor;
   Solenoid leftJaw;
   Solenoid rightJaw;
   PWMVictorSPX intakeWheels;
@@ -39,31 +40,37 @@ public class IntakeSubsystem extends Subsystem {
         rightJaw = null;
         intakeWheels = null;
         hatchVacuum = null;
+        compressor = null;
       }break;
       case PracticeBot: {
         leftJaw = new Solenoid(RobotMap.PracticeBot.INTAKE_LEFT_JAW_PORT);
         rightJaw = new Solenoid(RobotMap.PracticeBot.INTAKE_RIGHT_JAW_PORT);
         intakeWheels = new PWMVictorSPX(RobotMap.PracticeBot.INTAKE_WHEELS_PWM);
         hatchVacuum = new PWMVictorSPX(RobotMap.PracticeBot.HATCH_VACUUM);
-        System.out.println("CREATED AT: " + RobotMap.PracticeBot.HATCH_VACUUM);
+        compressor = new Compressor(0);
+        compressor.setClosedLoopControl(true);
+        //System.out.println("CREATED AT: " + RobotMap.PracticeBot.HATCH_VACUUM);
       }break;
       case OldCompBot: {
         leftJaw = null;
         rightJaw = null;
         intakeWheels = null;
         hatchVacuum = null;
+        compressor = null;
       }break;
       case Steve: {
         leftJaw = null;
         rightJaw = null;
         intakeWheels = null;
         hatchVacuum = null;
+        compressor = null;
       }break;
       case TestBoard: {
         leftJaw = null;
         rightJaw = null;
         intakeWheels = null;
         hatchVacuum = null;
+        compressor = null;
       }break;
     }
     System.out.println(robotName + "\'s IntakeSubsystem correctly instantiated.");
@@ -83,6 +90,13 @@ public class IntakeSubsystem extends Subsystem {
       leftJaw.set(!nowIsClosed);
       rightJaw.set(!nowIsClosed);
       isClosed = nowIsClosed;
+    }
+  }
+  public void toggleClosed() {
+    if (leftJaw != null && rightJaw !=null) {
+      isClosed = !isClosed;
+      leftJaw.set(isClosed);
+      rightJaw.set(isClosed);
     }
   }
 

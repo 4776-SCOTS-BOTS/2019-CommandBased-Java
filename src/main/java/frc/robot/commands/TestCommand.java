@@ -15,7 +15,7 @@ import frc.robot.OI.*;
  */
 public class TestCommand extends Command {
   public TestCommand() {
-    requires(Robot.shoulder);
+    requires(Robot.intake);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -30,13 +30,15 @@ public class TestCommand extends Command {
   protected void execute() {
     //SmartDashboard.putNumber("Left Joystick Y Value", -Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS));
     //Robot.driveTrain.stop();
-    Robot.shoulder.power(Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS));
+    //Robot.shoulder.power(Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS));
+    Robot.intake.toggleClosed();
+    System.out.println("TOGGLED");
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

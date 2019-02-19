@@ -47,10 +47,14 @@ public class OI {
     //autoAllignButton.whileHeld(new JeVoisCenter());
     rampButton = new JoystickButton(driverJoystick, XBox.B_BUTTON);
     rampButton.whenPressed(new RampToTape());
-    testButton = new JoystickButton(driverJoystick, XBox.X_BUTTON);
-    testButton.whileHeld(new TestCommand());
-    connectButton = new JoystickButton(driverJoystick, XBox.Y_BUTTON);
-    connectButton.whenPressed(new ReconnectJeVois(false));
+
+    //testButton = new JoystickButton(driverJoystick, XBox.X_BUTTON);
+    //testButton.whileHeld(new TestCommand());
+    
+    //connectButton = new JoystickButton(driverJoystick, XBox.Y_BUTTON);
+    //connectButton.whenPressed(new ReconnectJeVois(false));
+
+
     if (useSinglePlayer) {
       //No manipulator!
       manipulatorJoystick = null;
