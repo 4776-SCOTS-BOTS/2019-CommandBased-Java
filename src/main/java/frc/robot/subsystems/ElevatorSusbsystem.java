@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.*;
+import frc.robot.commands.*;
 
 /**
  * Subsystem handling movement of the elevator.
@@ -42,9 +43,12 @@ public class ElevatorSusbsystem extends Subsystem {
   }
 
   public void setPower (double power) {
-    //leftElevatorMotor.set(power);
-    //rightElevatorMotor.set(power);
-    
+    leftElevatorMotor.set(power);
+    rightElevatorMotor.set(power);
+  }
+  public void disableElevator() {
+    leftElevatorMotor.stopMotor();
+    rightElevatorMotor.stopMotor();
   }
   public ElevatorSusbsystem (RobotMap.RobotName robotName) {//Instantiate the driveTrain based on which robot we are using
     switch (robotName) {
@@ -62,6 +66,7 @@ public class ElevatorSusbsystem extends Subsystem {
         leftElevatorMotor = new PWMVictorSPX(RobotMap.PracticeBot.LEFT_ELEVATOR_PWM);
         rightElevatorMotor = new PWMVictorSPX(RobotMap.PracticeBot.RIGHT_ELEVATOR_PWM);
       }
+      break;
       case TestBoard: {
         //Don't assign the driveWheels to anything since there aren't any motors
         leftElevatorMotor = null;
@@ -88,5 +93,6 @@ public class ElevatorSusbsystem extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new ElevatorManipulator());
   }
 }

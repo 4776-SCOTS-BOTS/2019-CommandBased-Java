@@ -13,9 +13,9 @@ import frc.robot.OI.*;
 /**
  * <b>This</b> is the <i>TEST COMMAND</i> for testing!
  */
-public class ToggleFront extends Command {
-  public ToggleFront() {
-    requires(Robot.climber);
+public class ToggleMouthOpen extends Command {
+  public ToggleMouthOpen() {
+    //requires(Robot.intake); //disable if you dont want IntakeManipulator command to be interrupted
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -31,8 +31,8 @@ public class ToggleFront extends Command {
     //SmartDashboard.putNumber("Left Joystick Y Value", -Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS));
     //Robot.driveTrain.stop();
     //Robot.shoulder.power(Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS));
-    Robot.climber.toggleFront();
-    System.out.println("TOGGLED FRONT CLIMBERS");
+    Robot.intake.toggleClosed();
+    System.out.println("TOGGLED MOUTH");
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -50,6 +50,6 @@ public class ToggleFront extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    
+    end();
   }
 }

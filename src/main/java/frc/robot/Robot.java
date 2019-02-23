@@ -4,7 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-//Version: Feb 22, 2018 - added climber control
+//Version: Feb 22, 2018 (LATE AT NIGHT) - added intake mouth functionality and elevator functionality
 package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
@@ -58,8 +58,8 @@ public class Robot extends TimedRobot {
     //jeVois = new JeVoisSubsystem(); //Blank subsystem for jevois
     //jeVois = new JeVoisSubsystem(false); //Actual subsystem for jevois - boolean= use two cameras?
 
-    //elevator = new ElevatorSusbsystem(currentRobot);
-    elevator = new ElevatorSusbsystem();//blank subsystem
+    elevator = new ElevatorSusbsystem(currentRobot);
+    //elevator = new ElevatorSusbsystem();//blank subsystem
 
     intake = new IntakeSubsystem(currentRobot);
     //intake = new IntakeSubsystem();//blank subsystem
@@ -67,8 +67,8 @@ public class Robot extends TimedRobot {
     //shoulder = new ShoulderSubsystem(currentRobot);
     shoulder = new ShoulderSubsystem();//blank subsystem
 
-    climber = new ClimberSubsystem(currentRobot);
-    //climber = new ClimberSubsystem();//blank subsystem
+    //climber = new ClimberSubsystem(currentRobot);
+    climber = new ClimberSubsystem();//blank subsystem
     oi = new OI(true);
 
     //Create chooser tool for different autonomouses
@@ -76,12 +76,16 @@ public class Robot extends TimedRobot {
     chooser.addOption("Basic Autonomous", new TestCommand());
     //Display the chooser tool on the SmartDashboard
     SmartDashboard.putData("Auto Mode:", chooser);
+    /*
+    Command mouth = new ToggleMouthOpen();
+    SmartDashboard.putData(mouth);
     Command all = new ToggleClimbers();
-    Command front = new ToggleFront();
-    Command rear = new ToggleRear();
     SmartDashboard.putData(all);
+    Command front = new ToggleFront();
     SmartDashboard.putData(front);
+    Command rear = new ToggleRear();
     SmartDashboard.putData(rear);
+    */
   }
 
   /**

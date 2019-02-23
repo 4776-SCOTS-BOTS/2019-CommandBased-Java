@@ -23,7 +23,6 @@ public class IntakeSubsystem extends Subsystem {
   PWMVictorSPX intakeWheels;
   PWMVictorSPX hatchVacuum;
 
-  public double currentSpeed;
   public boolean isClosed;
 
   //Blank Constructor: Do not use naything.
@@ -79,12 +78,17 @@ public class IntakeSubsystem extends Subsystem {
     System.out.println("DOING IT AT: " + power);
     hatchVacuum.set(power);
   }
-  public void setSpeed(double newSpeed) {
+  public void powerIntake(double power) {
     if (intakeWheels != null) {
-      intakeWheels.set(newSpeed);
-      currentSpeed = newSpeed;
+      intakeWheels.set(power);
     }
   }
+  public void disableIntake() {
+    if (intakeWheels != null) {
+      intakeWheels.stopMotor();
+    }
+  }
+
   public void setClosed(boolean nowIsClosed) {
     if (leftJaw != null && rightJaw !=null) {
       leftJaw.set(!nowIsClosed);
@@ -104,6 +108,6 @@ public class IntakeSubsystem extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    //setDefaultCommand(new IntakeManipulator());
+    setDefaultCommand(new IntakeManipulator());
   }
 }

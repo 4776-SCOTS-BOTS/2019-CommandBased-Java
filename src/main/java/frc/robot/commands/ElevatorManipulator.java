@@ -9,15 +9,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.OI.*;
-/**
- * <b>This</b> is the <i>TEST COMMAND</i> for testing!
- */
-public class ToggleFront extends Command {
-  public ToggleFront() {
-    requires(Robot.climber);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+import frc.robot.OI.XBox;
+
+public class ElevatorManipulator extends Command {
+  public ElevatorManipulator() {
+    requires(Robot.elevator);
   }
 
   // Called just before this Command runs the first time
@@ -28,28 +24,26 @@ public class ToggleFront extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //SmartDashboard.putNumber("Left Joystick Y Value", -Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS));
-    //Robot.driveTrain.stop();
-    //Robot.shoulder.power(Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS));
-    Robot.climber.toggleFront();
-    System.out.println("TOGGLED FRONT CLIMBERS");
+    Robot.elevator.setPower(Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS));
+  
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.elevator.disableElevator();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    
+    end();
   }
 }

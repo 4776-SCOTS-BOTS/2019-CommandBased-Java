@@ -36,7 +36,7 @@ public class IntakeManipulator extends Command {
     } else if (Robot.oi.getManipulatorPOV() == XBox.BOTTOM_POV) {
       Robot.intake.setClosed(true);
     }*/
-  }
+    }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -47,12 +47,13 @@ public class IntakeManipulator extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    
+    Robot.intake.disableIntake();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

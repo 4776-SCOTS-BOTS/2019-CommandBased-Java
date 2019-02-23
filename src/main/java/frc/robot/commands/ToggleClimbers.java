@@ -33,7 +33,7 @@ public class ToggleClimbers extends Command {
     //Robot.shoulder.power(Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS));
     Robot.climber.toggleRear();
     Robot.climber.toggleFront();
-    System.out.println("TOGGLED");
+    System.out.println("TOGGLED ALL CLIMBERS");
   }
 
   // Make this return true when this Command no longer needs to run execute()
