@@ -48,8 +48,8 @@ public class OI {
     rampButton = new JoystickButton(driverJoystick, XBox.B_BUTTON);
     rampButton.whenPressed(new RampToTape());
 
-    //testButton = new JoystickButton(driverJoystick, XBox.X_BUTTON);
-    //testButton.whileHeld(new TestCommand());
+    testButton = new JoystickButton(driverJoystick, XBox.X_BUTTON);
+    testButton.whileHeld(new TestCommand());
     
     //connectButton = new JoystickButton(driverJoystick, XBox.Y_BUTTON);
     //connectButton.whenPressed(new ReconnectJeVois(false));
@@ -95,6 +95,9 @@ public class OI {
   public int getDriverPOV() {
     return driverJoystick.getPOV();
   }
+  public boolean getDriverButtonDown(int button) {
+    return driverJoystick.getRawButtonPressed(button);
+  }
   //Manipulator
   public double getManipulatorAxis(int axisIndex) {
     if (singlePlayer)
@@ -113,6 +116,9 @@ public class OI {
       return XBox.NO_POV;
     else
       return manipulatorJoystick.getPOV();
+  }
+  public boolean getManipulatorButtonDown(int button) {
+    return manipulatorJoystick.getRawButtonPressed(button);
   }
 
   //// CREATING BUTTONS

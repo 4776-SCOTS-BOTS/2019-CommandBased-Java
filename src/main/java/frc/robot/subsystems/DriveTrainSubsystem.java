@@ -108,6 +108,6 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new CheesyDrive(true));
+    //setDefaultCommand(new CheesyDrive(true));
   }
 }

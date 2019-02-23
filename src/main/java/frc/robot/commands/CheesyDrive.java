@@ -37,7 +37,7 @@ public class CheesyDrive extends Command {
   protected void execute() {
     double forward = -Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS);
     boolean reverse = ((forward < -0.06) && fieldView);
-    double turn = (reverse ? -1 : 1) * Robot.oi.getDriverAxis(XBox.RIGHT_X_AXIS);
+    double turn = (reverse ? -1 : 1) * Robot.oi.getDriverAxis(XBox.LEFT_X_AXIS);
     Robot.driveTrain.cheesyDrive(forward, turn, Robot.oi.getDriverButton(XBox.RIGHT_BUMPER_BUTTON));
     SmartDashboard.putBoolean("GoingReverse", reverse);
     //System.out.println(Robot.jeVois.getXAvg(false) +" "+-Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS));

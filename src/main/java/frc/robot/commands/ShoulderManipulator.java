@@ -8,16 +8,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.OI.*;
-/**
- * <b>This</b> is the <i>TEST COMMAND</i> for testing!
- */
-public class ToggleMouthOpen extends Command {
-  public ToggleMouthOpen() {
-    //requires(Robot.intake); //disable if you dont want IntakeManipulator command to be interrupted
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+import frc.robot.OI.XBox;
+
+public class ShoulderManipulator extends Command {
+  public ShoulderManipulator() {
+    requires(Robot.shoulder);
   }
 
   // Called just before this Command runs the first time
@@ -28,17 +25,16 @@ public class ToggleMouthOpen extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //SmartDashboard.putNumber("Left Joystick Y Value", -Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS));
-    //Robot.driveTrain.stop();
-    //Robot.shoulder.power(Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS));
-    Robot.intake.toggleMouth();//toggle the mouth open / closed
-    System.out.println("TOGGLED MOUTH");
-  }
+    //System.out.println("SHOULDER POT VALUE: " + Robot.shoulder.getPotValue());
+    SmartDashboard.putNumber("SHOULDER POT VALUE", Robot.shoulder.getPotValue());
+    Robot.shoulder.powerShoulder(Robot.oi.getDriverAxis(XBox.RIGHT_Y_AXIS));
+    Robot.shoulder.powerIntake(Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS));
+  } 
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

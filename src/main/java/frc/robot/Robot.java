@@ -4,13 +4,13 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-//Version: Feb 22, 2018 (LATE AT NIGHT) - added intake mouth functionality and elevator functionality
+//Version: 2/23/19 - got everything working but vacuum.
 package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.interfaces.Potentiometer;
+import edu.wpi.first.wpilibj.interfaces.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 //import frc.robot.OI.*;
 import frc.robot.RobotMap.*;
@@ -32,10 +32,11 @@ public class Robot extends TimedRobot {
   public static IntakeSubsystem intake;
   public static ShoulderSubsystem shoulder;
   public static ClimberSubsystem climber;
-  Potentiometer p = new AnalogPotentiometer(0);
+  //Potentiometer p = new AnalogPotentiometer(0);
   public static OI oi;
   public static boolean readData;
   private boolean debugJeVois;
+  public static Timer t;
 
   Command autonomousCommand;
   SendableChooser<Command> chooser = new SendableChooser<>();
@@ -46,11 +47,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    t = new Timer();
+    t.reset();
+    t.start();
     System.out.println("BEGINNING_ROBOT_INIT - Instantiating subystems for \'" + currentRobot + "\'!");
     readData = false; //Reading data every loop is VERY performance heavy, so make sure readData is off when not needed!
     debugJeVois = false;
 
     //SUBSYSTEMS: (Please note: when switching robots, change the currentRobot variable, not the subsystem constructors)
+    //PLEASE NOTE!!!!! Currently, cheesydrive only using left joystick on driver (turning isnt on right joystick)
     driveTrain = new DriveTrainSubsystem(currentRobot);
     //driveTrain = new DriveTrainSubsystem();//blank subsystem
 
@@ -64,19 +69,19 @@ public class Robot extends TimedRobot {
     intake = new IntakeSubsystem(currentRobot);
     //intake = new IntakeSubsystem();//blank subsystem
 
-    //shoulder = new ShoulderSubsystem(currentRobot);
-    shoulder = new ShoulderSubsystem();//blank subsystem
+    shoulder = new ShoulderSubsystem(currentRobot);
+    //shoulder = new ShoulderSubsystem();//blank subsystem
 
-    //climber = new ClimberSubsystem(currentRobot);
-    climber = new ClimberSubsystem();//blank subsystem
-    oi = new OI(true);
+    climber = new ClimberSubsystem(currentRobot);
+    //climber = new ClimberSubsystem();//blank subsystem
+    oi = new OI(false);//false = doubleplayer, true = singleplayer
 
     //Create chooser tool for different autonomouses
     chooser.setDefaultOption("Default Auto", new TestCommand());
     chooser.addOption("Basic Autonomous", new TestCommand());
     //Display the chooser tool on the SmartDashboard
     SmartDashboard.putData("Auto Mode:", chooser);
-    /*
+    
     Command mouth = new ToggleMouthOpen();
     SmartDashboard.putData(mouth);
     Command all = new ToggleClimbers();
@@ -85,7 +90,12 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData(front);
     Command rear = new ToggleRear();
     SmartDashboard.putData(rear);
-    */
+
+    Command forward = new ToggleShoulder();
+    SmartDashboard.putData(forward);
+    Command reverse = new ReverseShoulder();
+    SmartDashboard.putData(reverse);
+    
   }
 
   /**

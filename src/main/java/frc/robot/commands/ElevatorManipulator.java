@@ -24,8 +24,11 @@ public class ElevatorManipulator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.elevator.setPower(Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS));
-  
+    //control up/down power of elevator
+    Robot.elevator.setPower(-Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS));
+    //System.out.println(-Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS));
+    //print says power-left-right
+    System.out.println(-Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS) + " " + Robot.elevator.getLeftPot() + " " + Robot.elevator.getRightPot());
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -47,7 +47,11 @@ public class IntakeSubsystem extends Subsystem {
         intakeWheels = new PWMVictorSPX(RobotMap.PracticeBot.INTAKE_WHEELS_PWM);
         hatchVacuum = new PWMVictorSPX(RobotMap.PracticeBot.HATCH_VACUUM);
         compressor = new Compressor(0);
-        compressor.setClosedLoopControl(true);
+        //Currently disabled because they dont want compressor on right now
+        //compressor.setClosedLoopControl(true);
+        compressor.stop();
+        System.out.println("PLEASE NOTE: The compressor is disable and will not run!");
+        
         //System.out.println("CREATED AT: " + RobotMap.PracticeBot.HATCH_VACUUM);
       }break;
       case OldCompBot: {
@@ -74,8 +78,7 @@ public class IntakeSubsystem extends Subsystem {
     }
     System.out.println(robotName + "\'s IntakeSubsystem correctly instantiated.");
   }
-  public void vacuum(double power) {
-    System.out.println("DOING IT AT: " + power);
+  public void powerVacuum(double power) {
     hatchVacuum.set(power);
   }
   public void powerIntake(double power) {
@@ -96,7 +99,7 @@ public class IntakeSubsystem extends Subsystem {
       isClosed = nowIsClosed;
     }
   }
-  public void toggleClosed() {
+  public void toggleMouth() {
     if (leftJaw != null && rightJaw !=null) {
       isClosed = !isClosed;
       leftJaw.set(isClosed);
