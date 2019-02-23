@@ -19,6 +19,8 @@ public class ClimberSubsystem extends Subsystem {
   Solenoid frontRightCylinder;
   Solenoid rearLeftCylinder;
   Solenoid rearRightCylinder;
+  boolean isFrontExtended;
+  boolean isRearExtended;
 
   //Blank Constructor: Do not use anything
   public ClimberSubsystem () {
@@ -60,7 +62,20 @@ public class ClimberSubsystem extends Subsystem {
         rearRightCylinder = null;
       }break;
     }
+    isRearExtended = false;
+    isFrontExtended = false;
     System.out.println(robotName + "\'s ClimberSubsystem correctly instantiated.");
+  }
+
+  public void toggleFront() {
+    isFrontExtended = !isFrontExtended;
+    frontLeftCylinder.set(isFrontExtended);
+    frontRightCylinder.set(isFrontExtended);
+  }
+  public void toggleRear() {
+    isRearExtended = !isRearExtended;
+    rearLeftCylinder.set(isRearExtended);
+    rearRightCylinder.set(isRearExtended);
   }
 
   @Override

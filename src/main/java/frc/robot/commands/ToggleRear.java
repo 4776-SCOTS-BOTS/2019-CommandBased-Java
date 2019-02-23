@@ -13,8 +13,8 @@ import frc.robot.OI.*;
 /**
  * <b>This</b> is the <i>TEST COMMAND</i> for testing!
  */
-public class TestCommand extends Command {
-  public TestCommand() {
+public class ToggleRear extends Command {
+  public ToggleRear() {
     requires(Robot.climber);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
@@ -31,7 +31,7 @@ public class TestCommand extends Command {
     //SmartDashboard.putNumber("Left Joystick Y Value", -Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS));
     //Robot.driveTrain.stop();
     //Robot.shoulder.power(Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS));
-    Robot.climber.toggleFront();
+    Robot.climber.toggleRear();
     System.out.println("TOGGLED");
   }
 

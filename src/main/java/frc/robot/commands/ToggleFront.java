@@ -13,8 +13,8 @@ import frc.robot.OI.*;
 /**
  * <b>This</b> is the <i>TEST COMMAND</i> for testing!
  */
-public class TestCommand extends Command {
-  public TestCommand() {
+public class ToggleFront extends Command {
+  public ToggleFront() {
     requires(Robot.climber);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);

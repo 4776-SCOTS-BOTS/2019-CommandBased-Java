@@ -4,7 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-//Version: Feb 19, 2018 - added pnuematic intake/compressor control
+//Version: Feb 22, 2018 - added climber control
 package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
@@ -31,6 +31,7 @@ public class Robot extends TimedRobot {
   public static ElevatorSusbsystem elevator;
   public static IntakeSubsystem intake;
   public static ShoulderSubsystem shoulder;
+  public static ClimberSubsystem climber;
   Potentiometer p = new AnalogPotentiometer(0);
   public static OI oi;
   public static boolean readData;
@@ -65,6 +66,9 @@ public class Robot extends TimedRobot {
 
     //shoulder = new ShoulderSubsystem(currentRobot);
     shoulder = new ShoulderSubsystem();//blank subsystem
+
+    climber = new ClimberSubsystem(currentRobot);
+    //climber = new ClimberSubsystem();//blank subsystem
     oi = new OI(true);
 
     //Create chooser tool for different autonomouses
@@ -72,8 +76,12 @@ public class Robot extends TimedRobot {
     chooser.addOption("Basic Autonomous", new TestCommand());
     //Display the chooser tool on the SmartDashboard
     SmartDashboard.putData("Auto Mode:", chooser);
-    Command data = new TestCommand();
-    SmartDashboard.putData(data);
+    Command all = new ToggleClimbers();
+    Command front = new ToggleFront();
+    Command rear = new ToggleRear();
+    SmartDashboard.putData(all);
+    SmartDashboard.putData(front);
+    SmartDashboard.putData(rear);
   }
 
   /**
