@@ -121,6 +121,35 @@ public class JeVoisSubsystem extends Subsystem{// implements PIDSource{
   public int getBytes() {
     return jeVoisCam0.getBytesReceived();
   }
+  public JeVoisSubsystem (RobotName robotName, boolean enableSystem) {
+    if (enableSystem) {
+      switch(robotName) {
+        case CompBot: {
+          //this();
+        }
+        break;
+        case PracticeBot: {
+          //this();
+        }
+        break;
+        case OldCompBot: {
+          //this(false);
+          createSystem(false);
+        }
+        break;
+        case Steve: {
+          //this();
+        }
+        break;
+        default: {
+          //this();
+        }
+      }
+      System.out.println(robotName + "\'s JeVoisSubsystem correctly instantiated and ENABLED.");
+    } else {
+      System.out.println(robotName + "\'s JeVoisSubsystem correctly instantiated and DISABLED.");
+    }
+  }
   public JeVoisSubsystem (RobotName robotName) {
     switch(robotName) {
       case CompBot: {

@@ -34,8 +34,11 @@ public class ElevatorSusbsystem extends Subsystem {
   public double getLeftPot() {
     return leftElevatorPot.get();
   }
-  public double getRightPot() {
+  public double getRawRightPot() {
     return rightElevatorPot.get();
+  }
+  public double getRightPot() {
+    return rightElevatorPot.get() + RobotMap.PracticeBot.RIGHT_ELEVATOR_POT_OFFSET;
   }
   public boolean getUseCargo () {
     return useCargo;
@@ -54,6 +57,23 @@ public class ElevatorSusbsystem extends Subsystem {
   public void setPower (double power) {
     leftElevatorMotor.set(power);
     rightElevatorMotor.set(power);
+  }
+  public void rawSetPower (double power) {
+    leftElevatorMotor.set(power);
+    rightElevatorMotor.set(power);
+    System.out.println(power + " " + getLeftPot() + " " + getRightPot());
+  }
+  public void setPower (double power, double rightMod) {
+    if (rightMod > 1) {
+      leftElevatorMotor.set(power / rightMod);
+      rightElevatorMotor.set(power);
+      System.out.println(power/rightMod + " " + power  + " " + getLeftPot() + " " + getRightPot());
+  
+    } else {
+      leftElevatorMotor.set(power);
+      rightElevatorMotor.set(power * rightMod);
+      System.out.println(power + " " + power*rightMod  + " " + getLeftPot() + " " + getRightPot());
+    }
   }
   public void disableElevator() {
     leftElevatorMotor.stopMotor();

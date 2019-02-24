@@ -4,7 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-//Version: 2/23/19 - got everything working but vacuum.
+//Version: 2/24/19
 package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
@@ -47,6 +47,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    CameraServer.getInstance().addAxisCamera("ultimate camera boi", "10.47.76.11");
     t = new Timer();
     t.reset();
     t.start();
@@ -59,7 +60,7 @@ public class Robot extends TimedRobot {
     driveTrain = new DriveTrainSubsystem(currentRobot);
     //driveTrain = new DriveTrainSubsystem();//blank subsystem
 
-    jeVois = new JeVoisSubsystem(currentRobot); //Proper subsystem (doesn't require different constructors for different robots)
+    jeVois = new JeVoisSubsystem(currentRobot, false); //Proper subsystem (doesn't require different constructors for different robots)
     //jeVois = new JeVoisSubsystem(); //Blank subsystem for jevois
     //jeVois = new JeVoisSubsystem(false); //Actual subsystem for jevois - boolean= use two cameras?
 
@@ -83,18 +84,18 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto Mode:", chooser);
     
     Command mouth = new ToggleMouthOpen();
-    SmartDashboard.putData(mouth);
+    SmartDashboard.putData("TOGGLE MOUTH", mouth);
     Command all = new ToggleClimbers();
-    SmartDashboard.putData(all);
+    SmartDashboard.putData("CLIMB ALL", all);
     Command front = new ToggleFront();
-    SmartDashboard.putData(front);
+    SmartDashboard.putData("CLIMB FRONT", front);
     Command rear = new ToggleRear();
-    SmartDashboard.putData(rear);
+    SmartDashboard.putData("CLIMB REAR", rear);
 
     Command forward = new ToggleShoulder();
-    SmartDashboard.putData(forward);
+    SmartDashboard.putData("FORWARD SHOULDER", forward);
     Command reverse = new ReverseShoulder();
-    SmartDashboard.putData(reverse);
+    SmartDashboard.putData("REVERSE SHOULDER", reverse);
     
   }
 

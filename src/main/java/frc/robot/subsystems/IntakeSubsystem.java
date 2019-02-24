@@ -18,8 +18,7 @@ import frc.robot.commands.*;
  */
 public class IntakeSubsystem extends Subsystem {
   Compressor compressor;
-  Solenoid leftJaw;
-  Solenoid rightJaw;
+  Solenoid jaw;
   PWMVictorSPX intakeWheels;
   PWMVictorSPX hatchVacuum;
 
@@ -35,42 +34,37 @@ public class IntakeSubsystem extends Subsystem {
   public IntakeSubsystem (RobotName robotName) {
     switch (robotName) {
       case CompBot: {
-        leftJaw = null;
-        rightJaw = null;
+        jaw = null;
         intakeWheels = null;
         hatchVacuum = null;
         compressor = null;
       }break;
       case PracticeBot: {
-        leftJaw = new Solenoid(RobotMap.PracticeBot.INTAKE_LEFT_JAW_PORT);
-        rightJaw = new Solenoid(RobotMap.PracticeBot.INTAKE_RIGHT_JAW_PORT);
+        jaw = new Solenoid(RobotMap.PracticeBot.INTAKE_JAW_PORT);
         intakeWheels = new PWMVictorSPX(RobotMap.PracticeBot.INTAKE_WHEELS_PWM);
         hatchVacuum = new PWMVictorSPX(RobotMap.PracticeBot.HATCH_VACUUM);
         compressor = new Compressor(0);
         //Currently disabled because they dont want compressor on right now
-        //compressor.setClosedLoopControl(true);
-        compressor.stop();
-        System.out.println("PLEASE NOTE: The compressor is disable and will not run!");
+        compressor.setClosedLoopControl(true);
+        //compressor.stop();
+        //System.out.println("PLEASE NOTE: The compressor is disabled and will not run!");
         
         //System.out.println("CREATED AT: " + RobotMap.PracticeBot.HATCH_VACUUM);
       }break;
       case OldCompBot: {
-        leftJaw = null;
-        rightJaw = null;
+        jaw = null;
         intakeWheels = null;
         hatchVacuum = null;
         compressor = null;
       }break;
       case Steve: {
-        leftJaw = null;
-        rightJaw = null;
+        jaw = null;
         intakeWheels = null;
         hatchVacuum = null;
         compressor = null;
       }break;
       case TestBoard: {
-        leftJaw = null;
-        rightJaw = null;
+        jaw = null;
         intakeWheels = null;
         hatchVacuum = null;
         compressor = null;
@@ -93,17 +87,15 @@ public class IntakeSubsystem extends Subsystem {
   }
 
   public void setClosed(boolean nowIsClosed) {
-    if (leftJaw != null && rightJaw !=null) {
-      leftJaw.set(!nowIsClosed);
-      rightJaw.set(!nowIsClosed);
+    if (jaw != null) {
+      jaw.set(!nowIsClosed);
       isClosed = nowIsClosed;
     }
   }
   public void toggleMouth() {
-    if (leftJaw != null && rightJaw !=null) {
+    if (jaw != null) {
       isClosed = !isClosed;
-      leftJaw.set(isClosed);
-      rightJaw.set(isClosed);
+      jaw.set(isClosed);
     }
   }
 

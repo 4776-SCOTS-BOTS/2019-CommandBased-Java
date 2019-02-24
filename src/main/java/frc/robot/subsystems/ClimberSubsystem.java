@@ -7,18 +7,19 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.*;
 
 /**
  * Subsystem that handles the climber.
  */
 public class ClimberSubsystem extends Subsystem {
-  Solenoid frontLeftCylinder;
-  Solenoid frontRightCylinder;
-  Solenoid rearLeftCylinder;
-  Solenoid rearRightCylinder;
+  Solenoid frontCylinders;
+  Solenoid rearCylinders;
+  PWMVictorSPX climbWheels;
   boolean isFrontExtended;
   boolean isRearExtended;
 
@@ -32,34 +33,29 @@ public class ClimberSubsystem extends Subsystem {
   public ClimberSubsystem (RobotMap.RobotName robotName) {
     switch (robotName) {
       case CompBot: {
-        frontLeftCylinder = new Solenoid(RobotMap.CompBot.CLIMBER_FRONT_LEFT_PORT);
-        frontRightCylinder = new Solenoid(RobotMap.CompBot.CLIMBER_FRONT_RIGHT_PORT);
-        frontLeftCylinder = new Solenoid(RobotMap.CompBot.CLIMBER_REAR_LEFT_PORT);
-        frontRightCylinder = new Solenoid(RobotMap.CompBot.CLIMBER_REAR_RIGHT_PORT);
+        frontCylinders = null;
+        rearCylinders = null;
+        climbWheels = null;
       }break;
       case PracticeBot: {
-        frontLeftCylinder = new Solenoid(RobotMap.PracticeBot.CLIMBER_FRONT_LEFT_PORT);
-        frontRightCylinder = new Solenoid(RobotMap.PracticeBot.CLIMBER_FRONT_RIGHT_PORT);
-        frontLeftCylinder = new Solenoid(RobotMap.PracticeBot.CLIMBER_REAR_LEFT_PORT);
-        frontRightCylinder = new Solenoid(RobotMap.PracticeBot.CLIMBER_REAR_RIGHT_PORT);
+        frontCylinders = new Solenoid(RobotMap.PracticeBot.CLIMBER_FRONT_PORT);
+        rearCylinders = new Solenoid(RobotMap.PracticeBot.CLIMBER_REAR_PORT);
+        climbWheels = new PWMVictorSPX(RobotMap.PracticeBot.CLIMBING_WHEELS_PWM);
       }break;
       case OldCompBot: {
-        frontLeftCylinder = null;
-        frontRightCylinder = null;
-        rearLeftCylinder = null;
-        rearRightCylinder = null;
+        frontCylinders = null;
+        rearCylinders = null;
+        climbWheels = null;
       }break;
       case Steve: {
-        frontLeftCylinder = null;
-        frontRightCylinder = null;
-        rearLeftCylinder = null;
-        rearRightCylinder = null;
+        frontCylinders = null;
+        rearCylinders = null;
+        climbWheels = null;
       }break;
       case TestBoard: {
-        frontLeftCylinder = null;
-        frontRightCylinder = null;
-        rearLeftCylinder = null;
-        rearRightCylinder = null;
+        frontCylinders = null;
+        rearCylinders = null;
+        climbWheels = null;
       }break;
     }
     isRearExtended = false;
@@ -69,18 +65,23 @@ public class ClimberSubsystem extends Subsystem {
 
   public void toggleFront() {
     isFrontExtended = !isFrontExtended;
-    frontLeftCylinder.set(isFrontExtended);
-    frontRightCylinder.set(isFrontExtended);
+    frontCylinders.set(isFrontExtended);
   }
   public void toggleRear() {
     isRearExtended = !isRearExtended;
-    rearLeftCylinder.set(isRearExtended);
-    rearRightCylinder.set(isRearExtended);
+    rearCylinders.set(isRearExtended);
+  }
+  public void powerClimbWheels(double power) {
+    climbWheels.set(power);
+  }
+  public void stopClimbWheels() {
+    climbWheels.stopMotor();
   }
 
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new ClimberManipulator());
   }
 }

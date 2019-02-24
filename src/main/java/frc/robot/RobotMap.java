@@ -47,12 +47,9 @@ public class RobotMap {
     SHOULDER_PWM = 0, //Motor that rotates the arm to face the front and back
     INTAKE_WHEELS_PWM = 0, //Wheels picking up cargo on the stationary intake
     CLIMBING_WHEELS_PWM = 0, //Wheels on the rear pneumatic climbing cylinders (PORT = PCM's PWM)
-    INTAKE_LEFT_JAW_PORT = 0, //Pneumatic cylinders opening the stationary intake (PORT = PCM's PWM)
-    INTAKE_RIGHT_JAW_PORT = 0, //Pneumatic cylinders opening the stationary intake (PORT = PCM's PWM)
-    CLIMBER_FRONT_LEFT_PORT = 0, //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    CLIMBER_FRONT_RIGHT_PORT = 0, //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    CLIMBER_REAR_LEFT_PORT = 0, //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    CLIMBER_REAR_RIGHT_PORT = 0, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+    INTAKE_JAW_PORT = 0, //Pneumatic cylinders opening the stationary intake (PORT = PCM's PWM)
+    CLIMBER_FRONT_PORT = 0, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+    CLIMBER_REAR_PORT = 0, //Pneumatic cylinders to climb (PORT = PCM's PWM)
     LEFT_VACUUM = 0, //Left side of suction cup motor
     RIGHT_VACUUM = 0; //Right side of suction cup motor
   }
@@ -81,19 +78,20 @@ public class RobotMap {
     SHOULDER_PWM = 10, //Motor that rotates the arm to face the front and back
     INTAKE_WHEELS_PWM = 15, //Wheels picking up cargo on the stationary intake
     INTAKE_BELTS_PWM = 19, //Wheels picking up cargo on the stationary intake
-    CLIMBING_WHEELS_PWM = -99, //Wheels on the rear pneumatic climbing cylinders (PORT = PCM's PWM)
+    CLIMBING_WHEELS_PWM = 14, //Wheels on the rear pneumatic climbing cylinders (PORT = PCM's PWM)
     //Pneumatic ports
-    INTAKE_LEFT_JAW_PORT = 4, //Pneumatic cylinders opening the stationary intake (PORT = PCM's PWM)
-    INTAKE_RIGHT_JAW_PORT = 5, //Pneumatic cylinders opening the stationary intake (PORT = PCM's PWM)
-    CLIMBER_FRONT_LEFT_PORT = 0,//SUPPOSED TO BE 0! //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    CLIMBER_FRONT_RIGHT_PORT = 3, //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    CLIMBER_REAR_LEFT_PORT = 1, //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    CLIMBER_REAR_RIGHT_PORT = 2, //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    HATCH_VACUUM = 1, //Suction cup motors
+    INTAKE_JAW_PORT = 6, //Pneumatic cylinders opening the stationary intake (PORT = PCM's PWM)
+    CLIMBER_FRONT_PORT = 4, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+    CLIMBER_REAR_PORT = 5, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+    HATCH_VACUUM = 17, //Suction cup motors
     //Potentiometer analog input ports
     SHOULDER_POT_AI = 6,
     RIGHT_ELEVATOR_POT_AI = 7,
     LEFT_ELEVATOR_POT_AI = 5;
+    //Calibration constants
+    public static final double 
+    RIGHT_ELEVATOR_POT_OFFSET= 0.04475,
+    RIGHT_ELEVATOR_OFFSET_SCALE = 4.0;
   }
   /**
    * Contained in this class are constants used for the old competition robot (for FIRST Power Up).

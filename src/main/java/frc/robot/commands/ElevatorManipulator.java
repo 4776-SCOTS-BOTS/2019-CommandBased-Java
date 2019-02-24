@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.OI.XBox;
 
 public class ElevatorManipulator extends Command {
@@ -25,11 +26,12 @@ public class ElevatorManipulator extends Command {
   @Override
   protected void execute() {
     //control up/down power of elevator
-    Robot.elevator.setPower(-Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS));
+    double rightPower = (1 - (Robot.elevator.getRightPot() - Robot.elevator.getLeftPot()) * RobotMap.PracticeBot.RIGHT_ELEVATOR_OFFSET_SCALE);
+    //Robot.elevator.setPower(-Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS), rightPower);
+    Robot.elevator.rawSetPower(-Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS));
     //System.out.println(-Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS));
-    //print says power-left-right
-    System.out.println(-Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS) + " " + Robot.elevator.getLeftPot() + " " + Robot.elevator.getRightPot());
-  }
+    //print says: "powerleft powerright left right"
+    }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
