@@ -4,7 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-//Version: 2/24/19
+//Version: 3/1/19
 package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    CameraServer.getInstance().addAxisCamera("ultimate camera boi", "10.47.76.11");
+    //CameraServer.getInstance().addAxisCamera("ultimate camera boi", "10.47.76.11");
     t = new Timer();
     t.reset();
     t.start();

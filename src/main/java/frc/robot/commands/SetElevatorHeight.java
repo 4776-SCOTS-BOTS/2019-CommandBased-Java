@@ -22,6 +22,7 @@ public class SetElevatorHeight extends Command {
   @Override
   protected void initialize() {
     Robot.elevator.setHeight(height);
+    Robot.elevator.commandOperated = true;
   }
 
   // Called repeatedly when this Command is scheduled to run

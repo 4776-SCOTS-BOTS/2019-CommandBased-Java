@@ -48,8 +48,8 @@ public class OI {
     rampButton = new JoystickButton(driverJoystick, XBox.B_BUTTON);
     rampButton.whenPressed(new RampToTape());
 
-    testButton = new JoystickButton(driverJoystick, XBox.X_BUTTON);
-    testButton.whileHeld(new TestCommand());
+    //testButton = new JoystickButton(driverJoystick, XBox.X_BUTTON);
+    //testButton.whenPressed(new MoveElevator());
     
     //connectButton = new JoystickButton(driverJoystick, XBox.Y_BUTTON);
     //connectButton.whenPressed(new ReconnectJeVois(false));
@@ -59,23 +59,28 @@ public class OI {
       //No manipulator!
       manipulatorJoystick = null;
     } else {
+
+
       //MANIPULATOR COMMANDS------------------------------------------------------------------------
       manipulatorJoystick = new Joystick(XBox.MANIPULATOR);
+
       //Make robot place cargo
       setCargoHeightButton = new JoystickButton(manipulatorJoystick, XBox.RIGHT_START_BUTTON);
       setCargoHeightButton.whenPressed(new SetPickupHeight(true));
       //Make robot place hatches
       setHatchHeightButton = new JoystickButton(manipulatorJoystick, XBox.X_BUTTON);
       setHatchHeightButton.whenPressed(new SetPickupHeight(false));
+
       //Make elevator go to low level on rocket
       setLowHeightButton = new JoystickButton(manipulatorJoystick, XBox.A_BUTTON);
-      setLowHeightButton.whenPressed(new SetElevatorHeight(RobotMap.ElevatorHeight.Low));
+      setLowHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.Low));
       //Make elevator go to medium level on rocket
       setMediumHeightButton = new JoystickButton(manipulatorJoystick, XBox.B_BUTTON);
-      setMediumHeightButton.whenPressed(new SetElevatorHeight(RobotMap.ElevatorHeight.Medium));
+      setMediumHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.Medium));
       //Make elevator go to high level on rocket
       setHighHeightButton = new JoystickButton(manipulatorJoystick, XBox.Y_BUTTON);
-      setHighHeightButton.whenPressed(new SetElevatorHeight(RobotMap.ElevatorHeight.High));
+      setHighHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.High));
+      
       //Make shoulder face the front
       setFaceFrontButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_BUMPER_BUTTON);
       setFaceFrontButton.whenPressed(new SetShoulderSide(false));

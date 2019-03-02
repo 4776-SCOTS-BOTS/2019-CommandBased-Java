@@ -28,6 +28,7 @@ public class ElevatorManipulator extends Command {
     //control up/down power of elevator
     double rightPower = (1 - (Robot.elevator.getRightPot() - Robot.elevator.getLeftPot()) * RobotMap.PracticeBot.RIGHT_ELEVATOR_OFFSET_SCALE);
     //Robot.elevator.setPower(-Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS), rightPower);
+    //System.out.println("main");
     Robot.elevator.rawSetPower(-Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS));
     //System.out.println(-Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS));
     //print says: "powerleft powerright left right"

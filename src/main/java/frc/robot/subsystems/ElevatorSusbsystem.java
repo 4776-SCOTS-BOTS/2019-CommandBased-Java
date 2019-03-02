@@ -17,6 +17,12 @@ import frc.robot.commands.*;
  * Subsystem handling movement of the elevator.
  */
 public class ElevatorSusbsystem extends Subsystem {
+  /**
+   * Determine if to use joystick input (override) or press buttons and go to height.
+   * <p><b>True</b> - Use the button mode
+   * <p><b>False</B> - Use the joystick override (default)
+   */
+  public boolean commandOperated;
   PWMVictorSPX leftElevatorMotor;
   PWMVictorSPX rightElevatorMotor;
   Potentiometer leftElevatorPot;
@@ -75,6 +81,9 @@ public class ElevatorSusbsystem extends Subsystem {
       System.out.println(power + " " + power*rightMod  + " " + getLeftPot() + " " + getRightPot());
     }
   }
+  /**
+   * Stop the motors on the elevator.
+   */
   public void disableElevator() {
     leftElevatorMotor.stopMotor();
     rightElevatorMotor.stopMotor();

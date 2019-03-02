@@ -90,8 +90,12 @@ public class RobotMap {
     LEFT_ELEVATOR_POT_AI = 5;
     //Calibration constants
     public static final double 
-    RIGHT_ELEVATOR_POT_OFFSET= 0.04475,
-    RIGHT_ELEVATOR_OFFSET_SCALE = 4.0;
+    RIGHT_ELEVATOR_POT_OFFSET= -0.0541499, //how much smaller is the right side
+    RIGHT_ELEVATOR_OFFSET_SCALE = 6.0,
+    RAMP_DISTANCE = 0.06915508,
+    LOW_HEIGHT = 0.735012,
+    MID_HEIGHT = 0.524817,
+    HIGH_HEIGHT = 0.353748;
   }
   /**
    * Contained in this class are constants used for the old competition robot (for FIRST Power Up).
