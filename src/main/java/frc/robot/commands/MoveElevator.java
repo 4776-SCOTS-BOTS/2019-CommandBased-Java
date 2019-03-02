@@ -13,6 +13,7 @@ import frc.robot.subsystems.ElevatorSusbsystem;
 
 public class MoveElevator extends CommandGroup {
   public boolean goingUp;
+  public double myTarget;
   /**
    * Move the ELEVATOR
    * <p>Input what new height you want to go to.
@@ -24,6 +25,7 @@ public class MoveElevator extends CommandGroup {
     // these will run in order.
       addSequential(new ElevatorToHeight(newElevatorHeight, this));
       addSequential(new RampElevatorDown(this));
+      addSequential(new HoldElevatorHeight(this));
 
     // To run multiple commands at the same time,
     // use addParallel()

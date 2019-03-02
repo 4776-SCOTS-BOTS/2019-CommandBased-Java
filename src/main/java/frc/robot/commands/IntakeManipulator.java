@@ -39,6 +39,7 @@ public class IntakeManipulator extends Command {
     //Robot.intake.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_Y_AXIS));
     //operate hatch vacuums using back triggers of manip
     Robot.intake.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getManipulatorAxis(XBox.LEFT_TRIGGER_AXIS));
+    Robot.intake.powerVacuum(Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS));
     
     /*//Operate closing / opening of intake jaw
     if (Robot.oi.getManipulatorPOV() == XBox.TOP_POV) {

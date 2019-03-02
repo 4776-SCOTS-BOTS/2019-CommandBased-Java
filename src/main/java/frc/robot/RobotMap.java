@@ -92,10 +92,13 @@ public class RobotMap {
     public static final double 
     RIGHT_ELEVATOR_POT_OFFSET= -0.0541499, //how much smaller is the right side
     RIGHT_ELEVATOR_OFFSET_SCALE = 6.0,
-    RAMP_DISTANCE = 0.06915508,
+    RAMP_UP_DISTANCE = 0.06915508,// + 0.08011591,//0.149 is too much
+    RAMP_DOWN_DISTANCE = 0.0306812998,
     LOW_HEIGHT = 0.735012,
     MID_HEIGHT = 0.524817,
-    HIGH_HEIGHT = 0.353748;
+    HIGH_HEIGHT = 0.40,//0.3537480,
+    ELEVATOR_THRESHOLD = 0.02,
+    ELEVATOR_FEED_FORWARD = 0.117;
   }
   /**
    * Contained in this class are constants used for the old competition robot (for FIRST Power Up).

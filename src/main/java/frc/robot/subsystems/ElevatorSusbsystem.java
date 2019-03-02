@@ -18,7 +18,8 @@ import frc.robot.commands.*;
  */
 public class ElevatorSusbsystem extends Subsystem {
   /**
-   * Determine if to use joystick input (override) or press buttons and go to height.
+   * <b>Currently NOT in use.</b>
+   * <p>Determine if to use joystick input (override) or press buttons and go to height.
    * <p><b>True</b> - Use the button mode
    * <p><b>False</B> - Use the joystick override (default)
    */

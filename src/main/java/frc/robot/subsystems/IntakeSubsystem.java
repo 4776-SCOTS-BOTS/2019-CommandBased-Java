@@ -45,8 +45,8 @@ public class IntakeSubsystem extends Subsystem {
         hatchVacuum = new PWMVictorSPX(RobotMap.PracticeBot.HATCH_VACUUM);
         compressor = new Compressor(0);
         //Currently disabled because they dont want compressor on right now
-        compressor.setClosedLoopControl(true);
-        //compressor.stop();
+        //compressor.setClosedLoopControl(true);
+        compressor.stop();
         //System.out.println("PLEASE NOTE: The compressor is disabled and will not run!");
         
         //System.out.println("CREATED AT: " + RobotMap.PracticeBot.HATCH_VACUUM);

@@ -21,11 +21,16 @@ public class ElevatorToHeight extends Command {
   double b = 17.4;
   double c = 2.5;
 
+  double downA = 0.00475;
+  double downB = 8.32;
+
   double myTarget;
   boolean goUp;
+  MoveElevator myBase;
 
   public ElevatorToHeight(RobotMap.ElevatorHeight newHeight, MoveElevator base) {
     requires(Robot.elevator);
+    myBase = base;
     timer = new Timer();
     switch(newHeight) {
       case Low: {
@@ -41,15 +46,18 @@ public class ElevatorToHeight extends Command {
       }
       break;
     }
-    goUp = (Robot.elevator.getRightPot() > myTarget);
-    base.goingUp = goUp;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("mytarget:" + myTarget + ", currently im: " + Robot.elevator.getRightPot());
+    goUp = (Robot.elevator.getRightPot() > myTarget);
+    myBase.goingUp = goUp;
+    myBase.myTarget = myTarget;
     timer.reset();
     timer.start();
+    System.out.println("STARTING init: am i goingUp? " + goUp);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -57,9 +65,13 @@ public class ElevatorToHeight extends Command {
   protected void execute() {
     //boolean goUp = (Robot.elevator.getRightPot() > myTarget);
     double scale = (goUp) ? 1 : -1;
-    currentSpeed = Math.exp(b * timer.get() / c) * a;
-    currentSpeed = Math.min(0.99, currentSpeed);
-    Robot.elevator.rawSetPower(scale * currentSpeed);
+    if (true || goUp) {
+      currentSpeed = scale * Math.exp(b * timer.get() / c) * a;
+    } else {
+      currentSpeed = -1 * Math.exp(downB *timer.get()) * downA;
+    }
+    currentSpeed = Math.max(-0.99, Math.min(0.99, currentSpeed));
+    Robot.elevator.rawSetPower(currentSpeed);
     System.out.println("Going up? " + goUp);
   }
 
@@ -68,9 +80,9 @@ public class ElevatorToHeight extends Command {
   protected boolean isFinished() {
     //return currentSpeed > 0.95;
     if (goUp) {
-      return (Robot.elevator.getRightPot() - RobotMap.PracticeBot.RAMP_DISTANCE < myTarget);
+      return (Robot.elevator.getRightPot() < RobotMap.PracticeBot.HIGH_HEIGHT) || ((Robot.elevator.getRightPot() - RobotMap.PracticeBot.RAMP_UP_DISTANCE) < myTarget);
     } else {
-      return (Robot.elevator.getRightPot() - RobotMap.PracticeBot.RAMP_DISTANCE > myTarget);
+      return (Robot.elevator.getRightPot() > RobotMap.PracticeBot.LOW_HEIGHT) || ((Robot.elevator.getRightPot() + RobotMap.PracticeBot.RAMP_DOWN_DISTANCE) > myTarget);
     }
   }
 
