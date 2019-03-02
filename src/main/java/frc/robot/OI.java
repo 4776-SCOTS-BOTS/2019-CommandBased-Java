@@ -83,7 +83,8 @@ public class OI {
       
       //Make shoulder face the front
       setFaceFrontButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_BUMPER_BUTTON);
-      setFaceFrontButton.whenPressed(new SetShoulderSide(false));
+      //setFaceFrontButton.whenPressed(new SetShoulderSide(false));
+      setFaceFrontButton.whenPressed(new ToggleMouthOpen());
       //Make shoulder face the back
       setFaceBackButton = new JoystickButton(manipulatorJoystick, XBox.RIGHT_BUMPER_BUTTON);
       setFaceBackButton.whenPressed(new SetShoulderSide(true));
