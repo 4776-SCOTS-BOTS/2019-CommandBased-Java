@@ -13,6 +13,9 @@ import frc.robot.RobotMap;
 import frc.robot.OI.XBox;
 
 public class ElevatorManipulator extends Command {
+  double limitChange = 0.10;
+  double oldOutput;
+  boolean ramp = true;
   public ElevatorManipulator() {
     requires(Robot.elevator);
   }
@@ -20,18 +23,19 @@ public class ElevatorManipulator extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    oldOutput = 0;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //control up/down power of elevator
-    double rightPower = (1 - (Robot.elevator.getRightPot() - Robot.elevator.getLeftPot()) * RobotMap.PracticeBot.RIGHT_ELEVATOR_OFFSET_SCALE);
-    //Robot.elevator.setPower(-Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS), rightPower);
-    //System.out.println("main");
-    Robot.elevator.rawSetPower(-Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS));
-    //System.out.println(-Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS));
-    //print says: "powerleft powerright left right"
+    double change = -Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS) - oldOutput;
+    change = Math.max(-limitChange, Math.min(change, limitChange));//clamp change
+    oldOutput += change;
+    oldOutput = Math.min(0.70, Math.max(oldOutput, -0.70));
+    Robot.elevator.rawSetPower(oldOutput);
+    
+    
     }
 
   // Make this return true when this Command no longer needs to run execute()

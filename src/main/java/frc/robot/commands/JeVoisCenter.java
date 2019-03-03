@@ -21,7 +21,7 @@ public class JeVoisCenter extends Command {
   double target;
   double P, I, D, integral, previousError;
   double multiplier;
-  double threshold = 3;
+  double threshold = 7;
   double min = 0.5;
   Timer timer;
   double centerTime = 1;
@@ -44,10 +44,13 @@ public class JeVoisCenter extends Command {
       System.out.println("ERROR in JeVoisCenter: Using the second camera is selected, but there is no second camera! This command will be ended.");
       end();
     }
-    target = RobotMap.JeVois.CAMERA_WIDTH / 2; //target = 160
+    //target = RobotMap.JeVois.CAMERA_WIDTH / 2; //target = 160
+    //target = RobotMap.PracticeBot.JEVOIS_CENTER;
+    target = 160;
+
     //P = RobotMap.JeVois.PID_P;
     P = 0.0045;
-    I = 0.0; //RobotMap.JeVois.PID_I;
+    I = 0.004; //RobotMap.JeVois.PID_I;
     D = 0.0; //RobotMap.JeVois.PID_D;
     multiplier = 1.2;
     integral = 0;
@@ -60,13 +63,13 @@ public class JeVoisCenter extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //System.out.println("JC initialized.");
+    System.out.println("JC initialized.");
     Robot.readData = true;
     timer.reset();
     timer.start();
     currentTime = 0;
+    integral = 0;
     accurate = false;
-    multiplier = Preferences.getInstance().getDouble("M", 5);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -76,6 +79,7 @@ public class JeVoisCenter extends Command {
     integral += error * 0.02;
     double derivative = (error - previousError) / 0.02;
     double turnPower = multiplier*P*error + I*integral + D*derivative;
+    turnPower = Math.min(0.1, Math.max(turnPower, -0.1));
     //currentPower = a * Math.exp(-b * Robot.jeVois.getSideW(true, false)) + c;
 
     Robot.driveTrain.cheesyDrive(0, Math.min(min, Math.max(-min, -turnPower)), true); //Clamp turnPower to prevent motor problems
@@ -92,7 +96,7 @@ public class JeVoisCenter extends Command {
       System.out.println("FAILED!!!!!! ACCURACY!!!!!!!!!!!");
     }
     //System.out.println("TIME: " + currentTime + turnPower);
-    System.out.println("X:" + Robot.jeVois.getXAvg(false) + " power: " + turnPower);
+    System.out.println("X: " + Robot.jeVois.getXAvg(secondCam) + "power:" + turnPower + " p term: " + multiplier*P*error + " i term: " + I*integral);
   } 
 
   // Make this return true when this Command no longer needs to run execute()

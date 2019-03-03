@@ -30,7 +30,6 @@ public class ElevatorSusbsystem extends Subsystem {
   Potentiometer rightElevatorPot;
   Encoder leftElevatorEncoder;
   Encoder rightElevatorEncoder;
-  boolean useCargo;
   RobotMap.ElevatorHeight currentHeight;
 
   //Blank Constructor: Do not create anything for this subsytem.
@@ -46,15 +45,6 @@ public class ElevatorSusbsystem extends Subsystem {
   }
   public double getRightPot() {
     return rightElevatorPot.get() + RobotMap.PracticeBot.RIGHT_ELEVATOR_POT_OFFSET;
-  }
-  public boolean getUseCargo () {
-    return useCargo;
-  }
-  public void setUseCargo(boolean _useCargo) {
-    useCargo = _useCargo;
-  }
-  public void toggleUseCargo() {
-    useCargo = !useCargo;
   }
 
   public void setHeight (RobotMap.ElevatorHeight newHeight) {

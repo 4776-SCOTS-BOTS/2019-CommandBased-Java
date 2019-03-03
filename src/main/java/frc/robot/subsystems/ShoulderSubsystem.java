@@ -14,13 +14,14 @@ import frc.robot.RobotMap;
 import frc.robot.commands.*;
 
 /**
- * Subsystem handling control of the wrist.
+ * Subsystem handling control of the <b>wrist/shoulder</b> and <b>intake belts</b>.
  */
 public class ShoulderSubsystem extends Subsystem {
   PWMVictorSPX shoulderMotor;
   PWMVictorSPX intakeMotor;//the belts holding/shooting cargo
   Potentiometer shoulderPot;
-  boolean facingBack;
+  public boolean facingBack;
+  public boolean angledUp;
 
   public void powerShoulder(double power) {
     shoulderMotor.set(power);
@@ -93,10 +94,6 @@ public class ShoulderSubsystem extends Subsystem {
       break;
     }
     System.out.println(robotName + "\'s ShoulderSubsystem correctly instantiated.");
-  }
-
-  public void setFacingSide (boolean faceBack) {
-    facingBack = faceBack;
   }
 
   @Override

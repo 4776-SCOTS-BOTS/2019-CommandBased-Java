@@ -8,8 +8,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.RobotMap.*;
 import frc.robot.commands.*;
 
 /**
@@ -31,13 +33,14 @@ public class OI {
   setMediumHeightButton,
   setHighHeightButton,
   setFaceFrontButton,
-  setFaceBackButton;
+  setFaceBackButton,
+  overrideElevatorButton;
 
   public OI () {
     //If this is used, then "just in case" use competition settings
-    this(false);
+    this(false, RobotName.CompBot);
   }
-  public OI (boolean useSinglePlayer) {
+  public OI (boolean useSinglePlayer, RobotMap.RobotName robot) {
     singlePlayer = useSinglePlayer;
     //DRIVER COMMANDS--------------------------------------------------------------------------------
     driverJoystick = new Joystick(XBox.DRIVER);
@@ -66,10 +69,10 @@ public class OI {
 
       //Make robot place cargo
       setCargoHeightButton = new JoystickButton(manipulatorJoystick, XBox.RIGHT_START_BUTTON);
-      setCargoHeightButton.whenPressed(new SetPickupHeight(true));
+      setCargoHeightButton.whenPressed(new SetPickupHeight(true, robot));
       //Make robot place hatches
       setHatchHeightButton = new JoystickButton(manipulatorJoystick, XBox.X_BUTTON);
-      setHatchHeightButton.whenPressed(new SetPickupHeight(false));
+      setHatchHeightButton.whenPressed(new SetPickupHeight(false, robot));
 
       //Make elevator go to low level on rocket
       setLowHeightButton = new JoystickButton(manipulatorJoystick, XBox.A_BUTTON);
@@ -80,17 +83,28 @@ public class OI {
       //Make elevator go to high level on rocket
       setHighHeightButton = new JoystickButton(manipulatorJoystick, XBox.Y_BUTTON);
       setHighHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.High));
+      //Override HoldElevator/MoveElevator Commands to allow driver control
+      overrideElevatorButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_STICK_BUTTON);
+      overrideElevatorButton.whenPressed(new ElevatorManipulator());
       
       //Make shoulder face the front
       setFaceFrontButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_BUMPER_BUTTON);
-      //setFaceFrontButton.whenPressed(new SetShoulderSide(false));
-      setFaceFrontButton.whenPressed(new ToggleMouthOpen());
+      setFaceFrontButton.whenPressed(new SetPickupHeight(robot, false));
+      //setFaceFrontButton.whenPressed(new ToggleMouthOpen(true, robot));
       //Make shoulder face the back
       setFaceBackButton = new JoystickButton(manipulatorJoystick, XBox.RIGHT_BUMPER_BUTTON);
-      setFaceBackButton.whenPressed(new SetShoulderSide(true));
+      setFaceBackButton.whenPressed(new SetPickupHeight(robot, true));
     }
   }
-
+  public void rumble(double power) {
+    power = Math.min(1, Math.max(power, 0));
+    driverJoystick.setRumble(RumbleType.kLeftRumble, power);
+    driverJoystick.setRumble(RumbleType.kRightRumble, power);
+    if (manipulatorJoystick != null) {
+      manipulatorJoystick.setRumble(RumbleType.kLeftRumble, power);
+      manipulatorJoystick.setRumble(RumbleType.kRightRumble, power);
+    }
+  }
   //Driver
   public double getDriverAxis(int axisIndex) {
     return driverJoystick.getRawAxis(axisIndex);
@@ -108,8 +122,9 @@ public class OI {
   public double getManipulatorAxis(int axisIndex) {
     if (singlePlayer)
       return 0;
-    else
+    else {
       return manipulatorJoystick.getRawAxis(axisIndex);
+    }
   }
   public boolean getManipulatorButton(int index) {
     if (singlePlayer)

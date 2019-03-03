@@ -13,7 +13,7 @@ import frc.robot.*;
 import frc.robot.OI.XBox;
 
 /**
- * Command to operate/manipulate the intake.
+ * Command to operate/manipulate the <b>intake</b>.
  */
 public class IntakeManipulator extends Command {
   Timer timer;
@@ -39,9 +39,10 @@ public class IntakeManipulator extends Command {
     //Robot.intake.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_Y_AXIS));
     //operate hatch vacuums using back triggers of manip
 
-    //TODO: Only power intake when jaw is open!
-    Robot.intake.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getManipulatorAxis(XBox.LEFT_TRIGGER_AXIS));
-    Robot.intake.powerVacuum(Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS));
+    //Power intake wheels
+    Robot.intake.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getManipulatorAxis(XBox.LEFT_TRIGGER_AXIS), true);
+    //Power vacuum motors and detach servos if needed
+    Robot.intake.powerVacuum(Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS), true);
     
     /*//Operate closing / opening of intake jaw
     if (Robot.oi.getManipulatorPOV() == XBox.TOP_POV) {

@@ -50,10 +50,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    if (false) {
+    if (true) {
       //Add camera streams
-      CameraServer.getInstance().addAxisCamera("super-cam", "10.47.76.4");
-      CameraServer.getInstance().addAxisCamera("basic-cam", "10.47.76.5");
+      //CameraServer.getInstance().addAxisCamera("super-cam", "10.47.76.4");
+      //CameraServer.getInstance().addAxisCamera("basic-cam", "10.47.76.5");
+      CameraServer.getInstance().addAxisCamera("bob-cam", "10.47.76.6");
     }
     //CameraServer.getInstance().addAxisCamera("ultimate camera boi", "10.47.76.11");
     t = new Timer();
@@ -68,7 +69,7 @@ public class Robot extends TimedRobot {
     driveTrain = new DriveTrainSubsystem(currentRobot);
     //driveTrain = new DriveTrainSubsystem();//blank subsystem
 
-    jeVois = new JeVoisSubsystem(currentRobot, false); //Proper subsystem (doesn't require different constructors for different robots)
+    jeVois = new JeVoisSubsystem(currentRobot, true); //Proper subsystem (doesn't require different constructors for different robots)
     //jeVois = new JeVoisSubsystem(); //Blank subsystem for jevois
     //jeVois = new JeVoisSubsystem(false); //Actual subsystem for jevois - boolean= use two cameras?
 
@@ -83,7 +84,7 @@ public class Robot extends TimedRobot {
 
     climber = new ClimberSubsystem(currentRobot);
     //climber = new ClimberSubsystem();//blank subsystem
-    oi = new OI(false);//false = doubleplayer, true = singleplayer
+    oi = new OI(false, currentRobot);//false = doubleplayer, true = singleplayer
 
     //Create chooser tool for different autonomouses
     chooser.setDefaultOption("Default Auto", new TestCommand());
@@ -96,7 +97,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Reset Middle", new ResetMiddleElevatorHeight());
     SmartDashboard.putData("Reset High", new ResetHighElevatorHeight());
 
-    Command mouth = new ToggleMouthOpen();
+    Command mouth = new ToggleMouthOpen(false, currentRobot);
     SmartDashboard.putData("TOGGLE MOUTH", mouth);
     Command all = new ToggleClimbers();
     SmartDashboard.putData("CLIMB ALL", all);
@@ -125,12 +126,12 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putData("Current Commands Running", Scheduler.getInstance());
     
     if (debugJeVois) { //display data on the jevois for debugging purposes
-      //jeVois.safeRead();
+      jeVois.safeRead();
       //jeVois.newPrint();
-      //System.out.println("X:" + jeVois.getXAvg(false));
+      System.out.println("X:" + jeVois.getXAvg(false));
     }
     if (readData && !debugJeVois) {
-      //jeVois.safeRead();
+      jeVois.safeRead();
     }
   }
 
@@ -147,6 +148,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
+    oi.rumble(0);
   }
 
   /**

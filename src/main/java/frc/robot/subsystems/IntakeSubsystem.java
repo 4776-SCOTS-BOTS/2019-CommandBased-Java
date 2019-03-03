@@ -14,7 +14,7 @@ import frc.robot.RobotMap.RobotName;
 import frc.robot.commands.*;
 
 /**
- * Subsystem handling control of the intake.
+ * Subsystem handling control of the <b>intake (wheels)</b>, <b>hatch vacuum/servos</b>, and the <b>compressor</b>.
  */
 public class IntakeSubsystem extends Subsystem {
   Compressor compressor;
@@ -25,7 +25,7 @@ public class IntakeSubsystem extends Subsystem {
   Servo bottomServoRelease;
   double currentAngle;
 
-  public boolean isClosed;
+  public boolean isOpen;
 
   //Blank Constructor: Do not use naything.
   public IntakeSubsystem () {
@@ -51,8 +51,8 @@ public class IntakeSubsystem extends Subsystem {
         System.out.println("HEY! Vacuum is at pwm " + RobotMap.PracticeBot.HATCH_VACUUM + "!");
         compressor = new Compressor(0);
         //Currently disabled because they dont want compressor on right now
-        compressor.setClosedLoopControl(true);
-        //compressor.stop();
+        //compressor.setClosedLoopControl(true);
+        compressor.stop();
         //System.out.println("PLEASE NOTE: The compressor is disabled and will not run!");
         
         //System.out.println("CREATED AT: " + RobotMap.PracticeBot.HATCH_VACUUM);
@@ -87,11 +87,17 @@ public class IntakeSubsystem extends Subsystem {
     setServoAngle(90);
     System.out.println(robotName + "\'s IntakeSubsystem correctly instantiated.");
   }
-  public void powerVacuum(double power) {
+  public void powerVacuum(double power, boolean autoDisable) {
     hatchVacuum.set(power);
+    if (autoDisable && (power > -0.1)) {
+      openServos();
+    }
+    if (autoDisable && (power < -0.3)) {
+      closeServos();
+    }
   }
-  public void powerIntake(double power) {
-    if (intakeWheels != null) {
+  public void powerIntake(double power, boolean autoDisable) {
+    if (intakeWheels != null && (!autoDisable || isOpen)) {
       intakeWheels.set(power);
     }
   }
@@ -101,19 +107,28 @@ public class IntakeSubsystem extends Subsystem {
     }
   }
 
-  public void setClosed(boolean nowIsClosed) {
+  public void setClosed(boolean nowIsOpen) {
+    isOpen = nowIsOpen;
     if (jaw != null) {
-      jaw.set(!nowIsClosed);
-      isClosed = nowIsClosed;
+      jaw.set(isOpen);
     }
   }
   public void toggleMouth() {
     if (jaw != null) {
-      isClosed = !isClosed;
-      jaw.set(isClosed);
+      isOpen = !isOpen;
+      jaw.set(isOpen);
     }
   }
-
+  public void closeServos() {
+    currentAngle = 0;
+    topServoRelease.setAngle(currentAngle);
+    bottomServoRelease.setAngle(currentAngle);
+  }
+  public void openServos() {
+    currentAngle = 90;
+    topServoRelease.setAngle(currentAngle);
+    bottomServoRelease.setAngle(currentAngle);
+  }
   public void setServoAngle(double angle) {
     currentAngle = angle;
     topServoRelease.setAngle(currentAngle);

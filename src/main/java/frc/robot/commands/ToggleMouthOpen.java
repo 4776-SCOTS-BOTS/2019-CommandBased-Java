@@ -9,36 +9,69 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 import frc.robot.OI.*;
 /**
- * <b>This</b> is the <i>TEST COMMAND</i> for testing!
+ * <b>Toggle</b> the mouth <i>open</i> or <i>closed</i>.
  */
 public class ToggleMouthOpen extends Command {
-  public ToggleMouthOpen() {
-    //requires(Robot.intake); //disable if you dont want IntakeManipulator command to be interrupted
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+  boolean movingShoulderAlso;
+  double threshold;
+  double targetAngle;
+  public ToggleMouthOpen(boolean moveShoulderToPickup, RobotMap.RobotName robot) {
+    movingShoulderAlso = moveShoulderToPickup;
+    if (movingShoulderAlso) {
+      requires(Robot.shoulder);
+      //determine what the target is and the thresholds
+      switch (robot) {
+        case CompBot: {
+          threshold = RobotMap.PracticeBot.SHOULDER_THRESHOLD;
+          targetAngle = RobotMap.PracticeBot.CARGO_PICKUP_SHOULDER;
+        }
+        break;
+        case PracticeBot: {
+          threshold = RobotMap.PracticeBot.SHOULDER_THRESHOLD;
+          targetAngle = RobotMap.PracticeBot.CARGO_PICKUP_SHOULDER;
+        }
+        break;
+        default: {
+          //default: use the practice bot(?)
+          System.out.println("Oops! what pickup height? I don't know!");
+          threshold = RobotMap.PracticeBot.SHOULDER_THRESHOLD;
+          targetAngle = RobotMap.PracticeBot.CARGO_PICKUP_SHOULDER;
+        }
+      }
+    }
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.intake.toggleMouth();//toggle the mouth open / closed
+    System.out.println("TOGGLED MOUTH");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //SmartDashboard.putNumber("Left Joystick Y Value", -Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS));
-    //Robot.driveTrain.stop();
-    //Robot.shoulder.power(Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS));
-    Robot.intake.toggleMouth();//toggle the mouth open / closed
-    System.out.println("TOGGLED MOUTH");
+    System.out.println("Target(toPickUpCargo): " + targetAngle + "PotPickupCargo: " + Robot.shoulder.getPotValue());
+    if (Robot.shoulder.getPotValue() > targetAngle) {
+      //decrease shoulder
+      Robot.shoulder.powerShoulder(0.6);
+    } else {
+      //increase shoulder
+      Robot.shoulder.powerShoulder(-0.6);
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    if (movingShoulderAlso) {
+      return ((Robot.shoulder.getPotValue() > (targetAngle - threshold)) && (Robot.shoulder.getPotValue() < (targetAngle + threshold)));
+    } else {
+      return true;
+    }
   }
 
   // Called once after isFinished returns true

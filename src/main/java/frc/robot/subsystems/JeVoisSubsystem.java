@@ -130,6 +130,7 @@ public class JeVoisSubsystem extends Subsystem{// implements PIDSource{
         break;
         case PracticeBot: {
           //this();
+          createSystem(false);
         }
         break;
         case OldCompBot: {

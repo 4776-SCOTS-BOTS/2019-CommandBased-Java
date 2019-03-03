@@ -94,15 +94,23 @@ public class RobotMap {
     //Calibration constants
     public static double 
     RIGHT_ELEVATOR_POT_OFFSET= -0.0541499, //how much smaller is the right side
-    RIGHT_ELEVATOR_OFFSET_SCALE = 6.0,
+    RIGHT_ELEVATOR_OFFSET_SCALE = 6.0,//how much does the elevator try to be balanced
     RAMP_UP_DISTANCE = 0.06915508,// + 0.08011591,//0.149 is too much
-    RAMP_DOWN_DISTANCE = 0.0306812998,
-    LOW_HEIGHT = 0.735012,
-    MID_HEIGHT = 0.524817,
-    HIGH_HEIGHT = 0.40,//0.3537480,
-    ELEVATOR_THRESHOLD = 0.02,
-    ELEVATOR_FEED_FORWARD = 0.117,
-    MAX_SPEED = 0.70;
+    RAMP_DOWN_DISTANCE = 0.0306812998,//how far does the elevator ramp drive?
+    LOW_HEIGHT = 0.735012,//for elevator
+    MID_HEIGHT = 0.524817,//for elevator
+    HIGH_HEIGHT = 0.40,//0.3537480,//for elevator
+    ELEVATOR_THRESHOLD = 0.02,//how close to the correct height does the elevator have to be?
+    ELEVATOR_FEED_FORWARD = 0.117,//how much power is needed to keep the elevator at its height?
+    MAX_SPEED = 0.70,//how fast can the elevator go?
+    FORWARD_STRAIGHT_SHOULDER = 0.4545366,
+    FORWARD_UP_SHOULDER = 0.47725756,
+    REVERSE_UP_SHOULDER = 0.5379968,
+    REVERSE_STRAIGHT_SHOULDER = 0.5515320,
+    CARGO_PICKUP_SHOULDER = 0.56589,
+    SHOULDER_THRESHOLD = 0.005,
+
+    JEVOIS_CENTER = 160.0;
   }
   /**
    * Contained in this class are constants used for the old competition robot (for FIRST Power Up).

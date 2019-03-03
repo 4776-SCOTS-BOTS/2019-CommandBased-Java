@@ -66,11 +66,12 @@ public class RampToTape extends Command {
     //integral += error * 0.02;
     //double derivative = (error - previousError) / 0.02;
     //double turnPower = P*error + I*integral + D*derivative;
-    //currentPower = a * Math.exp(-b * Robot.jeVois.getSideW(true, false)) + c;
+    double turnPower = 0;
+    currentPower = a * Math.exp(-b * Robot.jeVois.getSideW(true, false)) + c;
 
-    //Robot.driveTrain.cheesyDrive(-currentPower, d * Math.min(min, Math.max(-min, -turnPower)), false); //Clamp turnPower to prevent motor problems
+    Robot.driveTrain.cheesyDrive(currentPower, d * Math.min(min, Math.max(-min, -turnPower)), false); //Clamp turnPower to prevent motor problems
     //Robot.driveTrain.tankDrive(Math.min(min, Math.max(-min, turnPower)), Math.min(min, Math.max(-min, -turnPower)));
-    //System.out.println(turnPower);
+    System.out.println("RAMPING: " + currentPower);
     //System.out.println(Robot.jeVois.getWAvg(false) + " " + currentPower + " " + turnPower);
   }
 

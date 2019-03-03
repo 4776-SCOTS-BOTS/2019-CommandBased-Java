@@ -18,7 +18,7 @@ public class AutoTapeAllign extends CommandGroup {
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-    //addSequential(new JeVoisCenter());
+    addSequential(new JeVoisCenter());
     addSequential(new RampToTape());
     // To run multiple commands at the same time,
     // use addParallel()

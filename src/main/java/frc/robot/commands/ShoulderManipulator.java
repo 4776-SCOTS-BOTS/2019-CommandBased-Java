@@ -27,6 +27,7 @@ public class ShoulderManipulator extends Command {
   protected void execute() {
     //System.out.println("POT: " + Robot.shoulder.getPotValue());
     SmartDashboard.putNumber("SHOULDER POT VALUE", Robot.shoulder.getPotValue());
+    
     Robot.shoulder.powerShoulder(Robot.oi.getManipulatorAxis(XBox.RIGHT_Y_AXIS));
     Robot.shoulder.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getManipulatorAxis(XBox.LEFT_TRIGGER_AXIS));
   } 
