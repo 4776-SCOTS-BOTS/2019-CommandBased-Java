@@ -5,41 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.Calibrations;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.*;
-import frc.robot.OI.*;
+import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 /**
- * Command to drive the robot using tank drive.
+ * Run this command when the elevator is at the middle of its stage, setting the constant to the current height.
+ * <p><b>PLEASE NOE:</b> This command should only be run through the <i>SmartDashboard</i>, not during teleop.
  */
-public class TankDrive extends Command {
-  public TankDrive() {
-    requires(Robot.driveTrain);
+public class ResetMiddleElevatorHeight extends Command {
+  public ResetMiddleElevatorHeight() {
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    RobotMap.PracticeBot.MID_HEIGHT = Robot.elevator.getRightPot();
+    System.out.println("The middle elevator height for the PracticeBot has been set to " + RobotMap.PracticeBot.MID_HEIGHT + ".");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveTrain.tankDrive(-Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS), -Robot.oi.getDriverAxis(XBox.RIGHT_Y_AXIS));
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.driveTrain.stop();
   }
 
   // Called when another command which requires one or more of the same

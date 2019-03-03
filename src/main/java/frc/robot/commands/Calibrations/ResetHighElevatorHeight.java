@@ -5,36 +5,36 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.Calibrations;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.OI.XBox;
+import frc.robot.RobotMap;
 
-public class ShoulderManipulator extends Command {
-  public ShoulderManipulator() {
-    requires(Robot.shoulder);
+/**
+ * Run this command when the elevator is at the top of its stage, setting the constant to the current height.
+ * <p><b>PLEASE NOE:</b> This command should only be run through the <i>SmartDashboard</i>, not during teleop.
+ */
+public class ResetHighElevatorHeight extends Command {
+  public ResetHighElevatorHeight() {
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    RobotMap.PracticeBot.HIGH_HEIGHT = Robot.elevator.getRightPot();
+    System.out.println("The high elevator height for the PracticeBot has been set to " + RobotMap.PracticeBot.HIGH_HEIGHT + ".");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //System.out.println("POT: " + Robot.shoulder.getPotValue());
-    SmartDashboard.putNumber("SHOULDER POT VALUE", Robot.shoulder.getPotValue());
-    Robot.shoulder.powerShoulder(Robot.oi.getManipulatorAxis(XBox.RIGHT_Y_AXIS));
-    Robot.shoulder.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getManipulatorAxis(XBox.LEFT_TRIGGER_AXIS));
-  } 
+  }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

@@ -68,7 +68,7 @@ public class RobotMap {
   /**
    * Contained in this class are constants used for the practice robot, a prototype of the competition robot.
    */
-  public final class PracticeBot {
+  public static  class PracticeBot {
     //Motor PWMs
     public static final int 
     LEFT_DRIVE_PWM = 11, //Motors operating left side of the chassis
@@ -87,9 +87,12 @@ public class RobotMap {
     //Potentiometer analog input ports
     SHOULDER_POT_AI = 6,
     RIGHT_ELEVATOR_POT_AI = 7,
-    LEFT_ELEVATOR_POT_AI = 5;
+    LEFT_ELEVATOR_POT_AI = 5,
+    //Servo PWMs
+    TOP_SERVO_RELEASE_PWM = 9,
+    BOTTOM_SERVO_RELEASE_PWM = 18;
     //Calibration constants
-    public static final double 
+    public static double 
     RIGHT_ELEVATOR_POT_OFFSET= -0.0541499, //how much smaller is the right side
     RIGHT_ELEVATOR_OFFSET_SCALE = 6.0,
     RAMP_UP_DISTANCE = 0.06915508,// + 0.08011591,//0.149 is too much
@@ -98,7 +101,8 @@ public class RobotMap {
     MID_HEIGHT = 0.524817,
     HIGH_HEIGHT = 0.40,//0.3537480,
     ELEVATOR_THRESHOLD = 0.02,
-    ELEVATOR_FEED_FORWARD = 0.117;
+    ELEVATOR_FEED_FORWARD = 0.117,
+    MAX_SPEED = 0.70;
   }
   /**
    * Contained in this class are constants used for the old competition robot (for FIRST Power Up).

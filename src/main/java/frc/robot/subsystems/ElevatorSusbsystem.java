@@ -68,7 +68,7 @@ public class ElevatorSusbsystem extends Subsystem {
   public void rawSetPower (double power) {
     leftElevatorMotor.set(power);
     rightElevatorMotor.set(power);
-    System.out.println(power + " " + getLeftPot() + " " + getRightPot());
+    //System.out.println(power + " " + getLeftPot() + " " + getRightPot());
   }
   public void setPower (double power, double rightMod) {
     if (rightMod > 1) {

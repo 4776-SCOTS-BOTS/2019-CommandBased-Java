@@ -48,8 +48,8 @@ public class OI {
     rampButton = new JoystickButton(driverJoystick, XBox.B_BUTTON);
     rampButton.whenPressed(new RampToTape());
 
-    //testButton = new JoystickButton(driverJoystick, XBox.X_BUTTON);
-    //testButton.whenPressed(new MoveElevator());
+    testButton = new JoystickButton(driverJoystick, XBox.X_BUTTON);
+    testButton.whenPressed(new ToggleServoVacuumRelease());
     
     //connectButton = new JoystickButton(driverJoystick, XBox.Y_BUTTON);
     //connectButton.whenPressed(new ReconnectJeVois(false));

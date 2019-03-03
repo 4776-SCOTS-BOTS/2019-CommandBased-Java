@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.*;
 import frc.robot.RobotMap.*;
 import frc.robot.commands.*;
+import frc.robot.commands.DriveTrain.*;
 import edu.wpi.first.wpilibj.*;
 
 /**
@@ -69,7 +70,7 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
     System.out.println(robotName + "\'s DriveTrainSubsystem correctly instantiated.");
   }
   /**
-   * Tank Drive on the DriveTrainSubsystem.
+   * Tank Drive on the <b>DriveTrainSubsystem</b>.
    * @param leftSpeed - the left side's speed (-1.0 to 1.0).
    * @param rightSpeed - the right side's speed (-1.0 to 1.0).
    */
@@ -77,7 +78,7 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
     driveWheels.tankDrive(leftSpeed, rightSpeed);
   }
   /**
-   * Arcade Drive on the DriveTrainSubsystem.
+   * Arcade Drive on the <b>DriveTrainSubsystem</b>.
    * @param ySpeed - Forward speed of the robot (-1.0 to 1.0).
    * @param xTurn - Amount to turn the robot (-1.0 to 1.0).
    */
@@ -96,7 +97,7 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
     //System.out.println(driveWheels.isAlive());
   }
   /**
-   * Stop <b>all</b> movement of the drive wheels.
+   * Stop <b>all</b> movement of the <i>drive wheels</i>.
    */
   public void stop() {
     driveWheels.tankDrive(0, 0);
@@ -108,6 +109,6 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new CheesyDrive(false));
+    setDefaultCommand(new CheesyDrive(false, true));
   }
 }

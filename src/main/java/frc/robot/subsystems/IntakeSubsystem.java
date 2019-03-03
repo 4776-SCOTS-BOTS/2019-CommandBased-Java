@@ -21,6 +21,9 @@ public class IntakeSubsystem extends Subsystem {
   Solenoid jaw;
   PWMVictorSPX intakeWheels;
   PWMVictorSPX hatchVacuum;
+  Servo topServoRelease;
+  Servo bottomServoRelease;
+  double currentAngle;
 
   public boolean isClosed;
 
@@ -38,38 +41,50 @@ public class IntakeSubsystem extends Subsystem {
         intakeWheels = null;
         hatchVacuum = null;
         compressor = null;
+        topServoRelease = null;
+        bottomServoRelease = null;
       }break;
       case PracticeBot: {
         jaw = new Solenoid(RobotMap.PracticeBot.INTAKE_JAW_PORT);
         intakeWheels = new PWMVictorSPX(RobotMap.PracticeBot.INTAKE_WHEELS_PWM);
         hatchVacuum = new PWMVictorSPX(RobotMap.PracticeBot.HATCH_VACUUM);
+        System.out.println("HEY! Vacuum is at pwm " + RobotMap.PracticeBot.HATCH_VACUUM + "!");
         compressor = new Compressor(0);
         //Currently disabled because they dont want compressor on right now
-        //compressor.setClosedLoopControl(true);
-        compressor.stop();
+        compressor.setClosedLoopControl(true);
+        //compressor.stop();
         //System.out.println("PLEASE NOTE: The compressor is disabled and will not run!");
         
         //System.out.println("CREATED AT: " + RobotMap.PracticeBot.HATCH_VACUUM);
+        topServoRelease = new Servo(RobotMap.PracticeBot.TOP_SERVO_RELEASE_PWM);
+        bottomServoRelease = new Servo(RobotMap.PracticeBot.BOTTOM_SERVO_RELEASE_PWM);
       }break;
       case OldCompBot: {
         jaw = null;
         intakeWheels = null;
         hatchVacuum = null;
         compressor = null;
+        topServoRelease = null;
+        bottomServoRelease = null;
       }break;
       case Steve: {
         jaw = null;
         intakeWheels = null;
         hatchVacuum = null;
         compressor = null;
+        topServoRelease = null;
+        bottomServoRelease = null;
       }break;
       case TestBoard: {
         jaw = null;
         intakeWheels = null;
         hatchVacuum = null;
         compressor = null;
+        topServoRelease = null;
+        bottomServoRelease = null;
       }break;
     }
+    setServoAngle(90);
     System.out.println(robotName + "\'s IntakeSubsystem correctly instantiated.");
   }
   public void powerVacuum(double power) {
@@ -98,6 +113,26 @@ public class IntakeSubsystem extends Subsystem {
       jaw.set(isClosed);
     }
   }
+
+  public void setServoAngle(double angle) {
+    currentAngle = angle;
+    topServoRelease.setAngle(currentAngle);
+    bottomServoRelease.setAngle(currentAngle);
+  }
+  public void rotateServoAngle(double rotation) {
+    currentAngle += rotation;
+    topServoRelease.setAngle(currentAngle);
+    bottomServoRelease.setAngle(currentAngle);
+  }
+  public void toggleServos() {
+    //90=open
+    //0=close
+    currentAngle = Math.min((currentAngle + 90) % 180, 170);
+    topServoRelease.setAngle(currentAngle);
+    bottomServoRelease.setAngle(currentAngle);
+    System.out.println("Servos toggled to " + currentAngle + " degrees.");
+  }
+
 
   @Override
   public void initDefaultCommand() {

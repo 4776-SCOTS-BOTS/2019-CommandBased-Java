@@ -5,16 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
-import frc.robot.OI.XBox;
+import frc.robot.*;
+import frc.robot.OI.*;
 
-public class ShoulderManipulator extends Command {
-  public ShoulderManipulator() {
-    requires(Robot.shoulder);
+/**
+ * Command to drive the robot using arcade drive.
+ */
+public class ArcadeDrive extends Command {
+  public ArcadeDrive() {
+    requires(Robot.driveTrain);
   }
 
   // Called just before this Command runs the first time
@@ -25,11 +27,8 @@ public class ShoulderManipulator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //System.out.println("POT: " + Robot.shoulder.getPotValue());
-    SmartDashboard.putNumber("SHOULDER POT VALUE", Robot.shoulder.getPotValue());
-    Robot.shoulder.powerShoulder(Robot.oi.getManipulatorAxis(XBox.RIGHT_Y_AXIS));
-    Robot.shoulder.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getManipulatorAxis(XBox.LEFT_TRIGGER_AXIS));
-  } 
+    Robot.driveTrain.arcadeDrive(-Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS), Robot.oi.getDriverAxis(XBox.RIGHT_X_AXIS));
+  }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -40,6 +39,7 @@ public class ShoulderManipulator extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.driveTrain.stop();
   }
 
   // Called when another command which requires one or more of the same

@@ -60,7 +60,7 @@ public class RampElevatorDown extends Command {
     } else {
       currentSpeed = m *timer.get() + k;
     }
-    currentSpeed = Math.max(-0.99, Math.min(0.99, currentSpeed));
+    currentSpeed = Math.max(-RobotMap.PracticeBot.MAX_SPEED, Math.min(RobotMap.PracticeBot.MAX_SPEED, currentSpeed));
     Robot.elevator.rawSetPower(currentSpeed);
   }
 

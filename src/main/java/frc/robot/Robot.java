@@ -7,6 +7,7 @@
 //Version: 3/2/19
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -15,6 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
 //import frc.robot.OI.*;
 import frc.robot.RobotMap.*;
 import frc.robot.commands.*;
+import frc.robot.commands.DriveTrain.*;
+import frc.robot.commands.Calibrations.*;
 import frc.robot.subsystems.*;
 
 /**
@@ -47,6 +50,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    if (false) {
+      //Add camera streams
+      CameraServer.getInstance().addAxisCamera("super-cam", "10.47.76.4");
+      CameraServer.getInstance().addAxisCamera("basic-cam", "10.47.76.5");
+    }
     //CameraServer.getInstance().addAxisCamera("ultimate camera boi", "10.47.76.11");
     t = new Timer();
     t.reset();
@@ -83,6 +91,11 @@ public class Robot extends TimedRobot {
     //Display the chooser tool on the SmartDashboard
     SmartDashboard.putData("Auto Mode:", chooser);
     
+    //Add Calibrations to the SmartDashboard:
+    SmartDashboard.putData("Reset Bottom", new ResetBottomElevatorHeight());
+    SmartDashboard.putData("Reset Middle", new ResetMiddleElevatorHeight());
+    SmartDashboard.putData("Reset High", new ResetHighElevatorHeight());
+
     Command mouth = new ToggleMouthOpen();
     SmartDashboard.putData("TOGGLE MOUTH", mouth);
     Command all = new ToggleClimbers();

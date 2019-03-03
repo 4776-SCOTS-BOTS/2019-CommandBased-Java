@@ -70,7 +70,7 @@ public class ElevatorToHeight extends Command {
     } else {
       currentSpeed = -1 * Math.exp(downB *timer.get()) * downA;
     }
-    currentSpeed = Math.max(-0.99, Math.min(0.99, currentSpeed));
+    currentSpeed = Math.max(-RobotMap.PracticeBot.MAX_SPEED, Math.min(RobotMap.PracticeBot.MAX_SPEED, currentSpeed));
     Robot.elevator.rawSetPower(currentSpeed);
     System.out.println("Going up? " + goUp);
   }
