@@ -106,7 +106,10 @@ public class OI {
     }
   }
   public void rumble(double power) {
-    System.out.println("RUMBLE: " + power);
+    //System.out.println("RUMBLE: " + power);
+    if (true) {
+      return;
+    }
     power = Math.min(1, Math.max(power, 0));
     driverJoystick.setRumble(RumbleType.kLeftRumble, power);
     driverJoystick.setRumble(RumbleType.kRightRumble, power);

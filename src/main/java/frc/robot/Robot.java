@@ -27,18 +27,18 @@ import frc.robot.subsystems.*;
  * project.
  */
 public class Robot extends TimedRobot {
-  private RobotName currentRobot = RobotName.PracticeBot;
+  private RobotName currentRobot = RobotName.CompBot;
+
   public static JeVoisSubsystem jeVois;
   public static DriveTrainSubsystem driveTrain;
   public static ElevatorSusbsystem elevator;
   public static IntakeSubsystem intake;
   public static ShoulderSubsystem shoulder;
   public static ClimberSubsystem climber;
-  //Potentiometer p = new AnalogPotentiometer(0);
   public static OI oi;
+
   public static boolean readData;
   private boolean debugJeVois;
-  public static Timer t;
 
   Command autonomousCommand;
   SendableChooser<Command> chooser = new SendableChooser<>();
@@ -55,11 +55,7 @@ public class Robot extends TimedRobot {
       //CameraServer.getInstance().addAxisCamera("basic-cam", "10.47.76.5");
       CameraServer.getInstance().addAxisCamera("bob-cam", "10.47.76.6");
     }
-    //CameraServer.getInstance().addAxisCamera("ultimate camera boi", "10.47.76.11");
-    t = new Timer();
-    t.reset();
-    t.start();
-    System.out.println("BEGINNING_ROBOT_INIT - Instantiating subystems for \'" + currentRobot + "\'!");
+    System.out.println("BEGINNING_ROBOT_INIT - Instantiating subsystems for \'" + currentRobot + "\'!");
     readData = false; //Reading data every loop is VERY performance heavy, so make sure readData is off when not needed!
     debugJeVois = false;
 

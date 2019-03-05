@@ -25,7 +25,6 @@ public class ReverseShoulder extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("Time:"+Robot.t.get()+" Pot:"+Robot.shoulder.getPotValue());
     if (goF) {
       Robot.shoulder.powerShoulder(1);
     } else {

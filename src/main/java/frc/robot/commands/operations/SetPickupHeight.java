@@ -17,6 +17,7 @@ public class SetPickupHeight extends Command {
   boolean facingBackwards;
   double threshold;
   double targetAngle;
+  double maxSpeed;
   boolean needCargo;
   boolean needSide;
   /**
@@ -81,10 +82,10 @@ public class SetPickupHeight extends Command {
     //System.out.println("ME: " + Robot.shoulder.getPotValue() + "Target: " + targetAngle);
     if (Robot.shoulder.getPotValue() > targetAngle) {
       //decrease shoulder
-      Robot.shoulder.powerShoulder(0.9);
+      Robot.shoulder.powerShoulder(maxSpeed);
     } else {
       //increase shoulder
-      Robot.shoulder.powerShoulder(-0.9);
+      Robot.shoulder.powerShoulder(-maxSpeed);
     }
   }
 
@@ -112,6 +113,7 @@ public class SetPickupHeight extends Command {
   private void setTargets(RobotMap.RobotName robot) {
     switch (robot) {
       case CompBot: {
+        maxSpeed = RobotMap.CompBot.SHOULDER_MAX_SPEED;
         threshold = RobotMap.CompBot.SHOULDER_THRESHOLD;
         if (facingBackwards) {
           if (usingCargo) {
@@ -129,6 +131,7 @@ public class SetPickupHeight extends Command {
       }
       break;
       case PracticeBot: {
+        maxSpeed = RobotMap.PracticeBot.SHOULDER_MAX_SPEED;
         threshold = RobotMap.PracticeBot.SHOULDER_THRESHOLD;
         if (facingBackwards) {
           if (usingCargo) {
@@ -148,6 +151,7 @@ public class SetPickupHeight extends Command {
       default: {
         //default: use the comp bot
         System.out.println(robot + " has no case is \'SetPickupheight\'!");
+        maxSpeed = RobotMap.CompBot.SHOULDER_MAX_SPEED;
         threshold = RobotMap.CompBot.SHOULDER_THRESHOLD;
         if (facingBackwards) {
           if (usingCargo) {

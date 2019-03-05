@@ -36,7 +36,7 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
     //Instantiate the driveTrain based on which robot we are using
     switch (robotName) {
       case CompBot: {
-        driveWheels = new DifferentialDrive(new Victor(RobotMap.CompBot.LEFT_DRIVE_PWM), new Victor(RobotMap.CompBot.LEFT_DRIVE_PWM));
+        driveWheels = new DifferentialDrive(new Victor(RobotMap.CompBot.LEFT_DRIVE_PWM), new Victor(RobotMap.CompBot.RIGHT_DRIVE_PWM));
       }
       break;
       case Steve: {

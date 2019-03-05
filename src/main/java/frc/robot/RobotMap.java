@@ -41,26 +41,26 @@ public class RobotMap {
   public static class CompBot {
     //Motor PWMs
     public static final int 
-    LEFT_DRIVE_PWM = 99, //Motors operating left side of the chassis
-    RIGHT_DRIVE_PWM = 99, //Motors operating right side of the chassis
-    LEFT_ELEVATOR_PWM = 99, //Motor that operates left elevator up and down
-    RIGHT_ELEVATOR_PWM = 99, //Motor that operates right elevator up and down
-    SHOULDER_PWM = 99, //Motor that rotates the arm to face the front and back
-    INTAKE_WHEELS_PWM = 99, //Wheels picking up cargo on the stationary intake
-    INTAKE_BELTS_PWM = 99, //Wheels picking up cargo on the stationary intake
-    CLIMBING_WHEELS_PWM = 99, //Wheels on the rear pneumatic climbing cylinders (PORT = PCM's PWM)
+    LEFT_DRIVE_PWM = 10, //Motors operating left side of the chassis
+    RIGHT_DRIVE_PWM = 11, //Motors operating right side of the chassis
+    LEFT_ELEVATOR_PWM = 17, //Motor that operates left elevator up and down
+    RIGHT_ELEVATOR_PWM = 18, //Motor that operates right elevator up and down
+    SHOULDER_PWM = 15, //Motor that rotates the arm to face the front and back
+    INTAKE_WHEELS_PWM = 16, //Wheels picking up cargo on the stationary intake
+    INTAKE_BELTS_PWM = 13, //Wheels picking up cargo on the stationary intake
+    CLIMBING_WHEELS_PWM = 14, //Wheels on the rear pneumatic climbing cylinders (PORT = PCM's PWM)
     //Pneumatic ports
-    INTAKE_JAW_PORT = 99, //Pneumatic cylinders opening the stationary intake (PORT = PCM's PWM)
-    CLIMBER_FRONT_PORT = 99, //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    CLIMBER_REAR_PORT = 99, //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    HATCH_VACUUM = 99, //Suction cup motors
+    INTAKE_JAW_PORT = 0, //Pneumatic cylinders opening the stationary intake (PORT = PCM's PWM)
+    CLIMBER_FRONT_PORT = 1, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+    CLIMBER_REAR_PORT = 2, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+    HATCH_VACUUM = 12, //Suction cup motors
     //Potentiometer analog input ports
-    SHOULDER_POT_AI = 99,
-    RIGHT_ELEVATOR_POT_AI = 99,
-    LEFT_ELEVATOR_POT_AI = 99,
+    SHOULDER_POT_AI = 6,//TODO: shoulder pot
+    RIGHT_ELEVATOR_POT_AI = 4,
+    LEFT_ELEVATOR_POT_AI = 5,
     //Servo PWMs
-    TOP_SERVO_RELEASE_PWM = 99,
-    BOTTOM_SERVO_RELEASE_PWM = 99;
+    TOP_SERVO_RELEASE_PWM = 7,//TODO: top servo
+    BOTTOM_SERVO_RELEASE_PWM = 8;//TODO: bottom servo
     //Calibration constants
     public static double 
     RIGHT_ELEVATOR_POT_OFFSET= -0.0541499, //how much smaller is the right side
@@ -77,6 +77,7 @@ public class RobotMap {
     FORWARD_UP_SHOULDER = 0.47725756,
     REVERSE_UP_SHOULDER = 0.5379968,
     REVERSE_STRAIGHT_SHOULDER = 0.5515320,
+    SHOULDER_MAX_SPEED = 0.5,
     CARGO_PICKUP_SHOULDER = 0.56589,
     SHOULDER_THRESHOLD = 0.005,
     JEVOIS_CENTER = 160.0,
@@ -140,6 +141,7 @@ public class RobotMap {
     FORWARD_UP_SHOULDER = 0.47725756,
     REVERSE_UP_SHOULDER = 0.5379968,
     REVERSE_STRAIGHT_SHOULDER = 0.5515320,
+    SHOULDER_MAX_SPEED = 0.9,
     CARGO_PICKUP_SHOULDER = 0.56589,
     SHOULDER_THRESHOLD = 0.005,
     JEVOIS_CENTER = 160.0,

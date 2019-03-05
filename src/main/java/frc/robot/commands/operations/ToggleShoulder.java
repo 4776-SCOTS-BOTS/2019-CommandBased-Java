@@ -24,9 +24,7 @@ public class ToggleShoulder extends Command {
 
   // Called repeatedly when this Command is scheduled to run
   @Override
-  protected void execute() {
-    System.out.println("Time:"+Robot.t.get()+" Pot:"+Robot.shoulder.getPotValue());
-  
+  protected void execute() {  
     if (goF) {
       Robot.shoulder.powerShoulder(1);
     } else {
