@@ -5,32 +5,37 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.manipulators;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
+import frc.robot.*;
 import frc.robot.OI.XBox;
 
-public class ShoulderManipulator extends Command {
-  public ShoulderManipulator() {
-    requires(Robot.shoulder);
+public class ElevatorManipulator extends Command {
+  double limitChange = 0.10;
+  double oldOutput;
+  boolean ramp = true;
+  public ElevatorManipulator() {
+    requires(Robot.elevator);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    oldOutput = 0;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //System.out.println("POT: " + Robot.shoulder.getPotValue());
-    SmartDashboard.putNumber("SHOULDER POT VALUE", Robot.shoulder.getPotValue());
+    double change = -Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS) - oldOutput;
+    change = Math.max(-limitChange, Math.min(change, limitChange));//clamp change
+    oldOutput += change;
+    oldOutput = Math.min(0.70, Math.max(oldOutput, -0.70));
+    Robot.elevator.rawSetPower(oldOutput);
     
-    Robot.shoulder.powerShoulder(Robot.oi.getManipulatorAxis(XBox.RIGHT_Y_AXIS));
-    Robot.shoulder.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getManipulatorAxis(XBox.LEFT_TRIGGER_AXIS));
-  } 
+    
+    }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -41,6 +46,7 @@ public class ShoulderManipulator extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.elevator.disableElevator();
   }
 
   // Called when another command which requires one or more of the same

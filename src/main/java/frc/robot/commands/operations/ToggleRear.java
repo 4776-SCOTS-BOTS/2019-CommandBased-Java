@@ -5,17 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.operations;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.OI.*;
 /**
  * <b>This</b> is the <i>TEST COMMAND</i> for testing!
  */
-public class ToggleClimbers extends Command {
-  public ToggleClimbers() {
-    //requires(Robot.climber);
+public class ToggleRear extends Command {
+  public ToggleRear() {
+    requires(Robot.climber);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -23,6 +22,8 @@ public class ToggleClimbers extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.climber.toggleRear();
+    System.out.println("TOGGLED REAR CLIMBERS");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -31,9 +32,7 @@ public class ToggleClimbers extends Command {
     //SmartDashboard.putNumber("Left Joystick Y Value", -Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS));
     //Robot.driveTrain.stop();
     //Robot.shoulder.power(Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS));
-    Robot.climber.toggleRear();
-    Robot.climber.toggleFront();
-    System.out.println("TOGGLED ALL CLIMBERS");
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()

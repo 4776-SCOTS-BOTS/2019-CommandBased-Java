@@ -5,51 +5,67 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.OI.*;
-/**
- * <b>This</b> is the <i>TEST COMMAND</i> for testing!
- */
-public class ToggleRear extends Command {
-  public ToggleRear() {
-    requires(Robot.climber);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+
+public class Launch extends Command {
+  Timer timer;
+  double filter;
+  double loopTime;
+  double launchTime;
+  
+  double startTime;
+  double previousTime;
+  double currentPower;
+
+  public Launch() {
+    requires(Robot.driveTrain);
+    timer = new Timer();
+    filter = 0.1;
+    loopTime = 0.02;
+    previousTime = -1;
+    currentPower = 0.2;
+    startTime = 0;
+    launchTime = 1;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    timer.reset();
+    timer.start();
+    startTime = timer.get();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //SmartDashboard.putNumber("Left Joystick Y Value", -Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS));
-    //Robot.driveTrain.stop();
-    //Robot.shoulder.power(Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS));
-    Robot.climber.toggleRear();
-    System.out.println("TOGGLED REAR CLIMBERS");
+    if ((timer.get() - previousTime) > loopTime) {
+      currentPower = Math.min(0.99, currentPower + filter * (1 - currentPower));
+      previousTime = timer.get();
+    }
+    Robot.driveTrain.arcadeDrive(currentPower, 0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return ((timer.get() - startTime) > launchTime);
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.driveTrain.stop();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    
+    end();
   }
 }

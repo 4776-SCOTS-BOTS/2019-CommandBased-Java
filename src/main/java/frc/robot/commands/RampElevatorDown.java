@@ -15,6 +15,7 @@ public class RampElevatorDown extends Command {
   
   Timer timer;
   double currentSpeed;
+  double maxSpeed;
 
   //for exponential
   //double a = 0.0127;
@@ -31,12 +32,34 @@ public class RampElevatorDown extends Command {
 
   MoveElevator myBase;
   boolean goUp;
+  double highHeight;
+  double lowHeight;
 
-  public RampElevatorDown(MoveElevator base) {
+  public RampElevatorDown(MoveElevator base, RobotMap.RobotName robot) {
     requires(Robot.elevator);
     timer = new Timer();
     //goUp = base.goingUp;
     myBase = base;
+    switch(robot) {
+      case CompBot: {
+        maxSpeed = RobotMap.CompBot.ELEVATOR_MAX_SPEED;
+        highHeight = RobotMap.CompBot.HIGH_HEIGHT;
+        lowHeight = RobotMap.CompBot.LOW_HEIGHT;
+      }
+      break;
+      case PracticeBot: {
+        maxSpeed = RobotMap.PracticeBot.ELEVATOR_MAX_SPEED;
+        highHeight = RobotMap.PracticeBot.HIGH_HEIGHT;
+        lowHeight = RobotMap.PracticeBot.LOW_HEIGHT;
+      }
+      break;
+      default: {
+        maxSpeed = RobotMap.CompBot.ELEVATOR_MAX_SPEED;
+        highHeight = RobotMap.CompBot.HIGH_HEIGHT;
+        lowHeight = RobotMap.CompBot.LOW_HEIGHT;
+        System.out.println(robot + " doesn't have a case in \'RampElevatorDown\'!");
+      }
+    }
   }
 
   // Called just before this Command runs the first time
@@ -53,14 +76,14 @@ public class RampElevatorDown extends Command {
   protected void execute() {
     //System.out.println("SLOWING DOWN!!!!!!!!!! up?: " + goUp);
     //System.out.println("SSSS - " + timer.get());
-    double scale = (goUp) ? 1 : -1;
+    //double scale = (goUp) ? 1 : -1;
     //use different ramps for up/down
     if (goUp) {
       currentSpeed = Math.exp(b * timer.get() / c) * a;
     } else {
       currentSpeed = m *timer.get() + k;
     }
-    currentSpeed = Math.max(-RobotMap.PracticeBot.MAX_SPEED, Math.min(RobotMap.PracticeBot.MAX_SPEED, currentSpeed));
+    currentSpeed = Math.max(-maxSpeed, Math.min(maxSpeed, currentSpeed));
     Robot.elevator.rawSetPower(currentSpeed);
   }
 
@@ -68,9 +91,9 @@ public class RampElevatorDown extends Command {
   @Override
   protected boolean isFinished() {
     if (goUp) {
-      return (currentSpeed < 0.125) || (Robot.elevator.getRightPot() < RobotMap.PracticeBot.HIGH_HEIGHT);
+      return (currentSpeed < 0.125) || (Robot.elevator.getRightPot() < highHeight);
     } else {
-      return (currentSpeed > -0.05) || (Robot.elevator.getRightPot() > RobotMap.PracticeBot.LOW_HEIGHT);
+      return (currentSpeed > -0.05) || (Robot.elevator.getRightPot() > highHeight);
     }
   }
 

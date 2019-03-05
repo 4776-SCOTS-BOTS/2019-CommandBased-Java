@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.RobotMap.*;
 import frc.robot.commands.*;
+import frc.robot.commands.autonomous.*;
+import frc.robot.commands.manipulators.*;
+import frc.robot.commands.operations.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -34,7 +37,8 @@ public class OI {
   setHighHeightButton,
   setFaceFrontButton,
   setFaceBackButton,
-  overrideElevatorButton;
+  overrideElevatorButton,
+  toggleMouthButton;
 
   public OI () {
     //If this is used, then "just in case" use competition settings
@@ -67,6 +71,10 @@ public class OI {
       //MANIPULATOR COMMANDS------------------------------------------------------------------------
       manipulatorJoystick = new Joystick(XBox.MANIPULATOR);
 
+      //Toggle mouth
+      toggleMouthButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_START_BUTTON);
+      toggleMouthButton.whenPressed(new ToggleMouthOpen(false, robot));
+
       //Make robot place cargo
       setCargoHeightButton = new JoystickButton(manipulatorJoystick, XBox.RIGHT_START_BUTTON);
       setCargoHeightButton.whenPressed(new SetPickupHeight(true, robot));
@@ -76,13 +84,14 @@ public class OI {
 
       //Make elevator go to low level on rocket
       setLowHeightButton = new JoystickButton(manipulatorJoystick, XBox.A_BUTTON);
-      setLowHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.Low));
+      setLowHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.Low, robot));
+
       //Make elevator go to medium level on rocket
       setMediumHeightButton = new JoystickButton(manipulatorJoystick, XBox.B_BUTTON);
-      setMediumHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.Medium));
+      setMediumHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.Medium, robot));
       //Make elevator go to high level on rocket
       setHighHeightButton = new JoystickButton(manipulatorJoystick, XBox.Y_BUTTON);
-      setHighHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.High));
+      setHighHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.High, robot));
       //Override HoldElevator/MoveElevator Commands to allow driver control
       overrideElevatorButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_STICK_BUTTON);
       overrideElevatorButton.whenPressed(new ElevatorManipulator());
@@ -97,6 +106,7 @@ public class OI {
     }
   }
   public void rumble(double power) {
+    System.out.println("RUMBLE: " + power);
     power = Math.min(1, Math.max(power, 0));
     driverJoystick.setRumble(RumbleType.kLeftRumble, power);
     driverJoystick.setRumble(RumbleType.kRightRumble, power);

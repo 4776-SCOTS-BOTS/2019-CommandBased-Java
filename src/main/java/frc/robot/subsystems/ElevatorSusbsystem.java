@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import frc.robot.*;
-import frc.robot.commands.*;
+import frc.robot.commands.manipulators.*;
 
 /**
  * Subsystem handling movement of the elevator.
@@ -40,11 +40,8 @@ public class ElevatorSusbsystem extends Subsystem {
   public double getLeftPot() {
     return leftElevatorPot.get();
   }
-  public double getRawRightPot() {
-    return rightElevatorPot.get();
-  }
   public double getRightPot() {
-    return rightElevatorPot.get() + RobotMap.PracticeBot.RIGHT_ELEVATOR_POT_OFFSET;
+    return rightElevatorPot.get();
   }
 
   public void setHeight (RobotMap.ElevatorHeight newHeight) {
@@ -84,8 +81,8 @@ public class ElevatorSusbsystem extends Subsystem {
       case CompBot: {
         leftElevatorMotor = new PWMVictorSPX(RobotMap.CompBot.LEFT_ELEVATOR_PWM);
         rightElevatorMotor = new PWMVictorSPX(RobotMap.CompBot.RIGHT_ELEVATOR_PWM);
-        leftElevatorPot = null;
-        rightElevatorPot = null;
+        leftElevatorPot = new AnalogPotentiometer(RobotMap.CompBot.LEFT_ELEVATOR_POT_AI);
+        rightElevatorPot = new AnalogPotentiometer(RobotMap.CompBot.RIGHT_ELEVATOR_POT_AI);
       }
       break;
       case Steve: {

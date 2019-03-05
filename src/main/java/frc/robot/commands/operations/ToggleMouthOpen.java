@@ -5,12 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.operations;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.OI.*;
 /**
  * <b>Toggle</b> the mouth <i>open</i> or <i>closed</i>.
  */
@@ -25,8 +24,8 @@ public class ToggleMouthOpen extends Command {
       //determine what the target is and the thresholds
       switch (robot) {
         case CompBot: {
-          threshold = RobotMap.PracticeBot.SHOULDER_THRESHOLD;
-          targetAngle = RobotMap.PracticeBot.CARGO_PICKUP_SHOULDER;
+          threshold = RobotMap.CompBot.SHOULDER_THRESHOLD;
+          targetAngle = RobotMap.CompBot.CARGO_PICKUP_SHOULDER;
         }
         break;
         case PracticeBot: {
@@ -35,10 +34,10 @@ public class ToggleMouthOpen extends Command {
         }
         break;
         default: {
-          //default: use the practice bot(?)
-          System.out.println("Oops! what pickup height? I don't know!");
-          threshold = RobotMap.PracticeBot.SHOULDER_THRESHOLD;
-          targetAngle = RobotMap.PracticeBot.CARGO_PICKUP_SHOULDER;
+          //default: use the comp bot
+          System.out.println(robot + " has no case in \'ToggleMouthOpen\'!");
+          threshold = RobotMap.CompBot.SHOULDER_THRESHOLD;
+          targetAngle = RobotMap.CompBot.CARGO_PICKUP_SHOULDER;
         }
       }
     }

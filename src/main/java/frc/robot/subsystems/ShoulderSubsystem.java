@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import frc.robot.RobotMap;
-import frc.robot.commands.*;
+import frc.robot.commands.manipulators.*;
 
 /**
  * Subsystem handling control of the <b>wrist/shoulder</b> and <b>intake belts</b>.
@@ -54,12 +54,12 @@ public class ShoulderSubsystem extends Subsystem {
     switch (robotName) {
       case CompBot: {
         shoulderMotor = new PWMVictorSPX(RobotMap.CompBot.SHOULDER_PWM);
-        shoulderPot = null;
-        intakeMotor = null;
+        shoulderPot = new AnalogPotentiometer(RobotMap.CompBot.SHOULDER_POT_AI);
+        intakeMotor = new PWMVictorSPX(RobotMap.CompBot.INTAKE_BELTS_PWM);
       }
       break;
       case Steve: {
-        shoulderMotor = new PWMVictorSPX(6);
+        shoulderMotor = null;
         shoulderPot = null;
         intakeMotor = null;
       }
@@ -73,7 +73,6 @@ public class ShoulderSubsystem extends Subsystem {
       case PracticeBot: {
         shoulderMotor = new PWMVictorSPX(RobotMap.PracticeBot.SHOULDER_PWM);
         shoulderPot = new AnalogPotentiometer(RobotMap.PracticeBot.SHOULDER_POT_AI);
-        //shoulderPot = new AnalogPotentiometer(7);
         intakeMotor = new PWMVictorSPX(RobotMap.PracticeBot.INTAKE_BELTS_PWM);
       }
       break;

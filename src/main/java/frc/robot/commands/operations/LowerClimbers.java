@@ -5,23 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.operations;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ReconnectJeVois extends Command {
-  boolean connectSecondCam;
-  public ReconnectJeVois(boolean secondCam) {
-    //requires(Robot.jeVois);
-    connectSecondCam = secondCam;
+public class LowerClimbers extends Command {
+  public LowerClimbers() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("STARTING RECONNECTION PROCESS");
-    //Robot.jeVois.reconnect(connectSecondCam);
+    
+    Robot.climber.lowerAllClimbers();
+    System.out.println("LOWERED ALL CLIMBERS");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -44,6 +44,5 @@ public class ReconnectJeVois extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

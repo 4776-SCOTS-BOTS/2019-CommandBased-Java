@@ -11,13 +11,12 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.interfaces.*;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 //import frc.robot.OI.*;
 import frc.robot.RobotMap.*;
-import frc.robot.commands.*;
-import frc.robot.commands.DriveTrain.*;
-import frc.robot.commands.Calibrations.*;
+import frc.robot.commands.autonomous.Autonomous;
+import frc.robot.commands.operations.*;
+import frc.robot.commands.calibrations.*;
 import frc.robot.subsystems.*;
 
 /**
@@ -76,7 +75,7 @@ public class Robot extends TimedRobot {
     elevator = new ElevatorSusbsystem(currentRobot);
     //elevator = new ElevatorSusbsystem();//blank subsystem
 
-    intake = new IntakeSubsystem(currentRobot);
+    intake = new IntakeSubsystem(currentRobot, true, true);
     //intake = new IntakeSubsystem();//blank subsystem
 
     shoulder = new ShoulderSubsystem(currentRobot);
@@ -87,24 +86,26 @@ public class Robot extends TimedRobot {
     oi = new OI(false, currentRobot);//false = doubleplayer, true = singleplayer
 
     //Create chooser tool for different autonomouses
-    chooser.setDefaultOption("Default Auto", new TestCommand());
-    chooser.addOption("Basic Autonomous", new TestCommand());
+    chooser.setDefaultOption("Default Auto", new Autonomous());
+    //chooser.addOption("Basic Autonomous", new SuperAutonomous());
     //Display the chooser tool on the SmartDashboard
     SmartDashboard.putData("Auto Mode:", chooser);
     
     //Add Calibrations to the SmartDashboard:
-    SmartDashboard.putData("Reset Bottom", new ResetBottomElevatorHeight());
-    SmartDashboard.putData("Reset Middle", new ResetMiddleElevatorHeight());
-    SmartDashboard.putData("Reset High", new ResetHighElevatorHeight());
+    SmartDashboard.putData("Reset Bottom", new ResetBottomElevatorHeight(currentRobot));
+    SmartDashboard.putData("Reset Middle", new ResetMiddleElevatorHeight(currentRobot));
+    SmartDashboard.putData("Reset High", new ResetHighElevatorHeight(currentRobot));
 
     Command mouth = new ToggleMouthOpen(false, currentRobot);
-    SmartDashboard.putData("TOGGLE MOUTH", mouth);
-    Command all = new ToggleClimbers();
-    SmartDashboard.putData("CLIMB ALL", all);
+    SmartDashboard.putData("a TOGGLE MOUTH", mouth);
+    Command all = new RaiseClimbers();
+    SmartDashboard.putData("a RAISE ALL", all);
+    Command none = new LowerClimbers();
+    SmartDashboard.putData("a LOWER ALL", none);
     Command front = new ToggleFront();
-    SmartDashboard.putData("CLIMB FRONT", front);
+    SmartDashboard.putData("a CLIMB FRONT", front);
     Command rear = new ToggleRear();
-    SmartDashboard.putData("CLIMB REAR", rear);
+    SmartDashboard.putData("a CLIMB REAR", rear);
 
     Command forward = new ToggleShoulder();
     SmartDashboard.putData("FORWARD SHOULDER", forward);
@@ -164,6 +165,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    Robot.climber.lowerAllClimbers();
     autonomousCommand = chooser.getSelected();
 
     /*
@@ -199,6 +201,8 @@ public class Robot extends TimedRobot {
     System.out.println("TELEOP_INIT");
     SmartDashboard.putBoolean("Enabled", true);
     //System.out.println("{\"FD\": 0, \"X1\": 0, \"Y1\": 0, \"W1\": 0, \"H1\": 0, \"X2\": 0, \"Y2\": 0, \"W2\": 0, \"H2\": 0}\n{".getBytes().length);
+    Robot.climber.lowerAllClimbers();
+    Robot.intake.setJawClosed(false);
   }
 
   /**

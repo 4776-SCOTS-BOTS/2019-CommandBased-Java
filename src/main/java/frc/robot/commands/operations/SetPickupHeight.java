@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.operations;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
@@ -112,18 +112,18 @@ public class SetPickupHeight extends Command {
   private void setTargets(RobotMap.RobotName robot) {
     switch (robot) {
       case CompBot: {
-        threshold = RobotMap.PracticeBot.SHOULDER_THRESHOLD;
+        threshold = RobotMap.CompBot.SHOULDER_THRESHOLD;
         if (facingBackwards) {
           if (usingCargo) {
-            targetAngle = RobotMap.PracticeBot.REVERSE_UP_SHOULDER;
+            targetAngle = RobotMap.CompBot.REVERSE_UP_SHOULDER;
           } else {
-            targetAngle = RobotMap.PracticeBot.REVERSE_STRAIGHT_SHOULDER;
+            targetAngle = RobotMap.CompBot.REVERSE_STRAIGHT_SHOULDER;
           }
         } else {
           if (usingCargo) {
-            targetAngle = RobotMap.PracticeBot.FORWARD_UP_SHOULDER;
+            targetAngle = RobotMap.CompBot.FORWARD_UP_SHOULDER;
           } else {
-            targetAngle = RobotMap.PracticeBot.FORWARD_STRAIGHT_SHOULDER;
+            targetAngle = RobotMap.CompBot.FORWARD_STRAIGHT_SHOULDER;
           }
         }
       }
@@ -146,20 +146,20 @@ public class SetPickupHeight extends Command {
       }
       break;
       default: {
-        //default: use the practice bot(?)
-        System.out.println("Oops! what pickup height? I don't know!");
-        threshold = RobotMap.PracticeBot.SHOULDER_THRESHOLD;
+        //default: use the comp bot
+        System.out.println(robot + " has no case is \'SetPickupheight\'!");
+        threshold = RobotMap.CompBot.SHOULDER_THRESHOLD;
         if (facingBackwards) {
           if (usingCargo) {
-            targetAngle = RobotMap.PracticeBot.REVERSE_UP_SHOULDER;
+            targetAngle = RobotMap.CompBot.REVERSE_UP_SHOULDER;
           } else {
-            targetAngle = RobotMap.PracticeBot.REVERSE_STRAIGHT_SHOULDER;
+            targetAngle = RobotMap.CompBot.REVERSE_STRAIGHT_SHOULDER;
           }
         } else {
           if (usingCargo) {
-            targetAngle = RobotMap.PracticeBot.FORWARD_UP_SHOULDER;
+            targetAngle = RobotMap.CompBot.FORWARD_UP_SHOULDER;
           } else {
-            targetAngle = RobotMap.PracticeBot.FORWARD_STRAIGHT_SHOULDER;
+            targetAngle = RobotMap.CompBot.FORWARD_STRAIGHT_SHOULDER;
           }
         }
       }

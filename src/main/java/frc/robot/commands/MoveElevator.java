@@ -9,7 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.ElevatorSusbsystem;
+import frc.robot.commands.operations.*;
 
 public class MoveElevator extends CommandGroup {
   public boolean goingUp;
@@ -18,14 +18,15 @@ public class MoveElevator extends CommandGroup {
    * Move the ELEVATOR
    * <p>Input what new height you want to go to.
    */
-  public MoveElevator(RobotMap.ElevatorHeight newElevatorHeight) {
+  public MoveElevator(RobotMap.ElevatorHeight newElevatorHeight, RobotMap.RobotName robot) {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-      addSequential(new ElevatorToHeight(newElevatorHeight, this));
-      addSequential(new RampElevatorDown(this));
-      addSequential(new HoldElevatorHeight(this));
+    
+    addSequential(new ElevatorToHeight(newElevatorHeight, this, robot));
+    addSequential(new RampElevatorDown(this, robot));
+    addSequential(new HoldElevatorHeight(this, robot));
 
     // To run multiple commands at the same time,
     // use addParallel()

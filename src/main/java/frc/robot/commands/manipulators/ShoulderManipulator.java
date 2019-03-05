@@ -5,42 +5,50 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.manipulators;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
+import frc.robot.OI.XBox;
 
-public class ToggleServoVacuumRelease extends Command {
-  public ToggleServoVacuumRelease() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class ShoulderManipulator extends Command {
+  public ShoulderManipulator() {
+    requires(Robot.shoulder);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.intake.toggleServos();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-  }
+    //System.out.println("POT: " + Robot.shoulder.getPotValue());
+    SmartDashboard.putNumber("SHOULDER POT VALUE", Robot.shoulder.getPotValue());
+    
+    Robot.shoulder.powerShoulder(Robot.oi.getManipulatorAxis(XBox.RIGHT_Y_AXIS));
+    Robot.shoulder.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getManipulatorAxis(XBox.LEFT_TRIGGER_AXIS));
+  } 
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.shoulder.stopIntake();
+    Robot.shoulder.stopShoulder();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

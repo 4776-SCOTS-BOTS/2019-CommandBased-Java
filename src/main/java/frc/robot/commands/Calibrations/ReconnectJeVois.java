@@ -5,61 +5,38 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.calibrations;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
 
-public class Launch extends Command {
-  Timer timer;
-  double filter;
-  double loopTime;
-  double launchTime;
-  
-  double startTime;
-  double previousTime;
-  double currentPower;
-
-  public Launch() {
-    requires(Robot.driveTrain);
-    timer = new Timer();
-    filter = 0.1;
-    loopTime = 0.02;
-    previousTime = -1;
-    currentPower = 0.2;
-    startTime = 0;
-    launchTime = 1;
+public class ReconnectJeVois extends Command {
+  boolean connectSecondCam;
+  public ReconnectJeVois(boolean secondCam) {
+    //requires(Robot.jeVois);
+    connectSecondCam = secondCam;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    timer.reset();
-    timer.start();
-    startTime = timer.get();
+    System.out.println("STARTING RECONNECTION PROCESS");
+    //Robot.jeVois.reconnect(connectSecondCam);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if ((timer.get() - previousTime) > loopTime) {
-      currentPower = Math.min(0.99, currentPower + filter * (1 - currentPower));
-      previousTime = timer.get();
-    }
-    Robot.driveTrain.arcadeDrive(currentPower, 0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return ((timer.get() - startTime) > launchTime);
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.driveTrain.stop();
   }
 
   // Called when another command which requires one or more of the same

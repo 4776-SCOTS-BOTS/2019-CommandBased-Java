@@ -11,8 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.*;
 import frc.robot.RobotMap.*;
-import frc.robot.commands.*;
-import frc.robot.commands.DriveTrain.*;
+import frc.robot.commands.drivetrain.*;
 import edu.wpi.first.wpilibj.*;
 
 /**
@@ -46,8 +45,6 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
       break;
       case PracticeBot: {
         driveWheels = new DifferentialDrive(new PWMVictorSPX(RobotMap.PracticeBot.LEFT_DRIVE_PWM), new PWMVictorSPX(RobotMap.PracticeBot.RIGHT_DRIVE_PWM));
-        //System.out.println("DRIVETRAINSUBSYSTEM: Left Motor: " + RobotMap.PracticeBot.LEFT_DRIVE_PWM + ", Right Motor: " + RobotMap.PracticeBot.RIGHT_DRIVE_PWM);
-        //System.out.println("DRIVEWHEELS: ");
       }
       break;
       case TestBoard: {

@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.manipulators;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -35,6 +35,7 @@ public class IntakeManipulator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    System.out.println("L: " + Robot.intake.getLeftVacuumCurrent() + " R: " + Robot.intake.getRightVacuumCurrent());
     //operate intake mouth wheels using left y axis of manip
     //Robot.intake.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_Y_AXIS));
     //operate hatch vacuums using back triggers of manip
@@ -42,7 +43,7 @@ public class IntakeManipulator extends Command {
     //Power intake wheels
     Robot.intake.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getManipulatorAxis(XBox.LEFT_TRIGGER_AXIS), true);
     //Power vacuum motors and detach servos if needed
-    Robot.intake.powerVacuum(Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS), true);
+    Robot.intake.powerVacuum(Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS), true, true);
     
     /*//Operate closing / opening of intake jaw
     if (Robot.oi.getManipulatorPOV() == XBox.TOP_POV) {

@@ -15,9 +15,41 @@ public class HoldElevatorHeight extends Command {
   double myTarget;
   MoveElevator myBase;
 
-  public HoldElevatorHeight(MoveElevator base) {
+  double lowHeight;
+  double midHeight;
+  double highHeight;
+  double threshold;
+  double feed;
+
+  public HoldElevatorHeight(MoveElevator base, RobotMap.RobotName robot) {
     requires(Robot.elevator);
     myBase = base;
+    switch (robot) {
+      case CompBot: {
+        lowHeight = RobotMap.CompBot.HIGH_HEIGHT;
+        midHeight = RobotMap.CompBot.MID_HEIGHT;
+        highHeight = RobotMap.CompBot.LOW_HEIGHT;
+        threshold = RobotMap.CompBot.ELEVATOR_THRESHOLD;
+        feed = RobotMap.CompBot.ELEVATOR_FEED_FORWARD;
+      }
+      break;
+      case PracticeBot: {
+        lowHeight = RobotMap.PracticeBot.HIGH_HEIGHT;
+        midHeight = RobotMap.PracticeBot.MID_HEIGHT;
+        highHeight = RobotMap.PracticeBot.LOW_HEIGHT;
+        threshold = RobotMap.PracticeBot.ELEVATOR_THRESHOLD;
+        feed = RobotMap.PracticeBot.ELEVATOR_FEED_FORWARD;
+      }
+      break;
+      default: {
+        lowHeight = RobotMap.CompBot.HIGH_HEIGHT;
+        midHeight = RobotMap.CompBot.MID_HEIGHT;
+        highHeight = RobotMap.CompBot.LOW_HEIGHT;
+        threshold = RobotMap.CompBot.ELEVATOR_THRESHOLD;
+        feed = RobotMap.CompBot.ELEVATOR_FEED_FORWARD;
+        System.out.println(robot + " doesn't have a case in \'HoldElevatorHeight\'!");
+      }
+    }
   }
 
   // Called just before this Command runs the first time
@@ -29,24 +61,24 @@ public class HoldElevatorHeight extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.elevator.getRightPot() < RobotMap.PracticeBot.HIGH_HEIGHT) {
+    if (Robot.elevator.getRightPot() < highHeight) {
       Robot.elevator.disableElevator();
       return;
     } 
-    else if(Robot.elevator.getRightPot() > RobotMap.PracticeBot.LOW_HEIGHT) {
+    else if(Robot.elevator.getRightPot() > lowHeight) {
       Robot.elevator.disableElevator();
       return;
     }
-    if (Robot.elevator.getRightPot() > (myTarget + RobotMap.PracticeBot.ELEVATOR_THRESHOLD)) {
+    if (Robot.elevator.getRightPot() > (myTarget + threshold)) {
       System.out.println("GOING A BIT HIGHER");
       Robot.elevator.rawSetPower(0.50);
     }
-    else if (Robot.elevator.getRightPot() < (myTarget - RobotMap.PracticeBot.ELEVATOR_THRESHOLD)) {
+    else if (Robot.elevator.getRightPot() < (myTarget - threshold)) {
       System.out.println("GOING A BIT LOWER");
       Robot.elevator.rawSetPower(-0.50);
     } else {
       System.out.println("HOLDING HEIGHT");
-      Robot.elevator.rawSetPower(RobotMap.PracticeBot.ELEVATOR_FEED_FORWARD);
+      Robot.elevator.rawSetPower(feed);
     }
   }
 

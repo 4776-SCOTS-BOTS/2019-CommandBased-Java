@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.commands.*;
+import frc.robot.commands.manipulators.*;
 
 /**
  * Subsystem that handles the climber.
@@ -20,8 +20,8 @@ public class ClimberSubsystem extends Subsystem {
   Solenoid frontCylinders;
   Solenoid rearCylinders;
   PWMVictorSPX climbWheels;
-  boolean isFrontExtended;
-  boolean isRearExtended;
+  public boolean isFrontExtended;
+  public boolean isRearExtended;
 
   //Blank Constructor: Do not use anything
   public ClimberSubsystem () {
@@ -33,9 +33,9 @@ public class ClimberSubsystem extends Subsystem {
   public ClimberSubsystem (RobotMap.RobotName robotName) {
     switch (robotName) {
       case CompBot: {
-        frontCylinders = null;
-        rearCylinders = null;
-        climbWheels = null;
+        frontCylinders = new Solenoid(RobotMap.CompBot.CLIMBER_FRONT_PORT);
+        rearCylinders = new Solenoid(RobotMap.CompBot.CLIMBER_REAR_PORT);
+        climbWheels = new PWMVictorSPX(RobotMap.CompBot.CLIMBING_WHEELS_PWM);
       }break;
       case PracticeBot: {
         frontCylinders = new Solenoid(RobotMap.PracticeBot.CLIMBER_FRONT_PORT);
@@ -70,6 +70,18 @@ public class ClimberSubsystem extends Subsystem {
   public void toggleRear() {
     isRearExtended = !isRearExtended;
     rearCylinders.set(isRearExtended);
+  }
+  public void raiseAllClimbers() {
+    isRearExtended = true;
+    isFrontExtended = true;
+    frontCylinders.set(true);
+    rearCylinders.set(true);
+  }
+  public void lowerAllClimbers() {
+    isRearExtended = false;
+    isFrontExtended = false;
+    frontCylinders.set(false);
+    rearCylinders.set(false);
   }
   public void powerClimbWheels(double power) {
     climbWheels.set(power);

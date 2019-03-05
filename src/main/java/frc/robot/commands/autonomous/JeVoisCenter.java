@@ -5,12 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.*;
 
 /**
@@ -45,7 +43,6 @@ public class JeVoisCenter extends Command {
       end();
     }
     //target = RobotMap.JeVois.CAMERA_WIDTH / 2; //target = 160
-    //target = RobotMap.PracticeBot.JEVOIS_CENTER;
     target = 160;
 
     //P = RobotMap.JeVois.PID_P;

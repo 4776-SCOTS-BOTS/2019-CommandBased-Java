@@ -5,20 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class Autonomous extends CommandGroup {
+public class AutoTapeAllign extends CommandGroup {
   /**
-   * Add your docs here.
+   * Auto allign to the tape, then drive at it!
    */
-  public Autonomous() {
+  public AutoTapeAllign() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-
+    addSequential(new JeVoisCenter());
+    addSequential(new RampToTape());
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());

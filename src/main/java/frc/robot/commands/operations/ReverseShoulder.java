@@ -5,16 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.operations;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ToggleShoulder extends Command {
+public class ReverseShoulder extends Command {
   boolean goF;
-  public ToggleShoulder() {
+  public ReverseShoulder() {
     requires(Robot.shoulder);
-    goF = true;
+    goF = false;
   }
 
   // Called just before this Command runs the first time
@@ -26,7 +26,6 @@ public class ToggleShoulder extends Command {
   @Override
   protected void execute() {
     System.out.println("Time:"+Robot.t.get()+" Pot:"+Robot.shoulder.getPotValue());
-  
     if (goF) {
       Robot.shoulder.powerShoulder(1);
     } else {
