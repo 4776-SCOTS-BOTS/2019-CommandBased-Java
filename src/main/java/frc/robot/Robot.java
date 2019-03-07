@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
 
   public static boolean readData;
   private boolean debugJeVois;
-  private int oldPOV;
+  private int moldPOV;
 
   Command autonomousCommand;
   Command dPadLeftCommand;
@@ -101,8 +101,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("a RAISE ALL", all);
     Command none = new LowerClimbers();
     SmartDashboard.putData("a LOWER ALL", none);
-    SmartDashboard.putData("a bbbb ALL", none);
-    SmartDashboard.putData("aaaaazzzza bbbb ALL", all);
     Command front = new ToggleFront();
     SmartDashboard.putData("a CLIMB FRONT", front);
     Command rear = new ToggleRear();
@@ -213,13 +211,14 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     //System.out.println("TeleopRunning");
     Scheduler.getInstance().run(); 
-    int pov = oi.getManipulatorPOV();
-    if ((pov != oldPOV) && (pov == XBox.LEFT_POV)) {
+    int mpov = oi.getManipulatorPOV();
+
+    if ((mpov != moldPOV) && (mpov == XBox.LEFT_POV)) {
       System.out.println("Hey, you pressed the left pov button! Good job! :D Ima run the supa command!");
       dPadLeftCommand.start();
     }
 
-    oldPOV = pov;
+    moldPOV = mpov;
   }
 
   /**

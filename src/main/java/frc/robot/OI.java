@@ -29,7 +29,11 @@ public class OI {
   Button autoAllignButton,
   testButton,
   rampButton,
-  connectButton;
+  connectButton,
+  raiseClimbersButton,
+  lowerClimbersButton,
+  toggleFrontClimbersButton,
+  toggleRearClimbersButton;
   //MANIPULATOR--------------------------
   Button setCargoHeightButton,
   setHatchHeightButton,
@@ -62,6 +66,15 @@ public class OI {
     
     //connectButton = new JoystickButton(driverJoystick, XBox.Y_BUTTON);
     //connectButton.whenPressed(new ReconnectJeVois(false));
+
+    raiseClimbersButton = new JoystickButton(driverJoystick, XBox.Y_BUTTON);
+    raiseClimbersButton.whenActive(new RaiseClimbers());
+    lowerClimbersButton = new JoystickButton(driverJoystick, XBox.A_BUTTON);
+    lowerClimbersButton.whenActive(new LowerClimbers());
+    toggleFrontClimbersButton = new JoystickButton(driverJoystick, XBox.B_BUTTON);
+    toggleFrontClimbersButton.whenActive(new ToggleFront());
+    toggleRearClimbersButton = new JoystickButton(driverJoystick, XBox.X_BUTTON);
+    toggleRearClimbersButton.whenActive(new ToggleRear());
 
 
     if (useSinglePlayer) {
