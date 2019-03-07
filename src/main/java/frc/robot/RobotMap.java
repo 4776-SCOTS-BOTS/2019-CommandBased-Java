@@ -73,14 +73,15 @@ public class RobotMap {
     ELEVATOR_THRESHOLD = 0.02,//how close to the correct height does the elevator have to be?
     ELEVATOR_FEED_FORWARD = 0.117,//how much power is needed to keep the elevator at its height?
     ELEVATOR_MAX_SPEED = 0.70,//how fast can the elevator go?
-    FORWARD_STRAIGHT_SHOULDER = 0.4545366,
-    FORWARD_UP_SHOULDER = 0.47725756,
-    REVERSE_UP_SHOULDER = 0.5379968,
-    REVERSE_STRAIGHT_SHOULDER = 0.5515320,
+    FORWARD_STRAIGHT_SHOULDER = 0.361521,
+    FORWARD_UP_SHOULDER = 0.37925,
+    REVERSE_UP_SHOULDER = 0.47249,
+    REVERSE_STRAIGHT_SHOULDER = 0.4881599,
     SHOULDER_MAX_SPEED = 0.5,
-    CARGO_PICKUP_SHOULDER = 0.56589,
-    SHOULDER_THRESHOLD = 0.005,
+    CARGO_PICKUP_SHOULDER = 0.56589,//when jaw is open, pick cargo off the ground
+    SHOULDER_THRESHOLD = 0.05,
     JEVOIS_CENTER = 160.0,
+    SHOULDER_FEED_FORWARD = 0.21875,
     //FOR VACUUMS:
     MIN_LEFT_VACUUM_CURRENT = 0,
     MAX_LEFT_VACUUM_CURRENT = 0,

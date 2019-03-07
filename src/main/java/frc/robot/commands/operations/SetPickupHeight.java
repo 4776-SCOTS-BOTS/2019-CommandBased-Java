@@ -82,19 +82,33 @@ public class SetPickupHeight extends Command {
     //System.out.println("ME: " + Robot.shoulder.getPotValue() + "Target: " + targetAngle);
     if (Robot.shoulder.getPotValue() > targetAngle) {
       //decrease shoulder
-      Robot.shoulder.powerShoulder(maxSpeed);
+      if (closeEnough()) {
+        Robot.shoulder.powerShoulder(-RobotMap.CompBot.SHOULDER_FEED_FORWARD);
+      } else {
+
+        Robot.shoulder.powerShoulder(maxSpeed);
+      }
     } else {
       //increase shoulder
+      if (closeEnough()) {
+        Robot.shoulder.powerShoulder(RobotMap.CompBot.SHOULDER_FEED_FORWARD);
+      } else {
+        
       Robot.shoulder.powerShoulder(-maxSpeed);
+      }
     }
   }
 
   // Make this return true when this Command no longer needs to run execute()
-  @Override
-  protected boolean isFinished() {
+  
+  boolean closeEnough() {
     System.out.println((Math.abs(Robot.shoulder.getPotValue() - targetAngle) < threshold));
     return (Math.abs(Robot.shoulder.getPotValue() - targetAngle) < threshold);
     //return ((Robot.shoulder.getPotValue() > (targetAngle - threshold)) && (Robot.shoulder.getPotValue() < (targetAngle + threshold)));
+  }
+  @Override
+  protected boolean isFinished() {
+    return false;
   }
 
   // Called once after isFinished returns true
