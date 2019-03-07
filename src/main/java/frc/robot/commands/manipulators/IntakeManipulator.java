@@ -35,7 +35,6 @@ public class IntakeManipulator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("L: " + Robot.intake.getLeftVacuumCurrent() + " R: " + Robot.intake.getRightVacuumCurrent());
     //operate intake mouth wheels using left y axis of manip
     //Robot.intake.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_Y_AXIS));
     //operate hatch vacuums using back triggers of manip

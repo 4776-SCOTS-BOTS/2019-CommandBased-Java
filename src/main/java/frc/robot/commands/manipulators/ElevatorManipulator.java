@@ -28,6 +28,7 @@ public class ElevatorManipulator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    //System.out.println("rightELEV: " + Robot.elevator.getRightPot());
     double change = -Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS) - oldOutput;
     change = Math.max(-limitChange, Math.min(change, limitChange));//clamp change
     oldOutput += change;

@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.*;
-//import frc.robot.OI.*;
+import frc.robot.OI.*;
 import frc.robot.RobotMap.*;
 import frc.robot.commands.autonomous.Autonomous;
 import frc.robot.commands.operations.*;
@@ -39,8 +39,10 @@ public class Robot extends TimedRobot {
 
   public static boolean readData;
   private boolean debugJeVois;
+  private int oldPOV;
 
   Command autonomousCommand;
+  Command dPadLeftCommand;
   SendableChooser<Command> chooser = new SendableChooser<>();
 
   /**
@@ -51,9 +53,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     if (true) {
       //Add camera streams
-      //CameraServer.getInstance().addAxisCamera("super-cam", "10.47.76.4");
-      //CameraServer.getInstance().addAxisCamera("basic-cam", "10.47.76.5");
-      CameraServer.getInstance().addAxisCamera("bob-cam", "10.47.76.6");
+      CameraServer.getInstance().addAxisCamera("super-cam", "10.47.76.4");
+      CameraServer.getInstance().addAxisCamera("basic-cam", "10.47.76.5");
+      //CameraServer.getInstance().addAxisCamera("bob-cam", "10.47.76.6");
     }
     System.out.println("BEGINNING_ROBOT_INIT - Instantiating subsystems for \'" + currentRobot + "\'!");
     readData = false; //Reading data every loop is VERY performance heavy, so make sure readData is off when not needed!
@@ -71,7 +73,7 @@ public class Robot extends TimedRobot {
     elevator = new ElevatorSusbsystem(currentRobot);
     //elevator = new ElevatorSusbsystem();//blank subsystem
 
-    intake = new IntakeSubsystem(currentRobot, true, true);
+    intake = new IntakeSubsystem(currentRobot, true, false);
     //intake = new IntakeSubsystem();//blank subsystem
 
     shoulder = new ShoulderSubsystem(currentRobot);
@@ -80,7 +82,8 @@ public class Robot extends TimedRobot {
     climber = new ClimberSubsystem(currentRobot);
     //climber = new ClimberSubsystem();//blank subsystem
     oi = new OI(false, currentRobot);//false = doubleplayer, true = singleplayer
-
+    
+    dPadLeftCommand = new EnterPickupCargoMode(currentRobot);
     //Create chooser tool for different autonomouses
     chooser.setDefaultOption("Default Auto", new Autonomous());
     //chooser.addOption("Basic Autonomous", new SuperAutonomous());
@@ -98,6 +101,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("a RAISE ALL", all);
     Command none = new LowerClimbers();
     SmartDashboard.putData("a LOWER ALL", none);
+    SmartDashboard.putData("a bbbb ALL", none);
+    SmartDashboard.putData("aaaaazzzza bbbb ALL", all);
     Command front = new ToggleFront();
     SmartDashboard.putData("a CLIMB FRONT", front);
     Command rear = new ToggleRear();
@@ -208,7 +213,13 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     //System.out.println("TeleopRunning");
     Scheduler.getInstance().run(); 
-    //elevator.setPower(oi.getDriverAxis(XBox.RIGHT_Y_AXIS));   
+    int pov = oi.getManipulatorPOV();
+    if ((pov != oldPOV) && (pov == XBox.LEFT_POV)) {
+      System.out.println("Hey, you pressed the left pov button! Good job! :D Ima run the supa command!");
+      dPadLeftCommand.start();
+    }
+
+    oldPOV = pov;
   }
 
   /**

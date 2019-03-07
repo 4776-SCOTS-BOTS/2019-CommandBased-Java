@@ -119,15 +119,19 @@ public class IntakeSubsystem extends Subsystem {
     if (autoDisable && (power < -0.3)) {
       closeServos();
     }
-    if (useRumble && (power < -0.3) && ((getLeftVacuumCurrent() > minLeftVacuumCurrent && getLeftVacuumCurrent() < maxLeftVacuumCurrent) || (getRightVacuumCurrent() > minRightVacuumCurrent && getRightVacuumCurrent() < maxRightVacuumCurrent))) {
+    if (useRumble && (power < -0.3) && ((false && (getLeftVacuumCurrent() > minLeftVacuumCurrent) && getLeftVacuumCurrent() < maxLeftVacuumCurrent) || (getRightVacuumCurrent() > minRightVacuumCurrent && getRightVacuumCurrent() < maxRightVacuumCurrent))) {
       Robot.oi.rumble(1);
     } else {
       Robot.oi.rumble(0);
     }
   }
   public void powerIntake(double power, boolean autoDisable) {
-    if (intakeWheels != null && (!autoDisable || isOpen)) {
-      intakeWheels.set(power);
+    if (intakeWheels != null) {
+      if (!autoDisable || isOpen) {
+        intakeWheels.set(power);
+      } else {
+        intakeWheels.set(0);
+      }
     }
   }
   public void disableIntake() {

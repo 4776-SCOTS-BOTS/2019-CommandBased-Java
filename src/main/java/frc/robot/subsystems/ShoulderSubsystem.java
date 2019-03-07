@@ -30,6 +30,7 @@ public class ShoulderSubsystem extends Subsystem {
     shoulderMotor.stopMotor();
   }
   public void powerIntake(double power) {
+    System.out.println("INTAAAKE: " + power);
     intakeMotor.set(power);
   }
   public void stopIntake() {

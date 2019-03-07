@@ -22,7 +22,8 @@ import frc.robot.commands.operations.*;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-  public Joystick driverJoystick, manipulatorJoystick;
+  private Joystick driverJoystick;
+  private Joystick manipulatorJoystick;
   boolean singlePlayer;
   //DRIVER-------------------------------
   Button autoAllignButton,
@@ -38,6 +39,7 @@ public class OI {
   setFaceFrontButton,
   setFaceBackButton,
   overrideElevatorButton,
+  overrideShoulderButton,
   toggleMouthButton;
 
   public OI () {
@@ -95,6 +97,9 @@ public class OI {
       //Override HoldElevator/MoveElevator Commands to allow driver control
       overrideElevatorButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_STICK_BUTTON);
       overrideElevatorButton.whenPressed(new ElevatorManipulator());
+      //Override the SetPickupHeight Commands to allow driver control
+      overrideShoulderButton = new JoystickButton(manipulatorJoystick, XBox.RIGHT_STICK_BUTTON);
+      overrideShoulderButton.whenPressed(new ShoulderManipulator());
       
       //Make shoulder face the front
       setFaceFrontButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_BUMPER_BUTTON);
@@ -107,16 +112,16 @@ public class OI {
   }
   public void rumble(double power) {
     //System.out.println("RUMBLE: " + power);
-    if (true) {
-      return;
-    }
-    power = Math.min(1, Math.max(power, 0));
+    //manipulatorJoystick.setRumble(RumbleType.kLeftRumble, power);
+    //manipulatorJoystick.setRumble(RumbleType.kRightRumble, power);
     driverJoystick.setRumble(RumbleType.kLeftRumble, power);
     driverJoystick.setRumble(RumbleType.kRightRumble, power);
-    if (manipulatorJoystick != null) {
+    /*if (manipulatorJoystick != null) {
       manipulatorJoystick.setRumble(RumbleType.kLeftRumble, power);
       manipulatorJoystick.setRumble(RumbleType.kRightRumble, power);
-    }
+    } else {
+      System.out.println("SS");
+    }*/
   }
   //Driver
   public double getDriverAxis(int axisIndex) {

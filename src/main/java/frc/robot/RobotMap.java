@@ -55,21 +55,21 @@ public class RobotMap {
     CLIMBER_REAR_PORT = 2, //Pneumatic cylinders to climb (PORT = PCM's PWM)
     HATCH_VACUUM = 12, //Suction cup motors
     //Potentiometer analog input ports
-    SHOULDER_POT_AI = 6,//TODO: shoulder pot
+    SHOULDER_POT_AI = 6,
     RIGHT_ELEVATOR_POT_AI = 4,
     LEFT_ELEVATOR_POT_AI = 5,
     //Servo PWMs
-    TOP_SERVO_RELEASE_PWM = 7,//TODO: top servo
-    BOTTOM_SERVO_RELEASE_PWM = 8;//TODO: bottom servo
+    TOP_SERVO_RELEASE_PWM = 7,
+    BOTTOM_SERVO_RELEASE_PWM = 8;
     //Calibration constants
     public static double 
-    RIGHT_ELEVATOR_POT_OFFSET= -0.0541499, //how much smaller is the right side
-    RIGHT_ELEVATOR_OFFSET_SCALE = 6.0,//how much does the elevator try to be balanced
-    RAMP_UP_DISTANCE = 0.06915508,// + 0.08011591,//0.149 is too much
-    RAMP_DOWN_DISTANCE = 0.0306812998,//how far does the elevator ramp drive?
-    LOW_HEIGHT = 0.735012,//for elevator
-    MID_HEIGHT = 0.524817,//for elevator
-    HIGH_HEIGHT = 0.40,//0.3537480,//for elevator
+    RIGHT_ELEVATOR_POT_OFFSET= 0.0, //how much smaller is the right side
+    RIGHT_ELEVATOR_OFFSET_SCALE = 0.0,//how much does the elevator try to be balanced
+    RAMP_UP_DISTANCE = 0.0,// + 0.08011591,//0.149 is too much
+    RAMP_DOWN_DISTANCE = 0.0,//how far does the elevator ramp drive?
+    LOW_HEIGHT = 0.0,//for elevator
+    MID_HEIGHT = 0.0,//for elevator
+    HIGH_HEIGHT = 0.0,//0.3537480,//for elevator
     ELEVATOR_THRESHOLD = 0.02,//how close to the correct height does the elevator have to be?
     ELEVATOR_FEED_FORWARD = 0.117,//how much power is needed to keep the elevator at its height?
     ELEVATOR_MAX_SPEED = 0.70,//how fast can the elevator go?
@@ -146,10 +146,10 @@ public class RobotMap {
     SHOULDER_THRESHOLD = 0.005,
     JEVOIS_CENTER = 160.0,
     //FOR VACUUMS:
-    MIN_LEFT_VACUUM_CURRENT = 0,
-    MAX_LEFT_VACUUM_CURRENT = 0,
-    MIN_RIGHT_VACUUM_CURRENT = 0,
-    MAX_RIGHT_VACUUM_CURRENT = 0;
+    MIN_LEFT_VACUUM_CURRENT = 2.0,
+    MAX_LEFT_VACUUM_CURRENT = 2.5,
+    MIN_RIGHT_VACUUM_CURRENT = 1.7,
+    MAX_RIGHT_VACUUM_CURRENT = 1.9;
   }
   /**
    * Contained in this class are constants used for the old competition robot (for FIRST Power Up).
