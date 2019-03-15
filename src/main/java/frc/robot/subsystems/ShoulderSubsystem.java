@@ -22,25 +22,27 @@ public class ShoulderSubsystem extends Subsystem {
   Potentiometer shoulderPot;
   public boolean facingBack;
   public boolean angledUp;
+  double pot;
 
   public void powerShoulder(double power) {
     shoulderMotor.set(power);
+    //System.out.println(";;; " + power);
   }
   public void stopShoulder() {
     shoulderMotor.stopMotor();
   }
   public void powerIntake(double power) {
-    System.out.println("INTAAAKE: " + power);
-    intakeMotor.set(power);
+    //intakeMotor.set(power);
   }
   public void stopIntake() {
-    intakeMotor.stopMotor();
+    //intakeMotor.stopMotor();
   }
   public double getPotValue() {
-    if (shoulderPot != null) {
+    if (shoulderPot != null && (shoulderPot.get() > 0.2)) {
+      pot = shoulderPot.get();
       return shoulderPot.get();
     } else {
-      return 0.0;
+      return pot;
     }
   }
 
@@ -56,7 +58,8 @@ public class ShoulderSubsystem extends Subsystem {
       case CompBot: {
         shoulderMotor = new PWMVictorSPX(RobotMap.CompBot.SHOULDER_PWM);
         shoulderPot = new AnalogPotentiometer(RobotMap.CompBot.SHOULDER_POT_AI);
-        intakeMotor = new PWMVictorSPX(RobotMap.CompBot.INTAKE_BELTS_PWM);
+        //intakeMotor = new PWMVictorSPX(RobotMap.CompBot.INTAKE_BELTS_PWM);
+        intakeMotor = null;
       }
       break;
       case Steve: {
@@ -74,7 +77,8 @@ public class ShoulderSubsystem extends Subsystem {
       case PracticeBot: {
         shoulderMotor = new PWMVictorSPX(RobotMap.PracticeBot.SHOULDER_PWM);
         shoulderPot = new AnalogPotentiometer(RobotMap.PracticeBot.SHOULDER_POT_AI);
-        intakeMotor = new PWMVictorSPX(RobotMap.PracticeBot.INTAKE_BELTS_PWM);
+        //intakeMotor = new PWMVictorSPX(RobotMap.PracticeBot.INTAKE_BELTS_PWM);
+        intakeMotor = null;
       }
       break;
       case TestBoard: {

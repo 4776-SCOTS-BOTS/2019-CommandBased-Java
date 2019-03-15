@@ -44,6 +44,8 @@ public class Robot extends TimedRobot {
   Command autonomousCommand;
   Command dPadLeftCommand;
   SendableChooser<Command> chooser = new SendableChooser<>();
+  Timer t;
+  Command myAuto;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -51,12 +53,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    if (true) {
-      //Add camera streams
-      CameraServer.getInstance().addAxisCamera("super-cam", "10.47.76.4");
-      CameraServer.getInstance().addAxisCamera("basic-cam", "10.47.76.5");
-      //CameraServer.getInstance().addAxisCamera("bob-cam", "10.47.76.6");
-    }
+    t = new Timer();
+    
+    //CameraServer.getInstance().addAxisCamera("basic-cam", "10.47.76.5");
+
+
+
+    
+    //Add camera streams
+    //CameraServer.getInstance().addAxisCamera("super-cam", "10.47.76.4");
+    //CameraServer.getInstance().addAxisCamera("bob-cam", "10.47.76.6");
+    
     System.out.println("BEGINNING_ROBOT_INIT - Instantiating subsystems for \'" + currentRobot + "\'!");
     readData = false; //Reading data every loop is VERY performance heavy, so make sure readData is off when not needed!
     debugJeVois = false;
@@ -73,7 +80,7 @@ public class Robot extends TimedRobot {
     elevator = new ElevatorSusbsystem(currentRobot);
     //elevator = new ElevatorSusbsystem();//blank subsystem
 
-    intake = new IntakeSubsystem(currentRobot, true, false);
+    intake = new IntakeSubsystem(currentRobot, false, true);
     //intake = new IntakeSubsystem();//blank subsystem
 
     shoulder = new ShoulderSubsystem(currentRobot);
@@ -91,26 +98,28 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto Mode:", chooser);
     
     //Add Calibrations to the SmartDashboard:
-    SmartDashboard.putData("Reset Bottom", new ResetBottomElevatorHeight(currentRobot));
+    /*SmartDashboard.putData("Reset Bottom", new ResetBottomElevatorHeight(currentRobot));
     SmartDashboard.putData("Reset Middle", new ResetMiddleElevatorHeight(currentRobot));
     SmartDashboard.putData("Reset High", new ResetHighElevatorHeight(currentRobot));
 
     Command mouth = new ToggleMouthOpen(false, currentRobot);
     SmartDashboard.putData("a TOGGLE MOUTH", mouth);
+    */
     Command all = new RaiseClimbers();
-    SmartDashboard.putData("a RAISE ALL", all);
+    SmartDashboard.putData("the RAISE ALL", all);
     Command none = new LowerClimbers();
-    SmartDashboard.putData("a LOWER ALL", none);
+    SmartDashboard.putData("the LOWER ALL", none);
     Command front = new ToggleFront();
-    SmartDashboard.putData("a CLIMB FRONT", front);
+    SmartDashboard.putData("the CLIMB FRONT", front);
     Command rear = new ToggleRear();
-    SmartDashboard.putData("a CLIMB REAR", rear);
-
+    SmartDashboard.putData("the CLIMB REAR", rear);
+/*
     Command forward = new ToggleShoulder();
     SmartDashboard.putData("FORWARD SHOULDER", forward);
     Command reverse = new ReverseShoulder();
-    SmartDashboard.putData("REVERSE SHOULDER", reverse);
+    SmartDashboard.putData("REVERSE SHOULDER", reverse);*/
     
+    myAuto = new InitIntake();
   }
 
   /**
@@ -142,7 +151,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    SmartDashboard.putBoolean("Enabled", false);
+    //SmartDashboard.putBoolean("Enabled", false);
   }
 
   @Override
@@ -165,8 +174,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     Robot.climber.lowerAllClimbers();
-    autonomousCommand = chooser.getSelected();
-
+    //autonomousCommand = chooser.getSelected();
+    autonomousCommand = myAuto;
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -186,10 +195,21 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
+    int mpov = oi.getManipulatorPOV();
+
+    if ((mpov != moldPOV) && (mpov == XBox.LEFT_POV)) {
+      System.out.println("Hey, you pressed the left pov button! Good job! :D Ima run the supa command!");
+      //dPadLeftCommand.start();
+    }
+
+    moldPOV = mpov;
   }
 
   @Override
   public void teleopInit() {
+    t.reset();
+    t.start();
+    //CameraServer.getInstance().removeCamera("basic-cam");
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -198,7 +218,7 @@ public class Robot extends TimedRobot {
       autonomousCommand.cancel();
     }
     System.out.println("TELEOP_INIT");
-    SmartDashboard.putBoolean("Enabled", true);
+    //SmartDashboard.putBoolean("Enabled", true);
     //System.out.println("{\"FD\": 0, \"X1\": 0, \"Y1\": 0, \"W1\": 0, \"H1\": 0, \"X2\": 0, \"Y2\": 0, \"W2\": 0, \"H2\": 0}\n{".getBytes().length);
     Robot.climber.lowerAllClimbers();
     Robot.intake.setJawClosed(false);
@@ -210,12 +230,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     //System.out.println("TeleopRunning");
+    //System.out.println("TIME: " + t.get());
     Scheduler.getInstance().run(); 
     int mpov = oi.getManipulatorPOV();
 
     if ((mpov != moldPOV) && (mpov == XBox.LEFT_POV)) {
       System.out.println("Hey, you pressed the left pov button! Good job! :D Ima run the supa command!");
-      dPadLeftCommand.start();
+      //dPadLeftCommand.start();
     }
 
     moldPOV = mpov;

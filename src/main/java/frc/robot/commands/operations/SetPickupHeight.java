@@ -102,19 +102,19 @@ public class SetPickupHeight extends Command {
   // Make this return true when this Command no longer needs to run execute()
   
   boolean closeEnough() {
-    System.out.println((Math.abs(Robot.shoulder.getPotValue() - targetAngle) < threshold));
+    //System.out.println((Math.abs(Robot.shoulder.getPotValue() - targetAngle) < threshold));
     return (Math.abs(Robot.shoulder.getPotValue() - targetAngle) < threshold);
     //return ((Robot.shoulder.getPotValue() > (targetAngle - threshold)) && (Robot.shoulder.getPotValue() < (targetAngle + threshold)));
   }
   @Override
   protected boolean isFinished() {
-    return false;
+    return closeEnough();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    //System.out.println("GOSH I STOPPED WHEN I: " + isFinished());
+    System.out.println("GOSH I STOPPED WHEN I: " + isFinished());
     Robot.shoulder.stopShoulder();
   }
 
@@ -182,5 +182,6 @@ public class SetPickupHeight extends Command {
         }
       }
     }
+    //System.out.println("TARGET+ " + targetAngle);
   }
 }

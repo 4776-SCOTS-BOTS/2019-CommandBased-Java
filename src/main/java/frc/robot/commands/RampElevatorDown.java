@@ -76,15 +76,19 @@ public class RampElevatorDown extends Command {
   protected void execute() {
     //System.out.println("SLOWING DOWN!!!!!!!!!! up?: " + goUp);
     //System.out.println("SSSS - " + timer.get());
-    //double scale = (goUp) ? 1 : -1;
+    double scale = (goUp) ? -1 : 1;
     //use different ramps for up/down
+    
     if (goUp) {
-      currentSpeed = Math.exp(b * timer.get() / c) * a;
+      currentSpeed = scale * Math.exp(b * timer.get() / c) * a;
+      currentSpeed = -1 * 0.554 * Math.exp(-14.2 *timer.get());
     } else {
-      currentSpeed = m *timer.get() + k;
+      //currentSpeed = m *timer.get() + k;
+    currentSpeed = 0.737 * Math.exp(-9.3 *timer.get());
     }
+  
     currentSpeed = Math.max(-maxSpeed, Math.min(maxSpeed, currentSpeed));
-    Robot.elevator.rawSetPower(currentSpeed);
+    Robot.elevator.setPower(currentSpeed);
   }
 
   // Make this return true when this Command no longer needs to run execute()

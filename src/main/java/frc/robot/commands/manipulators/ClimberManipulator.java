@@ -34,7 +34,8 @@ public class ClimberManipulator extends Command {
     if (Robot.climber.isRearExtended) {
       //put code here so driving only works on thingys
     }
-    Robot.climber.powerClimbWheels(-Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS));
+    Robot.climber.powerClimbWheels(Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS));
+    //Robot.climber.powerClimbWheels(0);
   }
 
   // Make this return true when this Command no longer needs to run execute()

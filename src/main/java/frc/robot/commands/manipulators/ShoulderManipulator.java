@@ -26,11 +26,11 @@ public class ShoulderManipulator extends Command {
   @Override
   protected void execute() {
     //System.out.println("SHOU POW: " + Robot.oi.getManipulatorAxis(XBox.RIGHT_Y_AXIS));
-    System.out.println("SHOULDERPOTVALUE: " + Robot.shoulder.getPotValue());
+    //System.out.println("SHOULDERPOTVALUE: " + Robot.shoulder.getPotValue());
     SmartDashboard.putNumber("SHOULDER POT VALUE", Robot.shoulder.getPotValue());
     
     Robot.shoulder.powerShoulder(Robot.oi.getManipulatorAxis(XBox.RIGHT_Y_AXIS) * 1.0);
-    Robot.shoulder.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getManipulatorAxis(XBox.LEFT_TRIGGER_AXIS));
+    //Robot.shoulder.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getManipulatorAxis(XBox.LEFT_TRIGGER_AXIS));
   } 
 
   // Make this return true when this Command no longer needs to run execute()

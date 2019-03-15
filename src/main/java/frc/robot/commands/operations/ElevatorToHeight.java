@@ -125,15 +125,17 @@ public class ElevatorToHeight extends Command {
   @Override
   protected void execute() {
     //boolean goUp = (Robot.elevator.getRightPot() > myTarget);
-    double scale = (goUp) ? 1 : -1;
+    double scale = (goUp) ? -1 : 1;
     if (true || goUp) {
       currentSpeed = scale * Math.exp(b * timer.get() / c) * a;
     } else {
-      currentSpeed = -1 * Math.exp(downB *timer.get()) * downA;
+      currentSpeed = 1 * Math.exp(downB *timer.get()) * downA;
     }
+    currentSpeed = scale * 0.035 * Math.exp(2.58 *timer.get());
     currentSpeed = Math.max(-maxSpeed, Math.min(maxSpeed, currentSpeed));
-    Robot.elevator.rawSetPower(currentSpeed);
-    System.out.println("Going up? " + goUp);
+    System.out.println("scale is " + scale + " because im up: " + goUp + " and speed= " + currentSpeed);
+    Robot.elevator.setPower(currentSpeed);
+    //System.out.println("up:  " + goUp);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -141,9 +143,10 @@ public class ElevatorToHeight extends Command {
   protected boolean isFinished() {
     //return currentSpeed > 0.95;
     if (goUp) {
-      return (Robot.elevator.getRightPot() < highHeight) || ((Robot.elevator.getRightPot() - rampUp) < myTarget);
+      System.out.println("ramped: " + (Robot.elevator.getRightPot() + rampUp) + ", target: " + myTarget + ", so " + ((Robot.elevator.getRightPot() + rampUp) <= myTarget));
+      return ((Robot.elevator.getRightPot() + rampUp) <= myTarget);
     } else {
-      return (Robot.elevator.getRightPot() > highHeight) || ((Robot.elevator.getRightPot() + rampDown) > myTarget);
+      return ((Robot.elevator.getRightPot() - rampDown) >= myTarget);
     }
   }
 

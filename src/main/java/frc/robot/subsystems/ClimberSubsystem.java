@@ -84,7 +84,7 @@ public class ClimberSubsystem extends Subsystem {
     rearCylinders.set(false);
   }
   public void powerClimbWheels(double power) {
-    System.out.println("POWWW: " + power);
+    //System.out.println("POWWW: " + power);
     climbWheels.set(power);
   }
   public void stopClimbWheels() {

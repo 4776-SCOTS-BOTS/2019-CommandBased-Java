@@ -22,14 +22,14 @@ public class RobotMap {
   /**
    * Enum deciding which robot is being used - The CompBot, Steve, or The PracticeBot.
    */
-  public enum RobotName {
+  /*public enum RobotName {
     CompBot,
     Steve,
     PracticeBot,
     TestBoard,
     OldCompBot;
-  }
-  public final RobotName ROBOT_NAME = RobotName.Steve;
+  }*/
+  //public final RobotName ROBOT_NAME = RobotName.Steve;
   public enum ElevatorHeight {
     High,
     Medium,
@@ -59,29 +59,31 @@ public class RobotMap {
     RIGHT_ELEVATOR_POT_AI = 4,
     LEFT_ELEVATOR_POT_AI = 5,
     //Servo PWMs
-    TOP_SERVO_RELEASE_PWM = 7,
+    TOP_SERVO_RELEASE_PWM = 9,
     BOTTOM_SERVO_RELEASE_PWM = 8;
     //Calibration constants
     public static double 
     RIGHT_ELEVATOR_POT_OFFSET= 0.0, //how much smaller is the right side
     RIGHT_ELEVATOR_OFFSET_SCALE = 0.0,//how much does the elevator try to be balanced
-    RAMP_UP_DISTANCE = 0.0,// + 0.08011591,//0.149 is too much
-    RAMP_DOWN_DISTANCE = 0.0,//how far does the elevator ramp drive?
-    LOW_HEIGHT = 0.0,//for elevator
-    MID_HEIGHT = 0.0,//for elevator
-    HIGH_HEIGHT = 0.0,//0.3537480,//for elevator
+    RAMP_UP_DISTANCE = 0.00031,// + 0.08011591,//0.149 is too much
+    RAMP_DOWN_DISTANCE = 0.011,//how far does the elevator ramp drive?
+    LOW_HEIGHT = 0.3235,//for elevator
+    MID_HEIGHT = 0.5237330478733418,//for elevator
+    HIGH_HEIGHT = 0.685,//0.3537480,//for elevator
     ELEVATOR_THRESHOLD = 0.02,//how close to the correct height does the elevator have to be?
-    ELEVATOR_FEED_FORWARD = 0.117,//how much power is needed to keep the elevator at its height?
+    //with cargo
+    ELEVATOR_FEED_FORWARD = 0.109375,//how much power is needed to keep the elevator at its height?
     ELEVATOR_MAX_SPEED = 0.70,//how fast can the elevator go?
-    FORWARD_STRAIGHT_SHOULDER = 0.361521,
-    FORWARD_UP_SHOULDER = 0.37925,
-    REVERSE_UP_SHOULDER = 0.47249,
-    REVERSE_STRAIGHT_SHOULDER = 0.4881599,
-    SHOULDER_MAX_SPEED = 0.5,
-    CARGO_PICKUP_SHOULDER = 0.56589,//when jaw is open, pick cargo off the ground
-    SHOULDER_THRESHOLD = 0.05,
+    FORWARD_STRAIGHT_SHOULDER = 0.6284652728011417,
+    FORWARD_UP_SHOULDER = 0.6479153636394408,
+    REVERSE_UP_SHOULDER = 0.7340199673988977,
+    REVERSE_STRAIGHT_SHOULDER = 0.7517071955289918,
+    SHOULDER_MAX_SPEED = 0.8,
+    CARGO_PICKUP_SHOULDER = 0.76486,//when jaw is open, pick cargo off the ground
+    SHOULDER_THRESHOLD = 0.0025,
     JEVOIS_CENTER = 160.0,
-    SHOULDER_FEED_FORWARD = 0.21875,
+    SHOULDER_FEED_FORWARD = 0.0,
+
     //FOR VACUUMS:
     MIN_LEFT_VACUUM_CURRENT = 0,
     MAX_LEFT_VACUUM_CURRENT = 0,
@@ -103,9 +105,9 @@ public class RobotMap {
   /**
    * Contained in this class are constants used for the practice robot, a prototype of the competition robot.
    */
-  public static  class PracticeBot {
+  public class PracticeBot {
     //Motor PWMs
-    public static final int 
+    public int 
     LEFT_DRIVE_PWM = 11, //Motors operating left side of the chassis
     RIGHT_DRIVE_PWM = 12, //Motors operating right side of the chassis
     LEFT_ELEVATOR_PWM = 13, //Motor that operates left elevator up and down
@@ -127,7 +129,7 @@ public class RobotMap {
     TOP_SERVO_RELEASE_PWM = 9,
     BOTTOM_SERVO_RELEASE_PWM = 18;
     //Calibration constants
-    public static double 
+    public double 
     RIGHT_ELEVATOR_POT_OFFSET= -0.0541499, //how much smaller is the right side
     RIGHT_ELEVATOR_OFFSET_SCALE = 6.0,//how much does the elevator try to be balanced
     RAMP_UP_DISTANCE = 0.06915508,// + 0.08011591,//0.149 is too much
@@ -193,4 +195,57 @@ public class RobotMap {
     PID_D = 0.0,
     ANGLE_THRESHOLD = 20; //How close can the robot be to the center to give up (units=pixels)?
   }
+  /*interface RobotType{
+    //Motor PWMs
+    public int 
+    LEFT_DRIVE_PWM(); //Motors operating left side of the chassis
+    public int RIGHT_DRIVE_PWM(), //Motors operating right side of the chassis
+    LEFT_ELEVATOR_PWM(); //Motor that operates left elevator up and down
+    RIGHT_ELEVATOR_PWM = 18, //Motor that operates right elevator up and down
+    SHOULDER_PWM = 15, //Motor that rotates the arm to face the front and back
+    INTAKE_WHEELS_PWM = 16, //Wheels picking up cargo on the stationary intake
+    INTAKE_BELTS_PWM = 13, //Wheels picking up cargo on the stationary intake
+    CLIMBING_WHEELS_PWM = 14, //Wheels on the rear pneumatic climbing cylinders (PORT = PCM's PWM)
+    //Pneumatic ports
+    INTAKE_JAW_PORT = 0, //Pneumatic cylinders opening the stationary intake (PORT = PCM's PWM)
+    CLIMBER_FRONT_PORT = 1, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+    CLIMBER_REAR_PORT = 2, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+    HATCH_VACUUM = 12, //Suction cup motors
+    //Potentiometer analog input ports
+    SHOULDER_POT_AI = 6,
+    RIGHT_ELEVATOR_POT_AI = 4,
+    LEFT_ELEVATOR_POT_AI = 5,
+    //Servo PWMs
+    TOP_SERVO_RELEASE_PWM = 9,
+    BOTTOM_SERVO_RELEASE_PWM = 8;
+    //Calibration constants
+    public static double 
+    RIGHT_ELEVATOR_POT_OFFSET= 0.0, //how much smaller is the right side
+    RIGHT_ELEVATOR_OFFSET_SCALE = 0.0,//how much does the elevator try to be balanced
+    RAMP_UP_DISTANCE = 0.00031,// + 0.08011591,//0.149 is too much
+    RAMP_DOWN_DISTANCE = 0.011,//how far does the elevator ramp drive?
+    LOW_HEIGHT = 0.3235,//for elevator
+    MID_HEIGHT = 0.5237330478733418,//for elevator
+    HIGH_HEIGHT = 0.685,//0.3537480,//for elevator
+    ELEVATOR_THRESHOLD = 0.02,//how close to the correct height does the elevator have to be?
+    //with cargo
+    ELEVATOR_FEED_FORWARD = 0.109375,//how much power is needed to keep the elevator at its height?
+    ELEVATOR_MAX_SPEED = 0.70,//how fast can the elevator go?
+    FORWARD_STRAIGHT_SHOULDER = 0.6284652728011417,
+    FORWARD_UP_SHOULDER = 0.6479153636394408,
+    REVERSE_UP_SHOULDER = 0.7340199673988977,
+    REVERSE_STRAIGHT_SHOULDER = 0.7517071955289918,
+    SHOULDER_MAX_SPEED = 0.8,
+    CARGO_PICKUP_SHOULDER = 0.76486,//when jaw is open, pick cargo off the ground
+    SHOULDER_THRESHOLD = 0.0025,
+    JEVOIS_CENTER = 160.0,
+    SHOULDER_FEED_FORWARD = 0.0,
+
+    //FOR VACUUMS:
+    MIN_LEFT_VACUUM_CURRENT = 0,
+    MAX_LEFT_VACUUM_CURRENT = 0,
+    MIN_RIGHT_VACUUM_CURRENT = 0,
+    MAX_RIGHT_VACUUM_CURRENT = 0;
+  
+  }*/
 }

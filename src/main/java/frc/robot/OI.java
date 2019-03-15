@@ -33,7 +33,8 @@ public class OI {
   raiseClimbersButton,
   lowerClimbersButton,
   toggleFrontClimbersButton,
-  toggleRearClimbersButton;
+  toggleRearClimbersButton,
+  overrideIntakeButton;
   //MANIPULATOR--------------------------
   Button setCargoHeightButton,
   setHatchHeightButton,
@@ -54,25 +55,30 @@ public class OI {
     singlePlayer = useSinglePlayer;
     //DRIVER COMMANDS--------------------------------------------------------------------------------
     driverJoystick = new Joystick(XBox.DRIVER);
-    autoAllignButton = new JoystickButton(driverJoystick, XBox.A_BUTTON);
+    //autoAllignButton = new JoystickButton(driverJoystick, XBox.A_BUTTON);
     //autoAllignButton.whileHeld(new RampToTape());
-    autoAllignButton.whileHeld(new AutoTapeAllign());//turn then ramp
+    //autoAllignButton.whileHeld(new AutoTapeAllign());//turn then ramp
     //autoAllignButton.whileHeld(new JeVoisCenter());
-    rampButton = new JoystickButton(driverJoystick, XBox.B_BUTTON);
-    rampButton.whenPressed(new RampToTape());
+    //rampButton = new JoystickButton(driverJoystick, XBox.B_BUTTON);
+    //rampButton.whenPressed(new RampToTape());
 
     testButton = new JoystickButton(driverJoystick, XBox.X_BUTTON);
     testButton.whenPressed(new ToggleServoVacuumRelease());
-    
+    overrideIntakeButton = new JoystickButton(driverJoystick, XBox.LEFT_BUMPER_BUTTON);
+    overrideIntakeButton.whenPressed(new IntakeManipulator());
     //connectButton = new JoystickButton(driverJoystick, XBox.Y_BUTTON);
     //connectButton.whenPressed(new ReconnectJeVois(false));
 
+    //robot jumps up
     raiseClimbersButton = new JoystickButton(driverJoystick, XBox.Y_BUTTON);
     raiseClimbersButton.whenActive(new RaiseClimbers());
+    //robot falls
     lowerClimbersButton = new JoystickButton(driverJoystick, XBox.A_BUTTON);
     lowerClimbersButton.whenActive(new LowerClimbers());
+    //battery side
     toggleFrontClimbersButton = new JoystickButton(driverJoystick, XBox.B_BUTTON);
     toggleFrontClimbersButton.whenActive(new ToggleFront());
+    //jaw side
     toggleRearClimbersButton = new JoystickButton(driverJoystick, XBox.X_BUTTON);
     toggleRearClimbersButton.whenActive(new ToggleRear());
 
@@ -88,7 +94,7 @@ public class OI {
 
       //Toggle mouth
       toggleMouthButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_START_BUTTON);
-      toggleMouthButton.whenPressed(new ToggleMouthOpen(false, robot));
+      toggleMouthButton.whenPressed(new ToggleMouthOpen(true, robot));
 
       //Make robot place cargo
       setCargoHeightButton = new JoystickButton(manipulatorJoystick, XBox.RIGHT_START_BUTTON);
@@ -127,8 +133,8 @@ public class OI {
     //System.out.println("RUMBLE: " + power);
     //manipulatorJoystick.setRumble(RumbleType.kLeftRumble, power);
     //manipulatorJoystick.setRumble(RumbleType.kRightRumble, power);
-    driverJoystick.setRumble(RumbleType.kLeftRumble, power);
-    driverJoystick.setRumble(RumbleType.kRightRumble, power);
+    //driverJoystick.setRumble(RumbleType.kLeftRumble, power);
+    //driverJoystick.setRumble(RumbleType.kRightRumble, power);
     /*if (manipulatorJoystick != null) {
       manipulatorJoystick.setRumble(RumbleType.kLeftRumble, power);
       manipulatorJoystick.setRumble(RumbleType.kRightRumble, power);

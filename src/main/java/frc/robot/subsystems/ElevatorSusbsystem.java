@@ -31,6 +31,7 @@ public class ElevatorSusbsystem extends Subsystem {
   Encoder leftElevatorEncoder;
   Encoder rightElevatorEncoder;
   RobotMap.ElevatorHeight currentHeight;
+  double oldHeight;
 
   //Blank Constructor: Do not create anything for this subsytem.
   public ElevatorSusbsystem () {
@@ -41,7 +42,12 @@ public class ElevatorSusbsystem extends Subsystem {
     return leftElevatorPot.get();
   }
   public double getRightPot() {
-    return rightElevatorPot.get();
+    if (leftElevatorPot.get() > 0.1) {
+      oldHeight = leftElevatorPot.get();
+    return leftElevatorPot.get();//TODO: dont use left on right
+    } else {
+      return oldHeight;
+    }
   }
 
   public void setHeight (RobotMap.ElevatorHeight newHeight) {
@@ -51,11 +57,7 @@ public class ElevatorSusbsystem extends Subsystem {
   public void setPower (double power) {
     leftElevatorMotor.set(power);
     rightElevatorMotor.set(power);
-  }
-  public void rawSetPower (double power) {
-    leftElevatorMotor.set(power);
-    rightElevatorMotor.set(power);
-    //System.out.println(power + " " + getLeftPot() + " " + getRightPot());
+    //System.out.println("THE SPEED: " + power);
   }
   public void setPower (double power, double rightMod) {
     if (rightMod > 1) {

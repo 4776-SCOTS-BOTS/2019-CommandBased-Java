@@ -56,17 +56,17 @@ public class ToggleMouthOpen extends Command {
     System.out.println("Target(toPickUpCargo): " + targetAngle + "PotPickupCargo: " + Robot.shoulder.getPotValue());
     if (Robot.shoulder.getPotValue() > targetAngle) {
       //decrease shoulder
-      Robot.shoulder.powerShoulder(0.6);
+      Robot.shoulder.powerShoulder(RobotMap.CompBot.SHOULDER_MAX_SPEED);
     } else {
       //increase shoulder
-      Robot.shoulder.powerShoulder(-0.6);
+      Robot.shoulder.powerShoulder(-RobotMap.CompBot.SHOULDER_MAX_SPEED);
     }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (movingShoulderAlso) {
+    if (movingShoulderAlso && Robot.intake.isOpen) {
       return ((Robot.shoulder.getPotValue() > (targetAngle - threshold)) && (Robot.shoulder.getPotValue() < (targetAngle + threshold)));
     } else {
       return true;

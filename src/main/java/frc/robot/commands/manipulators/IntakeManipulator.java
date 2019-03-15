@@ -16,20 +16,16 @@ import frc.robot.OI.XBox;
  * Command to operate/manipulate the <b>intake</b>.
  */
 public class IntakeManipulator extends Command {
-  Timer timer;
   double backTime;
   double waitTime = 0.3;
 
   public IntakeManipulator() {
     requires(Robot.intake);
-    timer = new Timer();
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    timer.reset();
-    timer.start();
   }
 
   // Called repeatedly when this Command is scheduled to run

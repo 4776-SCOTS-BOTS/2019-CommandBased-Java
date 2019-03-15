@@ -8,6 +8,7 @@
 package frc.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.robot.commands.operations.*;
 
 public class Autonomous extends CommandGroup {
   /**
@@ -16,7 +17,10 @@ public class Autonomous extends CommandGroup {
   public Autonomous() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
-    addSequential(new Launch());
+    
+    addParallel(new InitIntake());
+    //addSequential(new Launch());
+    
     // these will run in order.
 
     // To run multiple commands at the same time,

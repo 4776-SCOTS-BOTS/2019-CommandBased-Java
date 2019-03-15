@@ -23,6 +23,8 @@ public class IntakeSubsystem extends Subsystem {
   Solenoid jaw;
   PWMVictorSPX intakeWheels;
   PWMVictorSPX hatchVacuum;
+  PWMVictorSPX newIntakeBelts;//the belts holding/shooting cargo
+  DigitalInput limitSwitch;
   Servo topServoRelease;
   Servo bottomServoRelease;
   double currentAngle;
@@ -42,6 +44,7 @@ public class IntakeSubsystem extends Subsystem {
   }
 
   public IntakeSubsystem (RobotName robotName, boolean enableCompressor, boolean closeServos) {
+    newIntakeBelts = new PWMVictorSPX(RobotMap.CompBot.INTAKE_BELTS_PWM);
     switch (robotName) {
       case CompBot: {
         jaw = new Solenoid(RobotMap.CompBot.INTAKE_JAW_PORT);
@@ -49,9 +52,14 @@ public class IntakeSubsystem extends Subsystem {
         hatchVacuum = new PWMVictorSPX(RobotMap.CompBot.HATCH_VACUUM);
         topServoRelease = new Servo(RobotMap.CompBot.TOP_SERVO_RELEASE_PWM);
         bottomServoRelease = new Servo(RobotMap.CompBot.BOTTOM_SERVO_RELEASE_PWM);
+        System.out.println("servo top is " + RobotMap.CompBot.TOP_SERVO_RELEASE_PWM + " and bottom: " + RobotMap.CompBot.BOTTOM_SERVO_RELEASE_PWM);
         compressor = new Compressor(0);
-        pdp = new PowerDistributionPanel();
+        //pdp = new PowerDistributionPanel();
         enableCompressor(enableCompressor);
+        
+        if (!enableCompressor) {
+          compressor.stop();
+        }
         if (closeServos) {
           closeServos();
         }
@@ -110,6 +118,7 @@ public class IntakeSubsystem extends Subsystem {
     }
   }
   public void powerVacuum(double power, boolean autoDisable, boolean useRumble) {
+    //autoDisable = false;
     if (hatchVacuum != null) {
       hatchVacuum.set(power);
     }
@@ -127,6 +136,9 @@ public class IntakeSubsystem extends Subsystem {
   }
   public void powerIntake(double power, boolean autoDisable) {
     if (intakeWheels != null) {
+      if (newIntakeBelts != null) {
+        newIntakeBelts.set(power);
+      }
       if (!autoDisable || isOpen) {
         intakeWheels.set(power);
       } else {
@@ -135,20 +147,25 @@ public class IntakeSubsystem extends Subsystem {
     }
   }
   public void disableIntake() {
+    if (newIntakeBelts != null) {
+      newIntakeBelts.stopMotor();
+    }
     if (intakeWheels != null) {
       intakeWheels.stopMotor();
     }
   }
   public double getLeftVacuumCurrent() {
     if (pdp != null) {
-      return pdp.getCurrent(7);
+      //return pdp.getCurrent(7);
+      return 0;
     } else {
       return 0;
     }
   }
   public double getRightVacuumCurrent() {
     if (pdp != null) {
-      return pdp.getCurrent(9);
+      //return pdp.getCurrent(9);
+      return 0;
     } else {
       return 0;
     }
@@ -196,6 +213,7 @@ public class IntakeSubsystem extends Subsystem {
     topServoRelease.setAngle(currentAngle);
     bottomServoRelease.setAngle(currentAngle);
     System.out.println("Servos toggled to " + currentAngle + " degrees.");
+    System.out.println("TOP SERVOS are acutally " + topServoRelease.get() + ", bottom: " + bottomServoRelease.get());
   }
 
 

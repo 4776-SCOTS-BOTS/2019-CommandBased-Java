@@ -61,6 +61,7 @@ public class HoldElevatorHeight extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    //System.out.println("SPEED: " + Robot.elevator.getRightPot());
     if (Robot.elevator.getRightPot() < highHeight) {
       Robot.elevator.disableElevator();
       return;
@@ -70,16 +71,17 @@ public class HoldElevatorHeight extends Command {
       return;
     }
     if (Robot.elevator.getRightPot() > (myTarget + threshold)) {
-      System.out.println("GOING A BIT HIGHER");
-      Robot.elevator.rawSetPower(0.50);
+      //System.out.println("GOING A BIT lower");
+      Robot.elevator.setPower(-0.50);
     }
     else if (Robot.elevator.getRightPot() < (myTarget - threshold)) {
-      System.out.println("GOING A BIT LOWER");
-      Robot.elevator.rawSetPower(-0.50);
+      //System.out.println("GOING A BIT higher");
+      Robot.elevator.setPower(0.50);
     } else {
-      System.out.println("HOLDING HEIGHT");
-      Robot.elevator.rawSetPower(feed);
+      //System.out.println("HOLDING HEIGHT");
+      Robot.elevator.setPower(feed);
     }
+    //System.out.println("running hold method - my target is " + myTarget);
   }
 
   // Make this return true when this Command no longer needs to run execute()

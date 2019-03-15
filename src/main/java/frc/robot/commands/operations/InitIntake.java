@@ -5,45 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.manipulators;
+package frc.robot.commands.operations;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.*;
+import frc.robot.Robot;
 import frc.robot.OI.XBox;
 
-public class ElevatorManipulator extends Command {
-  double limitChange = 0.10;
-  double oldOutput;
-  boolean ramp = true;
-  
-  Timer t;
-  public ElevatorManipulator() {
-    requires(Robot.elevator);
-    t = new Timer();
+public class InitIntake extends Command {
+  public InitIntake() {
+    requires(Robot.intake);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    oldOutput = 0;
-    t.reset();
-    t.start();
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    //timer power pot
-    double change = -Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS) - oldOutput;
-    change = Math.max(-limitChange, Math.min(change, limitChange));//clamp change
-    oldOutput += change;
-    oldOutput = Math.min(0.70, Math.max(oldOutput, -0.70));
-    Robot.elevator.setPower(oldOutput);
-    System.out.println(t.get() + " " + oldOutput + " " + Robot.elevator.getRightPot());
+    Robot.intake.powerVacuum(-1, true, false);
     
-    
-    }
+    Robot.intake.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getManipulatorAxis(XBox.LEFT_TRIGGER_AXIS), true);
+  }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
@@ -54,13 +39,11 @@ public class ElevatorManipulator extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.elevator.disableElevator();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }
