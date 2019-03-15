@@ -22,13 +22,13 @@ public class RobotMap {
   /**
    * Enum deciding which robot is being used - The CompBot, Steve, or The PracticeBot.
    */
-  /*public enum RobotName {
+  public enum RobotName {
     CompBot,
     Steve,
     PracticeBot,
     TestBoard,
     OldCompBot;
-  }*/
+  }
   //public final RobotName ROBOT_NAME = RobotName.Steve;
   public enum ElevatorHeight {
     High,
@@ -105,9 +105,9 @@ public class RobotMap {
   /**
    * Contained in this class are constants used for the practice robot, a prototype of the competition robot.
    */
-  public class PracticeBot {
+  public static class PracticeBot {
     //Motor PWMs
-    public int 
+    public static int 
     LEFT_DRIVE_PWM = 11, //Motors operating left side of the chassis
     RIGHT_DRIVE_PWM = 12, //Motors operating right side of the chassis
     LEFT_ELEVATOR_PWM = 13, //Motor that operates left elevator up and down
@@ -129,7 +129,7 @@ public class RobotMap {
     TOP_SERVO_RELEASE_PWM = 9,
     BOTTOM_SERVO_RELEASE_PWM = 18;
     //Calibration constants
-    public double 
+    public static double 
     RIGHT_ELEVATOR_POT_OFFSET= -0.0541499, //how much smaller is the right side
     RIGHT_ELEVATOR_OFFSET_SCALE = 6.0,//how much does the elevator try to be balanced
     RAMP_UP_DISTANCE = 0.06915508,// + 0.08011591,//0.149 is too much
