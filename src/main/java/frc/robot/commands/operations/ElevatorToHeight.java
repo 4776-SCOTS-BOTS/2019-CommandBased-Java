@@ -9,8 +9,8 @@ package frc.robot.commands.operations;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
-import frc.robot.RobotMap;
+import frc.robot.*;
+import frc.robot.RobotMap.*;
 import frc.robot.commands.*;
 
 
@@ -35,77 +35,29 @@ public class ElevatorToHeight extends Command {
   double rampUp;
   double rampDown;
 
-  public ElevatorToHeight(RobotMap.ElevatorHeight newHeight, MoveElevator base, RobotMap.RobotName robot) {
+  public ElevatorToHeight(RobotMap.ElevatorHeight newHeight, MoveElevator base, RobotType type) {
     requires(Robot.elevator);
     myBase = base;
     timer = new Timer();
-    switch(robot) {
-      case CompBot: {
-        maxSpeed = RobotMap.CompBot.ELEVATOR_MAX_SPEED;
-        highHeight = RobotMap.CompBot.HIGH_HEIGHT;
-        lowHeight = RobotMap.CompBot.LOW_HEIGHT;
-        rampUp = RobotMap.CompBot.RAMP_UP_DISTANCE;
-        rampDown = RobotMap.CompBot.RAMP_DOWN_DISTANCE;
-        switch(newHeight) {
-          case Low: {
-            myTarget = RobotMap.CompBot.LOW_HEIGHT;
-          }
-          break;
-          case Medium: {
-            myTarget = RobotMap.CompBot.MID_HEIGHT;
-          }
-          break;
-          case High: {
-            myTarget = RobotMap.CompBot.HIGH_HEIGHT;
-          }
-          break;
-        }
+    
+    maxSpeed = type.ELEVATOR_MAX_SPEED;
+    highHeight = type.HIGH_HEIGHT;
+    lowHeight = type.LOW_HEIGHT;
+    rampUp = type.RAMP_UP_DISTANCE;
+    rampDown = type.RAMP_DOWN_DISTANCE;
+    switch(newHeight) {
+      case Low: {
+        myTarget = type.LOW_HEIGHT;
       }
       break;
-      case PracticeBot: {
-        maxSpeed = RobotMap.PracticeBot.ELEVATOR_MAX_SPEED;
-        highHeight = RobotMap.CompBot.HIGH_HEIGHT;
-        lowHeight = RobotMap.CompBot.LOW_HEIGHT;
-        rampUp = RobotMap.CompBot.RAMP_UP_DISTANCE;
-        rampDown = RobotMap.CompBot.RAMP_DOWN_DISTANCE;
-        switch(newHeight) {
-          case Low: {
-            myTarget = RobotMap.PracticeBot.LOW_HEIGHT;
-          }
-          break;
-          case Medium: {
-            myTarget = RobotMap.PracticeBot.MID_HEIGHT;
-          }
-          break;
-          case High: {
-            myTarget = RobotMap.PracticeBot.HIGH_HEIGHT;
-          }
-          break;
-        }
+      case Medium: {
+        myTarget = type.MID_HEIGHT;
       }
       break;
-      default: {
-        System.out.println(robot + " doesn't have a case in \'ElevatorToHeight\'!");
-        maxSpeed = RobotMap.CompBot.ELEVATOR_MAX_SPEED;
-        highHeight = RobotMap.CompBot.HIGH_HEIGHT;
-        lowHeight = RobotMap.CompBot.LOW_HEIGHT;
-        rampUp = RobotMap.CompBot.RAMP_UP_DISTANCE;
-        rampDown = RobotMap.CompBot.RAMP_DOWN_DISTANCE;
-        switch(newHeight) {
-          case Low: {
-            myTarget = RobotMap.CompBot.LOW_HEIGHT;
-          }
-          break;
-          case Medium: {
-            myTarget = RobotMap.CompBot.MID_HEIGHT;
-          }
-          break;
-          case High: {
-            myTarget = RobotMap.CompBot.HIGH_HEIGHT;
-          }
-          break;
-        }
+      case High: {
+        myTarget = type.HIGH_HEIGHT;
       }
+      break;
     }
   }
 

@@ -10,7 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.RobotMap;
+import frc.robot.RobotMap.*;
 import frc.robot.commands.manipulators.*;
 
 /**
@@ -26,41 +26,16 @@ public class ClimberSubsystem extends Subsystem {
   //Blank Constructor: Do not use anything
   public ClimberSubsystem () {
     //this(RobotMap.RobotName.CompBot);
-    this(RobotMap.RobotName.TestBoard);
-    System.out.println("Blank Subsystem for ClimberSubsystem was instantiated (as TestBoard).");
+    System.out.println("Blank Subsystem for ClimberSubsystem was instantiated.");
   }
 
-  public ClimberSubsystem (RobotMap.RobotName robotName) {
-    switch (robotName) {
-      case CompBot: {
-        frontCylinders = new Solenoid(RobotMap.CompBot.CLIMBER_FRONT_PORT);
-        rearCylinders = new Solenoid(RobotMap.CompBot.CLIMBER_REAR_PORT);
-        climbWheels = new PWMVictorSPX(RobotMap.CompBot.CLIMBING_WHEELS_PWM);
-      }break;
-      case PracticeBot: {
-        frontCylinders = new Solenoid(RobotMap.PracticeBot.CLIMBER_FRONT_PORT);
-        rearCylinders = new Solenoid(RobotMap.PracticeBot.CLIMBER_REAR_PORT);
-        climbWheels = new PWMVictorSPX(RobotMap.PracticeBot.CLIMBING_WHEELS_PWM);
-      }break;
-      case OldCompBot: {
-        frontCylinders = null;
-        rearCylinders = null;
-        climbWheels = null;
-      }break;
-      case Steve: {
-        frontCylinders = null;
-        rearCylinders = null;
-        climbWheels = null;
-      }break;
-      case TestBoard: {
-        frontCylinders = null;
-        rearCylinders = null;
-        climbWheels = null;
-      }break;
-    }
+  public ClimberSubsystem (RobotType type) {
+    frontCylinders = new Solenoid(type.CLIMBER_FRONT_PORT);
+    rearCylinders = new Solenoid(type.CLIMBER_REAR_PORT);
+    climbWheels = new PWMVictorSPX(type.CLIMBING_WHEELS_PWM);
     isRearExtended = false;
     isFrontExtended = false;
-    System.out.println(robotName + "\'s ClimberSubsystem correctly instantiated.");
+    System.out.println(type.name + "\'s ClimberSubsystem correctly instantiated.");
   }
 
   public void toggleFront() {

@@ -9,7 +9,7 @@ package frc.robot.commands.operations;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
+import frc.robot.RobotMap.RobotType;
 /**
  * <b>Toggle</b> the mouth <i>open</i> or <i>closed</i>.
  */
@@ -17,29 +17,15 @@ public class ToggleMouthOpen extends Command {
   boolean movingShoulderAlso;
   double threshold;
   double targetAngle;
-  public ToggleMouthOpen(boolean moveShoulderToPickup, RobotMap.RobotName robot) {
+  double shoulderMaxSpeed;
+  public ToggleMouthOpen(boolean moveShoulderToPickup, RobotType type) {
     movingShoulderAlso = moveShoulderToPickup;
     if (movingShoulderAlso) {
       requires(Robot.shoulder);
       //determine what the target is and the thresholds
-      switch (robot) {
-        case CompBot: {
-          threshold = RobotMap.CompBot.SHOULDER_THRESHOLD;
-          targetAngle = RobotMap.CompBot.CARGO_PICKUP_SHOULDER;
-        }
-        break;
-        case PracticeBot: {
-          threshold = RobotMap.PracticeBot.SHOULDER_THRESHOLD;
-          targetAngle = RobotMap.PracticeBot.CARGO_PICKUP_SHOULDER;
-        }
-        break;
-        default: {
-          //default: use the comp bot
-          System.out.println(robot + " has no case in \'ToggleMouthOpen\'!");
-          threshold = RobotMap.CompBot.SHOULDER_THRESHOLD;
-          targetAngle = RobotMap.CompBot.CARGO_PICKUP_SHOULDER;
-        }
-      }
+      threshold = type.SHOULDER_THRESHOLD;
+      targetAngle = type.CARGO_PICKUP_SHOULDER;
+      shoulderMaxSpeed = type.SHOULDER_MAX_SPEED;
     }
   }
 
@@ -56,10 +42,10 @@ public class ToggleMouthOpen extends Command {
     System.out.println("Target(toPickUpCargo): " + targetAngle + "PotPickupCargo: " + Robot.shoulder.getPotValue());
     if (Robot.shoulder.getPotValue() > targetAngle) {
       //decrease shoulder
-      Robot.shoulder.powerShoulder(RobotMap.CompBot.SHOULDER_MAX_SPEED);
+      Robot.shoulder.powerShoulder(shoulderMaxSpeed);
     } else {
       //increase shoulder
-      Robot.shoulder.powerShoulder(-RobotMap.CompBot.SHOULDER_MAX_SPEED);
+      Robot.shoulder.powerShoulder(-shoulderMaxSpeed);
     }
   }
 

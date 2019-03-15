@@ -9,9 +9,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.Robot;
-import frc.robot.RobotMap;
-import frc.robot.RobotMap.RobotName;
+import frc.robot.*;
+import frc.robot.RobotMap.*;
 import frc.robot.commands.manipulators.*;
 
 /**
@@ -39,82 +38,42 @@ public class IntakeSubsystem extends Subsystem {
   //Blank Constructor: Do not use naything.
   public IntakeSubsystem () {
     //this(RobotName.CompBot);
-    this(RobotName.TestBoard, false, false);
-    System.out.println("Blank Subsystem for IntakeSubsystem was instantiated (as TestBoard).");
+    //this(RobotName.TestBoard, false, false);
+    System.out.println("Blank Subsystem for IntakeSubsystem was instantiated.");
   }
 
-  public IntakeSubsystem (RobotName robotName, boolean enableCompressor, boolean closeServos) {
-    newIntakeBelts = new PWMVictorSPX(RobotMap.CompBot.INTAKE_BELTS_PWM);
-    switch (robotName) {
-      case CompBot: {
-        jaw = new Solenoid(RobotMap.CompBot.INTAKE_JAW_PORT);
-        intakeWheels = new PWMVictorSPX(RobotMap.CompBot.INTAKE_WHEELS_PWM);
-        hatchVacuum = new PWMVictorSPX(RobotMap.CompBot.HATCH_VACUUM);
-        topServoRelease = new Servo(RobotMap.CompBot.TOP_SERVO_RELEASE_PWM);
-        bottomServoRelease = new Servo(RobotMap.CompBot.BOTTOM_SERVO_RELEASE_PWM);
-        System.out.println("servo top is " + RobotMap.CompBot.TOP_SERVO_RELEASE_PWM + " and bottom: " + RobotMap.CompBot.BOTTOM_SERVO_RELEASE_PWM);
-        compressor = new Compressor(0);
-        //pdp = new PowerDistributionPanel();
-        enableCompressor(enableCompressor);
-        
-        if (!enableCompressor) {
-          compressor.stop();
-        }
-        if (closeServos) {
-          closeServos();
-        }
-        minLeftVacuumCurrent = RobotMap.CompBot.MIN_LEFT_VACUUM_CURRENT;
-        maxLeftVacuumCurrent = RobotMap.CompBot.MAX_LEFT_VACUUM_CURRENT;
-        minRightVacuumCurrent = RobotMap.CompBot.MIN_RIGHT_VACUUM_CURRENT;
-        maxRightVacuumCurrent = RobotMap.CompBot.MAX_RIGHT_VACUUM_CURRENT;
-      }break;
-      case PracticeBot: {
-        jaw = new Solenoid(RobotMap.PracticeBot.INTAKE_JAW_PORT);
-        intakeWheels = new PWMVictorSPX(RobotMap.PracticeBot.INTAKE_WHEELS_PWM);
-        hatchVacuum = new PWMVictorSPX(RobotMap.PracticeBot.HATCH_VACUUM);
-        compressor = new Compressor(0);
-        pdp = new PowerDistributionPanel();
-        topServoRelease = new Servo(RobotMap.PracticeBot.TOP_SERVO_RELEASE_PWM);
-        bottomServoRelease = new Servo(RobotMap.PracticeBot.BOTTOM_SERVO_RELEASE_PWM);
-        enableCompressor(enableCompressor);
-        if (closeServos) {
-          closeServos();
-        }
-        minLeftVacuumCurrent = RobotMap.PracticeBot.MIN_LEFT_VACUUM_CURRENT;
-        maxLeftVacuumCurrent = RobotMap.PracticeBot.MAX_LEFT_VACUUM_CURRENT;
-        minRightVacuumCurrent = RobotMap.PracticeBot.MIN_RIGHT_VACUUM_CURRENT;
-        maxRightVacuumCurrent = RobotMap.PracticeBot.MAX_RIGHT_VACUUM_CURRENT;
-      }break;
-      case OldCompBot: {
-        jaw = null;
-        intakeWheels = null;
-        hatchVacuum = null;
-        compressor = null;
-        topServoRelease = null;
-        bottomServoRelease = null;
-      }break;
-      case Steve: {
-        jaw = null;
-        intakeWheels = null;
-        hatchVacuum = null;
-        compressor = null;
-        topServoRelease = null;
-        bottomServoRelease = null;
-      }break;
-      case TestBoard: {
-        jaw = null;
-        intakeWheels = null;
-        hatchVacuum = null;
-        compressor = null;
-        topServoRelease = null;
-        bottomServoRelease = null;
-      }break;
+  public IntakeSubsystem (RobotType type, boolean enableCompressor, boolean closeServos) {
+    newIntakeBelts = new PWMVictorSPX(type.INTAKE_BELTS_PWM);
+    
+    jaw = new Solenoid(type.INTAKE_JAW_PORT);
+    intakeWheels = new PWMVictorSPX(type.INTAKE_WHEELS_PWM);
+    hatchVacuum = new PWMVictorSPX(type.HATCH_VACUUM);
+    topServoRelease = new Servo(type.TOP_SERVO_RELEASE_PWM);
+    bottomServoRelease = new Servo(type.BOTTOM_SERVO_RELEASE_PWM);
+    compressor = new Compressor(0);
+    //pdp = new PowerDistributionPanel();
+    enableCompressor(enableCompressor);
+    
+    if (!enableCompressor) {
+      compressor.stop();
     }
-    System.out.println(robotName + "\'s IntakeSubsystem correctly instantiated.");
+    if (closeServos) {
+      closeServos();
+    }
+    minLeftVacuumCurrent = type.MIN_LEFT_VACUUM_CURRENT;
+    maxLeftVacuumCurrent = type.MAX_LEFT_VACUUM_CURRENT;
+    minRightVacuumCurrent = type.MIN_RIGHT_VACUUM_CURRENT;
+    maxRightVacuumCurrent = type.MAX_RIGHT_VACUUM_CURRENT;
+    System.out.println(type.name + "\'s IntakeSubsystem correctly instantiated.");
   }
   public void enableCompressor(boolean enable) {
     if (compressor != null) {
       compressor.setClosedLoopControl(enable);
+      if (enable) {
+        //compressor.start(); //disabled for safety
+      } else {
+        compressor.stop();
+      }
     }
   }
   public void powerVacuum(double power, boolean autoDisable, boolean useRumble) {

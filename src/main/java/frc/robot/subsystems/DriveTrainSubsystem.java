@@ -9,7 +9,6 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.robot.*;
 import frc.robot.RobotMap.*;
 import frc.robot.commands.drivetrain.*;
 import edu.wpi.first.wpilibj.*;
@@ -29,42 +28,12 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
 
   //Blank Subsystem: Do not create anything
   public DriveTrainSubsystem () {
-    this(RobotName.TestBoard);
-    System.out.println("Blank Subsystem for DriveTrainSubsystem was instantiated (as TestBoard).");
+    System.out.println("Blank Subsystem for DriveTrainSubsystem was instantiated.");
   }
-  public DriveTrainSubsystem (RobotName robotName) {
+  public DriveTrainSubsystem (RobotType type) {
     //Instantiate the driveTrain based on which robot we are using
-    switch (robotName) {
-      case CompBot: {
-        driveWheels = new DifferentialDrive(new PWMVictorSPX(RobotMap.CompBot.LEFT_DRIVE_PWM), new PWMVictorSPX(RobotMap.CompBot.RIGHT_DRIVE_PWM));
-      }
-      break;
-      case Steve: {
-        driveWheels = new DifferentialDrive(new Victor(RobotMap.Steve.LEFT_DRIVE_PWM), new Victor(RobotMap.Steve.RIGHT_DRIVE_PWM));
-      }
-      break;
-      case PracticeBot: {
-        driveWheels = new DifferentialDrive(new PWMVictorSPX(RobotMap.PracticeBot.LEFT_DRIVE_PWM), new PWMVictorSPX(RobotMap.PracticeBot.RIGHT_DRIVE_PWM));
-      }
-      break;
-      case TestBoard: {
-        //Don't assign the driveWheels to anything since there aren't any motors
-        driveWheels = null;
-      }
-      break;
-      case OldCompBot: {
-        driveWheels = new DifferentialDrive(new PWMVictorSPX(RobotMap.OldCompBot.LEFT_DRIVE_PWM), new PWMVictorSPX(RobotMap.OldCompBot.RIGHT_DRIVE_PWM));
-        //pidController = new PIDController(RobotMap.JeVois.PID_P, RobotMap.JeVois.PID_I, RobotMap.JeVois.PID_D, Robot.jeVois, driveWheels);
-      }
-      break;
-      //Default: Assume robot is CompBot, so perform case CompBot and print the error
-      default: {
-        driveWheels = new DifferentialDrive(new Victor(RobotMap.CompBot.LEFT_DRIVE_PWM), new Victor(RobotMap.CompBot.RIGHT_DRIVE_PWM));
-        System.out.println("ERROR in DriveTrainSubsystem: Invalid RobotName selected when instantiating this susbsystem. Instantiating CompBot anyways.");
-      }
-      break;
-    }
-    System.out.println(robotName + "\'s DriveTrainSubsystem correctly instantiated.");
+    driveWheels = new DifferentialDrive(new PWMVictorSPX(type.LEFT_DRIVE_PWM), new PWMVictorSPX(type.RIGHT_DRIVE_PWM));
+    System.out.println(type.name + "\'s DriveTrainSubsystem correctly instantiated.");
   }
   /**
    * Tank Drive on the <b>DriveTrainSubsystem</b>.

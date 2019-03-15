@@ -10,6 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.*;
+import frc.robot.RobotMap.RobotType;
 
 public class RampElevatorDown extends Command {
   
@@ -35,31 +36,15 @@ public class RampElevatorDown extends Command {
   double highHeight;
   double lowHeight;
 
-  public RampElevatorDown(MoveElevator base, RobotMap.RobotName robot) {
+  public RampElevatorDown(MoveElevator base, RobotType type) {
     requires(Robot.elevator);
     timer = new Timer();
     //goUp = base.goingUp;
     myBase = base;
-    switch(robot) {
-      case CompBot: {
-        maxSpeed = RobotMap.CompBot.ELEVATOR_MAX_SPEED;
-        highHeight = RobotMap.CompBot.HIGH_HEIGHT;
-        lowHeight = RobotMap.CompBot.LOW_HEIGHT;
-      }
-      break;
-      case PracticeBot: {
-        maxSpeed = RobotMap.PracticeBot.ELEVATOR_MAX_SPEED;
-        highHeight = RobotMap.PracticeBot.HIGH_HEIGHT;
-        lowHeight = RobotMap.PracticeBot.LOW_HEIGHT;
-      }
-      break;
-      default: {
-        maxSpeed = RobotMap.CompBot.ELEVATOR_MAX_SPEED;
-        highHeight = RobotMap.CompBot.HIGH_HEIGHT;
-        lowHeight = RobotMap.CompBot.LOW_HEIGHT;
-        System.out.println(robot + " doesn't have a case in \'RampElevatorDown\'!");
-      }
-    }
+    
+    maxSpeed = type.ELEVATOR_MAX_SPEED;
+    highHeight = type.HIGH_HEIGHT;
+    lowHeight = type.LOW_HEIGHT;
   }
 
   // Called just before this Command runs the first time

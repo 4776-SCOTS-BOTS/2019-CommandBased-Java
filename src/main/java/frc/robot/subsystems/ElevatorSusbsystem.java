@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 import frc.robot.*;
+import frc.robot.RobotMap.*;
 import frc.robot.commands.manipulators.*;
 
 /**
@@ -35,8 +36,7 @@ public class ElevatorSusbsystem extends Subsystem {
 
   //Blank Constructor: Do not create anything for this subsytem.
   public ElevatorSusbsystem () {
-    this(RobotMap.RobotName.TestBoard);
-    System.out.println("Blank Subsystem for ElevatorSubsystem was instantiated (as TestBoard).");
+    System.out.println("Blank Subsystem for ElevatorSubsystem was instantiated.");
   }
   public double getLeftPot() {
     return leftElevatorPot.get();
@@ -78,55 +78,13 @@ public class ElevatorSusbsystem extends Subsystem {
     leftElevatorMotor.stopMotor();
     rightElevatorMotor.stopMotor();
   }
-  public ElevatorSusbsystem (RobotMap.RobotName robotName) {//Instantiate the driveTrain based on which robot we are using
-    switch (robotName) {
-      case CompBot: {
-        leftElevatorMotor = new PWMVictorSPX(RobotMap.CompBot.LEFT_ELEVATOR_PWM);
-        rightElevatorMotor = new PWMVictorSPX(RobotMap.CompBot.RIGHT_ELEVATOR_PWM);
-        leftElevatorPot = new AnalogPotentiometer(RobotMap.CompBot.LEFT_ELEVATOR_POT_AI);
-        rightElevatorPot = new AnalogPotentiometer(RobotMap.CompBot.RIGHT_ELEVATOR_POT_AI);
-      }
-      break;
-      case Steve: {
-        leftElevatorMotor = null;
-        rightElevatorMotor = null;
-        leftElevatorPot = null;
-        rightElevatorPot = null;
-      }
-      break;
-      case PracticeBot: {
-        leftElevatorMotor = new PWMVictorSPX(RobotMap.PracticeBot.LEFT_ELEVATOR_PWM);
-        rightElevatorMotor = new PWMVictorSPX(RobotMap.PracticeBot.RIGHT_ELEVATOR_PWM);
-        leftElevatorPot = new AnalogPotentiometer(RobotMap.PracticeBot.LEFT_ELEVATOR_POT_AI);
-        rightElevatorPot = new AnalogPotentiometer(RobotMap.PracticeBot.RIGHT_ELEVATOR_POT_AI);
-      }
-      break;
-      case TestBoard: {
-        //Don't assign the driveWheels to anything since there aren't any motors
-        leftElevatorMotor = null;
-        rightElevatorMotor = null;
-        leftElevatorPot = null;
-        rightElevatorPot = null;
-      }
-      break;
-      case OldCompBot: {
-        leftElevatorMotor = null;
-        rightElevatorMotor = null;
-        leftElevatorPot = null;
-        rightElevatorPot = null;
-      }
-      break;
-      //Default: Assume robot is CompBot, so perform case CompBot and print the error
-      default: {
-        leftElevatorMotor = new PWMVictorSPX(RobotMap.CompBot.LEFT_ELEVATOR_PWM);
-        rightElevatorMotor = new PWMVictorSPX(RobotMap.CompBot.RIGHT_ELEVATOR_PWM);
-        leftElevatorPot = null;
-        rightElevatorPot = null;
-        System.out.println("ERROR in ElevatorSubsystem: Invalid RobotName selected when instantiating this susbsystem. Instantiating CompBot anyways.");
-      }
-      break;
-    }
-    System.out.println(robotName + "\'s ElevatorSubsystem correctly instantiated.");
+  public ElevatorSusbsystem (RobotType type) {//Instantiate the driveTrain based on which robot we are using
+    
+    leftElevatorMotor = new PWMVictorSPX(type.LEFT_ELEVATOR_PWM);
+    rightElevatorMotor = new PWMVictorSPX(type.RIGHT_ELEVATOR_PWM);
+    leftElevatorPot = new AnalogPotentiometer(type.LEFT_ELEVATOR_POT_AI);
+    rightElevatorPot = new AnalogPotentiometer(type.RIGHT_ELEVATOR_POT_AI);
+    System.out.println(type.name + "\'s ElevatorSubsystem correctly instantiated.");
   }
 
   @Override

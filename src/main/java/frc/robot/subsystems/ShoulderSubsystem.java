@@ -18,7 +18,6 @@ import frc.robot.commands.manipulators.*;
  */
 public class ShoulderSubsystem extends Subsystem {
   PWMVictorSPX shoulderMotor;
-  PWMVictorSPX intakeMotor;//the belts holding/shooting cargo
   Potentiometer shoulderPot;
   public boolean facingBack;
   public boolean angledUp;
@@ -48,56 +47,14 @@ public class ShoulderSubsystem extends Subsystem {
 
   //Blank constructor: Do not use anything
   public ShoulderSubsystem () {
-    this(RobotMap.RobotName.TestBoard);
-    System.out.println("Blank Subsystem for ShoulderSubsystem was instantiated (as TestBoard).");
+    System.out.println("Blank Subsystem for ShoulderSubsystem was instantiated.");
   }
 
-  public ShoulderSubsystem(RobotMap.RobotName robotName) {
+  public ShoulderSubsystem(RobotMap.RobotType type) {
     facingBack = false;
-    switch (robotName) {
-      case CompBot: {
-        shoulderMotor = new PWMVictorSPX(RobotMap.CompBot.SHOULDER_PWM);
-        shoulderPot = new AnalogPotentiometer(RobotMap.CompBot.SHOULDER_POT_AI);
-        //intakeMotor = new PWMVictorSPX(RobotMap.CompBot.INTAKE_BELTS_PWM);
-        intakeMotor = null;
-      }
-      break;
-      case Steve: {
-        shoulderMotor = null;
-        shoulderPot = null;
-        intakeMotor = null;
-      }
-      break;
-      case OldCompBot: {
-        shoulderMotor = null;
-        shoulderPot = null;
-        intakeMotor = null;
-      }
-      break;
-      case PracticeBot: {
-        shoulderMotor = new PWMVictorSPX(RobotMap.PracticeBot.SHOULDER_PWM);
-        shoulderPot = new AnalogPotentiometer(RobotMap.PracticeBot.SHOULDER_POT_AI);
-        //intakeMotor = new PWMVictorSPX(RobotMap.PracticeBot.INTAKE_BELTS_PWM);
-        intakeMotor = null;
-      }
-      break;
-      case TestBoard: {
-        //Don't assign the driveWheels to anything since there aren't any motors
-        shoulderMotor = null;
-        shoulderPot = null;
-        intakeMotor = null;
-      }
-      break;
-      //Default: Assume robot is CompBot, so perform case CompBot and print the error
-      default: {
-        shoulderPot = null;
-        shoulderMotor = null;
-        intakeMotor = null;
-        System.out.println("ERROR in ShoulderSubsystem: Invalid RobotName selected when instantiating this susbsystem. Instantiating CompBot anyways.");
-      }
-      break;
-    }
-    System.out.println(robotName + "\'s ShoulderSubsystem correctly instantiated.");
+    shoulderMotor = new PWMVictorSPX(type.SHOULDER_PWM);
+    shoulderPot = new AnalogPotentiometer(type.SHOULDER_POT_AI);
+    System.out.println(type.name + "\'s ShoulderSubsystem correctly instantiated.");
   }
 
   @Override

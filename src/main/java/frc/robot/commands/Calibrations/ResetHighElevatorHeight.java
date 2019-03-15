@@ -9,36 +9,24 @@ package frc.robot.commands.calibrations;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-import frc.robot.RobotMap;
+import frc.robot.RobotMap.RobotType;
 
 /**
  * Run this command when the elevator is at the top of its stage, setting the constant to the current height.
  * <p><b>PLEASE NOTE:</b> This command should only be run through the <i>SmartDashboard</i>, not during teleop.
  */
 public class ResetHighElevatorHeight extends Command {
-  RobotMap.RobotName myRobot;
-  public ResetHighElevatorHeight(RobotMap.RobotName robot) {
-    myRobot = robot;
+  RobotType myType;
+  public ResetHighElevatorHeight(RobotType type) {
+    myType = type;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-      switch(myRobot) {
-        case CompBot: {
-          RobotMap.CompBot.HIGH_HEIGHT = Robot.elevator.getRightPot();
-        }
-        break;
-        case PracticeBot: {
-          RobotMap.PracticeBot.HIGH_HEIGHT = Robot.elevator.getRightPot();
-        }
-        break;
-        default: {
-          System.out.println(myRobot + " has no case in \'ResetHighElevatorHeight\'!");
-          RobotMap.CompBot.HIGH_HEIGHT = Robot.elevator.getRightPot();
-        }
-      }
-      System.out.println("The high elevator height for the " + myRobot + " has been set to " + Robot.elevator.getRightPot() + ".");
+    
+    myType.HIGH_HEIGHT = Robot.elevator.getRightPot();
+    System.out.println("The high elevator height for the " + myType.name + " has been set to " + Robot.elevator.getRightPot() + ".");
   }
 
   // Called repeatedly when this Command is scheduled to run

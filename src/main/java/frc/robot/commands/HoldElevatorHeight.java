@@ -8,8 +8,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
-import frc.robot.RobotMap;
+import frc.robot.*;
+import frc.robot.RobotMap.*;
 
 public class HoldElevatorHeight extends Command {
   double myTarget;
@@ -21,35 +21,15 @@ public class HoldElevatorHeight extends Command {
   double threshold;
   double feed;
 
-  public HoldElevatorHeight(MoveElevator base, RobotMap.RobotName robot) {
+  public HoldElevatorHeight(MoveElevator base, RobotType type) {
     requires(Robot.elevator);
     myBase = base;
-    switch (robot) {
-      case CompBot: {
-        lowHeight = RobotMap.CompBot.HIGH_HEIGHT;
-        midHeight = RobotMap.CompBot.MID_HEIGHT;
-        highHeight = RobotMap.CompBot.LOW_HEIGHT;
-        threshold = RobotMap.CompBot.ELEVATOR_THRESHOLD;
-        feed = RobotMap.CompBot.ELEVATOR_FEED_FORWARD;
-      }
-      break;
-      case PracticeBot: {
-        lowHeight = RobotMap.PracticeBot.HIGH_HEIGHT;
-        midHeight = RobotMap.PracticeBot.MID_HEIGHT;
-        highHeight = RobotMap.PracticeBot.LOW_HEIGHT;
-        threshold = RobotMap.PracticeBot.ELEVATOR_THRESHOLD;
-        feed = RobotMap.PracticeBot.ELEVATOR_FEED_FORWARD;
-      }
-      break;
-      default: {
-        lowHeight = RobotMap.CompBot.HIGH_HEIGHT;
-        midHeight = RobotMap.CompBot.MID_HEIGHT;
-        highHeight = RobotMap.CompBot.LOW_HEIGHT;
-        threshold = RobotMap.CompBot.ELEVATOR_THRESHOLD;
-        feed = RobotMap.CompBot.ELEVATOR_FEED_FORWARD;
-        System.out.println(robot + " doesn't have a case in \'HoldElevatorHeight\'!");
-      }
-    }
+    
+    lowHeight = type.HIGH_HEIGHT;
+    midHeight = type.MID_HEIGHT;
+    highHeight = type.LOW_HEIGHT;
+    threshold = type.ELEVATOR_THRESHOLD;
+    feed = type.ELEVATOR_FEED_FORWARD;
   }
 
   // Called just before this Command runs the first time

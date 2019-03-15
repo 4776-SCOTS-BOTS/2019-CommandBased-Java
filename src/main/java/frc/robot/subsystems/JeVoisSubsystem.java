@@ -10,8 +10,8 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.JeVoisData;
-import frc.robot.RobotMap;
-import frc.robot.RobotMap.RobotName;
+import frc.robot.*;
+import frc.robot.RobotMap.*;
 
 //import org.json.simple.JSONObject;
 
@@ -121,66 +121,19 @@ public class JeVoisSubsystem extends Subsystem{// implements PIDSource{
   public int getBytes() {
     return jeVoisCam0.getBytesReceived();
   }
-  public JeVoisSubsystem (RobotName robotName, boolean enableSystem) {
+  public JeVoisSubsystem (RobotType type, boolean enableSystem) {
     if (enableSystem) {
-      switch(robotName) {
-        case CompBot: {
-          //this();
-        }
-        break;
-        case PracticeBot: {
-          //this();
-          createSystem(false);
-        }
-        break;
-        case OldCompBot: {
-          //this(false);
-          createSystem(false);
-        }
-        break;
-        case Steve: {
-          //this();
-        }
-        break;
-        default: {
-          //this();
-        }
+      if (type.numberOfJeVois > 0) {
+        createSystem(type.numberOfJeVois > 1);
       }
-      System.out.println(robotName + "\'s JeVoisSubsystem correctly instantiated and ENABLED.");
+      System.out.println(type.name + "\'s JeVoisSubsystem correctly instantiated and ENABLED.");
     } else {
-      System.out.println(robotName + "\'s JeVoisSubsystem correctly instantiated and DISABLED.");
+      System.out.println(type.name + "\'s JeVoisSubsystem \'correctly\' instantiated and DISABLED.");
     }
-  }
-  public JeVoisSubsystem (RobotName robotName) {
-    switch(robotName) {
-      case CompBot: {
-        //this();
-      }
-      break;
-      case PracticeBot: {
-        //this();
-      }
-      break;
-      case OldCompBot: {
-        //this(false);
-        createSystem(false);
-      }
-      break;
-      case Steve: {
-        //this();
-      }
-      break;
-      default: {
-        //this();
-      }
-    }
-    System.out.println(robotName + "\'s JeVoisSubsystem correctly instantiated.");
   }
   //Default Constructor: Use main constructor with only 1 camera
   public JeVoisSubsystem () {
-    //this(false);
-    this(RobotName.TestBoard);
-    System.out.println("Blank Subsystem for JeVoisSubsystem was instantiated (as TestBoard).");
+    System.out.println("Blank Subsystem for JeVoisSubsystem was instantiated.");
   }
   //Main Constructor runs main "constructor"
   public JeVoisSubsystem (boolean _doubleCams) {

@@ -7,7 +7,6 @@
 //Version: 3/2/19
 package frc.robot;
 
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -16,7 +15,6 @@ import frc.robot.OI.*;
 import frc.robot.RobotMap.*;
 import frc.robot.commands.autonomous.Autonomous;
 import frc.robot.commands.operations.*;
-import frc.robot.commands.calibrations.*;
 import frc.robot.subsystems.*;
 
 /**
@@ -27,8 +25,9 @@ import frc.robot.subsystems.*;
  * project.
  */
 public class Robot extends TimedRobot {
-  private RobotName currentRobot = RobotName.CompBot;
-
+  //private RobotName currentRobot = RobotName.CompBot;
+  private static RobotType robotType = new CompBot();
+  int a = robotType.BOTTOM_SERVO_RELEASE_PWM;
   public static JeVoisSubsystem jeVois;
   public static DriveTrainSubsystem driveTrain;
   public static ElevatorSusbsystem elevator;
@@ -56,41 +55,37 @@ public class Robot extends TimedRobot {
     t = new Timer();
     
     //CameraServer.getInstance().addAxisCamera("basic-cam", "10.47.76.5");
-
-
-
-    
     //Add camera streams
     //CameraServer.getInstance().addAxisCamera("super-cam", "10.47.76.4");
     //CameraServer.getInstance().addAxisCamera("bob-cam", "10.47.76.6");
     
-    System.out.println("BEGINNING_ROBOT_INIT - Instantiating subsystems for \'" + currentRobot + "\'!");
+    System.out.println("BEGINNING_ROBOT_INIT - Instantiating subsystems for \'" + robotType.name + "\'!");
     readData = false; //Reading data every loop is VERY performance heavy, so make sure readData is off when not needed!
     debugJeVois = false;
 
     //SUBSYSTEMS: (Please note: when switching robots, change the currentRobot variable, not the subsystem constructors)
     //PLEASE NOTE!!!!! Currently, cheesydrive only using left joystick on driver (turning isnt on right joystick)
-    driveTrain = new DriveTrainSubsystem(currentRobot);
+    driveTrain = new DriveTrainSubsystem(robotType);
     //driveTrain = new DriveTrainSubsystem();//blank subsystem
 
-    jeVois = new JeVoisSubsystem(currentRobot, true); //Proper subsystem (doesn't require different constructors for different robots)
+    jeVois = new JeVoisSubsystem(robotType, true); //Proper subsystem (doesn't require different constructors for different robots)
     //jeVois = new JeVoisSubsystem(); //Blank subsystem for jevois
     //jeVois = new JeVoisSubsystem(false); //Actual subsystem for jevois - boolean= use two cameras?
 
-    elevator = new ElevatorSusbsystem(currentRobot);
+    elevator = new ElevatorSusbsystem(robotType);
     //elevator = new ElevatorSusbsystem();//blank subsystem
 
-    intake = new IntakeSubsystem(currentRobot, false, true);
+    intake = new IntakeSubsystem(robotType, false, true);
     //intake = new IntakeSubsystem();//blank subsystem
 
-    shoulder = new ShoulderSubsystem(currentRobot);
+    shoulder = new ShoulderSubsystem(robotType);
     //shoulder = new ShoulderSubsystem();//blank subsystem
 
-    climber = new ClimberSubsystem(currentRobot);
+    climber = new ClimberSubsystem(robotType);
     //climber = new ClimberSubsystem();//blank subsystem
-    oi = new OI(false, currentRobot);//false = doubleplayer, true = singleplayer
+    oi = new OI(false, robotType);//false = doubleplayer, true = singleplayer
     
-    dPadLeftCommand = new EnterPickupCargoMode(currentRobot);
+    dPadLeftCommand = new EnterPickupCargoMode(robotType);
     //Create chooser tool for different autonomouses
     chooser.setDefaultOption("Default Auto", new Autonomous());
     //chooser.addOption("Basic Autonomous", new SuperAutonomous());

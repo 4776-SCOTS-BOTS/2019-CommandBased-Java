@@ -9,19 +9,20 @@ package frc.robot.commands.operations;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.*;
+import frc.robot.RobotMap.*;
 import frc.robot.commands.*;
 
 public class EnterPickupCargoMode extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public EnterPickupCargoMode(RobotMap.RobotName robot) {
+  public EnterPickupCargoMode(RobotType type) {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-    addParallel(new MoveElevator(RobotMap.ElevatorHeight.Low, robot));
-    addParallel(new ToggleMouthOpen(true, robot));
+    addParallel(new MoveElevator(RobotMap.ElevatorHeight.Low, type));
+    addParallel(new ToggleMouthOpen(true, type));
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());

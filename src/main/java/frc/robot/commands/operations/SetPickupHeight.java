@@ -8,11 +8,11 @@
 package frc.robot.commands.operations;
 
 import edu.wpi.first.wpilibj.command.Command;
-import frc.robot.Robot;
-import frc.robot.RobotMap;
+import frc.robot.*;
+import frc.robot.RobotMap.*;
 
 public class SetPickupHeight extends Command {
-  RobotMap.RobotName myRobot;
+  RobotType myType;
   boolean usingCargo;
   boolean facingBackwards;
   double threshold;
@@ -24,8 +24,8 @@ public class SetPickupHeight extends Command {
    * Set what shoulder height is used: straight (for hatches) or angled up (for cargo)
    * @param useCargo - Set to true when using cargo. Set to false when using hatches.
    */
-  public SetPickupHeight(boolean useCargo, RobotMap.RobotName robot) {
-    myRobot = robot;
+  public SetPickupHeight(boolean useCargo, RobotType type) {
+    myType = type;
     requires(Robot.shoulder);
     usingCargo = useCargo;
     facingBackwards = Robot.shoulder.facingBack;
@@ -38,8 +38,8 @@ public class SetPickupHeight extends Command {
    * @param useCargo - Set to true when using cargo. Set to false when using hatches.
    * @param faceBack - Set what side you want to face
    */
-  public SetPickupHeight(boolean useCargo, RobotMap.RobotName robot, boolean faceBack) {
-    myRobot = robot;
+  public SetPickupHeight(boolean useCargo, RobotType type, boolean faceBack) {
+    myType = type;
     requires(Robot.shoulder);
     usingCargo = useCargo;
     facingBackwards = faceBack;
@@ -51,8 +51,8 @@ public class SetPickupHeight extends Command {
    * Set what shoulder height is used: straight (for hatches) or angled up (for cargo)
    * @param faceBack - Set what side you want to face
    */
-  public SetPickupHeight(RobotMap.RobotName robot, boolean faceBack) {
-    myRobot = robot;
+  public SetPickupHeight(RobotType type, boolean faceBack) {
+    myType = type;
     requires(Robot.shoulder);
     usingCargo = Robot.shoulder.angledUp;
     facingBackwards = faceBack;
@@ -71,7 +71,7 @@ public class SetPickupHeight extends Command {
       facingBackwards = Robot.shoulder.facingBack;
     }
     //System.out.println("CARGO: " + usingCargo + " BACKWARDS: " + facingBackwards);
-    setTargets(myRobot);
+    setTargets(myType);
     Robot.shoulder.angledUp = usingCargo;
     Robot.shoulder.facingBack = facingBackwards;
   }
@@ -83,7 +83,7 @@ public class SetPickupHeight extends Command {
     if (Robot.shoulder.getPotValue() > targetAngle) {
       //decrease shoulder
       if (closeEnough()) {
-        Robot.shoulder.powerShoulder(-RobotMap.CompBot.SHOULDER_FEED_FORWARD);
+        Robot.shoulder.powerShoulder(-myType.SHOULDER_FEED_FORWARD);
       } else {
 
         Robot.shoulder.powerShoulder(maxSpeed);
@@ -91,7 +91,7 @@ public class SetPickupHeight extends Command {
     } else {
       //increase shoulder
       if (closeEnough()) {
-        Robot.shoulder.powerShoulder(RobotMap.CompBot.SHOULDER_FEED_FORWARD);
+        Robot.shoulder.powerShoulder(myType.SHOULDER_FEED_FORWARD);
       } else {
         
       Robot.shoulder.powerShoulder(-maxSpeed);
@@ -124,64 +124,22 @@ public class SetPickupHeight extends Command {
   protected void interrupted() {
     end();
   }
-  private void setTargets(RobotMap.RobotName robot) {
-    switch (robot) {
-      case CompBot: {
-        maxSpeed = RobotMap.CompBot.SHOULDER_MAX_SPEED;
-        threshold = RobotMap.CompBot.SHOULDER_THRESHOLD;
-        if (facingBackwards) {
-          if (usingCargo) {
-            targetAngle = RobotMap.CompBot.REVERSE_UP_SHOULDER;
-          } else {
-            targetAngle = RobotMap.CompBot.REVERSE_STRAIGHT_SHOULDER;
-          }
-        } else {
-          if (usingCargo) {
-            targetAngle = RobotMap.CompBot.FORWARD_UP_SHOULDER;
-          } else {
-            targetAngle = RobotMap.CompBot.FORWARD_STRAIGHT_SHOULDER;
-          }
-        }
+  private void setTargets(RobotType type) {
+    
+    maxSpeed = type.SHOULDER_MAX_SPEED;
+    threshold = type.SHOULDER_THRESHOLD;
+    if (facingBackwards) {
+      if (usingCargo) {
+        targetAngle = type.REVERSE_UP_SHOULDER;
+      } else {
+        targetAngle = type.REVERSE_STRAIGHT_SHOULDER;
       }
-      break;
-      case PracticeBot: {
-        maxSpeed = RobotMap.PracticeBot.SHOULDER_MAX_SPEED;
-        threshold = RobotMap.PracticeBot.SHOULDER_THRESHOLD;
-        if (facingBackwards) {
-          if (usingCargo) {
-            targetAngle = RobotMap.PracticeBot.REVERSE_UP_SHOULDER;
-          } else {
-            targetAngle = RobotMap.PracticeBot.REVERSE_STRAIGHT_SHOULDER;
-          }
-        } else {
-          if (usingCargo) {
-            targetAngle = RobotMap.PracticeBot.FORWARD_UP_SHOULDER;
-          } else {
-            targetAngle = RobotMap.PracticeBot.FORWARD_STRAIGHT_SHOULDER;
-          }
-        }
-      }
-      break;
-      default: {
-        //default: use the comp bot
-        System.out.println(robot + " has no case is \'SetPickupheight\'!");
-        maxSpeed = RobotMap.CompBot.SHOULDER_MAX_SPEED;
-        threshold = RobotMap.CompBot.SHOULDER_THRESHOLD;
-        if (facingBackwards) {
-          if (usingCargo) {
-            targetAngle = RobotMap.CompBot.REVERSE_UP_SHOULDER;
-          } else {
-            targetAngle = RobotMap.CompBot.REVERSE_STRAIGHT_SHOULDER;
-          }
-        } else {
-          if (usingCargo) {
-            targetAngle = RobotMap.CompBot.FORWARD_UP_SHOULDER;
-          } else {
-            targetAngle = RobotMap.CompBot.FORWARD_STRAIGHT_SHOULDER;
-          }
-        }
+    } else {
+      if (usingCargo) {
+        targetAngle = type.FORWARD_UP_SHOULDER;
+      } else {
+        targetAngle = type.FORWARD_STRAIGHT_SHOULDER;
       }
     }
-    //System.out.println("TARGET+ " + targetAngle);
   }
 }
