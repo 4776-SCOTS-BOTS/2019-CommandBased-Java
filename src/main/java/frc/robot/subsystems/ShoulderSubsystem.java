@@ -21,6 +21,7 @@ public class ShoulderSubsystem extends Subsystem {
   Potentiometer shoulderPot;
   public boolean facingBack;
   public boolean angledUp;
+  public DigitalInput hatchLimit;
   double pot;
 
   public void powerShoulder(double power) {
@@ -44,6 +45,17 @@ public class ShoulderSubsystem extends Subsystem {
       return pot;
     }
   }
+  /**
+   * Get if the limit switch on the hatch mechanism is working or not
+   * @return a boolean of what the switch is reading (true=pressed, false=not pressed)
+   */
+  public boolean getLimit() {
+    if (hatchLimit != null) {
+      return hatchLimit.get();
+    } else {
+      return false;
+    }
+  }
 
   //Blank constructor: Do not use anything
   public ShoulderSubsystem () {
@@ -54,6 +66,7 @@ public class ShoulderSubsystem extends Subsystem {
     facingBack = false;
     shoulderMotor = new PWMVictorSPX(type.SHOULDER_PWM);
     shoulderPot = new AnalogPotentiometer(type.SHOULDER_POT_AI);
+    hatchLimit = new DigitalInput(type.HATCH_LIMITSWITCH_DIO);
     System.out.println(type.name + "\'s ShoulderSubsystem correctly instantiated.");
   }
 

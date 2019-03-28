@@ -7,6 +7,7 @@
 //Version: 3/2/19
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -25,9 +26,9 @@ import frc.robot.subsystems.*;
  * project.
  */
 public class Robot extends TimedRobot {
-  //private RobotName currentRobot = RobotName.CompBot;
-  private static RobotType robotType = new CompBot();
-  int a = robotType.BOTTOM_SERVO_RELEASE_PWM;
+  //DEPRECATED-private RobotName currentRobot = RobotName.CompBot;
+  private static RobotType robotType = new PracticeBot();
+  
   public static JeVoisSubsystem jeVois;
   public static DriveTrainSubsystem driveTrain;
   public static ElevatorSusbsystem elevator;
@@ -45,6 +46,8 @@ public class Robot extends TimedRobot {
   SendableChooser<Command> chooser = new SendableChooser<>();
   Timer t;
   Command myAuto;
+  
+  
 
   /**
    * This function is run when the robot is first started up and should be
@@ -53,7 +56,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     t = new Timer();
-    
+    CameraServer.getInstance().startAutomaticCapture();
     //CameraServer.getInstance().addAxisCamera("basic-cam", "10.47.76.5");
     //Add camera streams
     //CameraServer.getInstance().addAxisCamera("super-cam", "10.47.76.4");
@@ -75,7 +78,7 @@ public class Robot extends TimedRobot {
     elevator = new ElevatorSusbsystem(robotType);
     //elevator = new ElevatorSusbsystem();//blank subsystem
 
-    intake = new IntakeSubsystem(robotType, false, true);
+    intake = new IntakeSubsystem(robotType, true, true);
     //intake = new IntakeSubsystem();//blank subsystem
 
     shoulder = new ShoulderSubsystem(robotType);
@@ -204,6 +207,8 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     t.reset();
     t.start();
+    //CameraServer.getInstance().addAxisCamera("super-cam", "10.47.76.4");
+    //CameraServer.getInstance().removeCamera("super-cam");
     //CameraServer.getInstance().removeCamera("basic-cam");
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to

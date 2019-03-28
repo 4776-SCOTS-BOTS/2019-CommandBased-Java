@@ -41,59 +41,71 @@ public class RobotMap {
   public static class CompBot extends RobotType {
     public CompBot() {
       super();
-    }
-    public String name = "LazerShark McGee";
-    public int numberOfJeVois = 0;
-    //Motor PWMs
-    public int 
-    LEFT_DRIVE_PWM = 10, //Motors operating left side of the chassis
-    RIGHT_DRIVE_PWM = 11, //Motors operating right side of the chassis
-    LEFT_ELEVATOR_PWM = 17, //Motor that operates left elevator up and down
-    RIGHT_ELEVATOR_PWM = 18, //Motor that operates right elevator up and down
-    SHOULDER_PWM = 15, //Motor that rotates the arm to face the front and back
-    INTAKE_WHEELS_PWM = 16, //Wheels picking up cargo on the stationary intake
-    INTAKE_BELTS_PWM = 13, //Wheels picking up cargo on the stationary intake
-    CLIMBING_WHEELS_PWM = 14, //Wheels on the rear pneumatic climbing cylinders (PORT = PCM's PWM)
-    //Pneumatic ports
-    INTAKE_JAW_PORT = 0, //Pneumatic cylinders opening the stationary intake (PORT = PCM's PWM)
-    CLIMBER_FRONT_PORT = 1, //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    CLIMBER_REAR_PORT = 2, //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    HATCH_VACUUM = 12, //Suction cup motors
-    //Potentiometer analog input ports
-    SHOULDER_POT_AI = 6,
-    RIGHT_ELEVATOR_POT_AI = 4,
-    LEFT_ELEVATOR_POT_AI = 5,
-    //Servo PWMs
-    TOP_SERVO_RELEASE_PWM = 9,
-    BOTTOM_SERVO_RELEASE_PWM = 8;
-    //Calibration constants
-    public double 
-    RIGHT_ELEVATOR_POT_OFFSET= 0.0, //how much smaller is the right side
-    RIGHT_ELEVATOR_OFFSET_SCALE = 0.0,//how much does the elevator try to be balanced
-    RAMP_UP_DISTANCE = 0.00031,// + 0.08011591,//0.149 is too much
-    RAMP_DOWN_DISTANCE = 0.011,//how far does the elevator ramp drive?
-    LOW_HEIGHT = 0.3235,//for elevator
-    MID_HEIGHT = 0.5237330478733418,//for elevator
-    HIGH_HEIGHT = 0.685,//0.3537480,//for elevator
-    ELEVATOR_THRESHOLD = 0.02,//how close to the correct height does the elevator have to be?
-    //with cargo
-    ELEVATOR_FEED_FORWARD = 0.109375,//how much power is needed to keep the elevator at its height?
-    ELEVATOR_MAX_SPEED = 0.70,//how fast can the elevator go?
-    FORWARD_STRAIGHT_SHOULDER = 0.6284652728011417,
-    FORWARD_UP_SHOULDER = 0.6479153636394408,
-    REVERSE_UP_SHOULDER = 0.7340199673988977,
-    REVERSE_STRAIGHT_SHOULDER = 0.7517071955289918,
-    SHOULDER_MAX_SPEED = 0.8,
-    CARGO_PICKUP_SHOULDER = 0.76486,//when jaw is open, pick cargo off the ground
-    SHOULDER_THRESHOLD = 0.0025,
-    JEVOIS_CENTER = 160.0,
-    SHOULDER_FEED_FORWARD = 0.0,
+      name = "LazerShark McGee";
+      numberOfJeVois = 0;
+      //Motor PWMs
+      LEFT_DRIVE_PWM = 10; //Motors operating left side of the chassis
+      RIGHT_DRIVE_PWM = 11; //Motors operating right side of the chassis
+      LEFT_ELEVATOR_PWM = 17; //Motor that operates left elevator up and down
+      RIGHT_ELEVATOR_PWM = 18; //Motor that operates right elevator up and down
+      SHOULDER_PWM = 15; //Motor that rotates the arm to face the front and back
+      INTAKE_WHEELS_PWM = 16; //Wheels picking up cargo on the stationary intake
+      INTAKE_BELTS_PWM = 13; //Wheels picking up cargo on the stationary intake
+      CLIMBING_WHEELS_PWM = 14; //Wheels on the rear pneumatic climbing cylinders (PORT = PCM's PWM)
+      
+      //FOR CLIMBING
+      FRONT_LEFT_CLIMBING_PWM = 0;
+      FRONT_RIGHT_CLIMBING_PWM = 0;
+      REAR_LEFT_CLIMBING_PWM = 0;
+      REAR_RIGHT_CLIMBING_PWM = 0;
+      FRONT_LEFT_CLIMBING_POT_AI = 0;
+      FRONT_RIGHT_CLIMBING_POT_AI = 0;
+      REAR_LEFT_CLIMBING_POT_AI = 0;
+      REAR_RIGHT_CLIMBING_POT_AI = 0;
+      
+      //Pneumatic ports
+      INTAKE_JAW_PORT = 0; //Pneumatic cylinders opening the stationary intake (PORT = PCM's PWM)
+      //DEPRECATED-CLIMBER_FRONT_PORT = 1, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+      //DEPRECATED-CLIMBER_REAR_PORT = 2, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+      HATCH_BEAK_PORT = 4; //Suction cup motors
+      //Potentiometer analog input ports
+      SHOULDER_POT_AI = 6;
+      RIGHT_ELEVATOR_POT_AI = 4;
+      LEFT_ELEVATOR_POT_AI = 5;
+      
+      HATCH_LIMITSWITCH_DIO = 0;
+      /*DEPRECATED-//Servo PWMs
+      TOP_SERVO_RELEASE_PWM = 9,
+      BOTTOM_SERVO_RELEASE_PWM = 8;*/
+      //Calibration constants
+      RIGHT_ELEVATOR_POT_OFFSET= 0.0; //how much smaller is the right side
+      RIGHT_ELEVATOR_OFFSET_SCALE = 0.0;//how much does the elevator try to be balanced
+      RAMP_UP_DISTANCE = 0.00031; // + 0.08011591,//0.149 is too much
+      RAMP_DOWN_DISTANCE = 0.011; //how far does the elevator ramp drive?
+      LOW_HEIGHT = 0.3235; //for elevator
+      MID_HEIGHT = 0.5237330478733418; //for elevator
+      HIGH_HEIGHT = 0.685; //0.3537480,//for elevator
+      ELEVATOR_THRESHOLD = 0.02;//how close to the correct height does the elevator have to be?
+      //with cargo
+      ELEVATOR_FEED_FORWARD = 0.109375;//how much power is needed to keep the elevator at its height?
+      ELEVATOR_MAX_SPEED = 0.70;//how fast can the elevator go?
+      FORWARD_STRAIGHT_SHOULDER = 0.6284652728011417;
+      FORWARD_UP_SHOULDER = 0.6479153636394408;
+      REVERSE_UP_SHOULDER = 0.7340199673988977;
+      REVERSE_STRAIGHT_SHOULDER = 0.7517071955289918;
+      SHOULDER_MAX_SPEED = 0.8;
+      CARGO_PICKUP_SHOULDER = 0.76486;//when jaw is open, pick cargo off the ground
+      SHOULDER_THRESHOLD = 0.0025;
+      JEVOIS_CENTER = 160.0;
+      SHOULDER_FEED_FORWARD = 0.0;
 
-    //FOR VACUUMS:
-    MIN_LEFT_VACUUM_CURRENT = 0,
-    MAX_LEFT_VACUUM_CURRENT = 0,
-    MIN_RIGHT_VACUUM_CURRENT = 0,
-    MAX_RIGHT_VACUUM_CURRENT = 0;
+      //FOR VACUUMS:
+      MIN_LEFT_VACUUM_CURRENT = 0;
+      MAX_LEFT_VACUUM_CURRENT = 0;
+      MIN_RIGHT_VACUUM_CURRENT = 0;
+      MAX_RIGHT_VACUUM_CURRENT = 0;
+    }
+    
   }
   /**
    * Contained in this class are constants used for Steve, the programming robot.
@@ -113,56 +125,69 @@ public class RobotMap {
   public static class PracticeBot extends RobotType {
     public PracticeBot() {
       super();
+      name = "El Practico Robo";
+      numberOfJeVois = 0;
+      //Motor PWMs
+      LEFT_DRIVE_PWM = 11; //Motors operating left side of the chassis
+      RIGHT_DRIVE_PWM = 12; //Motors operating right side of the chassis
+      LEFT_ELEVATOR_PWM = 13; //Motor that operates left elevator up and down
+      RIGHT_ELEVATOR_PWM = 16; //Motor that operates right elevator up and down
+      SHOULDER_PWM = 10; //Motor that rotates the arm to face the front and back
+      INTAKE_WHEELS_PWM = 15; //Wheels picking up cargo on the stationary intake
+      INTAKE_BELTS_PWM = 19; //Wheels picking up cargo on the stationary intake
+      CLIMBING_WHEELS_PWM = 14; //Wheels on the rear pneumatic climbing cylinders (PORT = PCM's PWM)
+      
+      //FOR CLIMBING
+      FRONT_LEFT_CLIMBING_PWM = 0;
+      FRONT_RIGHT_CLIMBING_PWM = 0;
+      REAR_LEFT_CLIMBING_PWM = 0;
+      REAR_RIGHT_CLIMBING_PWM = 0;
+      FRONT_LEFT_CLIMBING_POT_AI = 0;
+      FRONT_RIGHT_CLIMBING_POT_AI = 0;
+      REAR_LEFT_CLIMBING_POT_AI = 0;
+      REAR_RIGHT_CLIMBING_POT_AI = 0;
+
+      //Pneumatic ports
+      INTAKE_JAW_PORT = 6; //Pneumatic cylinders opening the stationary intake (PORT = PCM's PWM)
+      //DEPRECATED-CLIMBER_FRONT_PORT = 4, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+      //DEPRECATED-CLIMBER_REAR_PORT = 5, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+      HATCH_BEAK_PORT = 4; //The beak that grabs hatches
+      //Potentiometer analog input ports
+      SHOULDER_POT_AI = 6;
+      RIGHT_ELEVATOR_POT_AI = 7;
+      LEFT_ELEVATOR_POT_AI = 5;
+      HATCH_LIMITSWITCH_DIO = 0;
+      /*DEPRECATED-//Servo PWMs
+      TOP_SERVO_RELEASE_PWM = 9,
+      BOTTOM_SERVO_RELEASE_PWM = 18;
+      */
+      //Calibration constants
+      RIGHT_ELEVATOR_POT_OFFSET= -0.0541499; //how much smaller is the right side
+      RIGHT_ELEVATOR_OFFSET_SCALE = 6.0;//how much does the elevator try to be balanced
+      RAMP_UP_DISTANCE = 0.06915508;// + 0.08011591,//0.149 is too much
+      RAMP_DOWN_DISTANCE = 0.0306812998;//how far does the elevator ramp drive?
+      LOW_HEIGHT = 0.735012;//for elevator
+      MID_HEIGHT = 0.524817;//for elevator
+      HIGH_HEIGHT = 0.40;//0.3537480,//for elevator
+      ELEVATOR_THRESHOLD = 0.02;//how close to the correct height does the elevator have to be?
+      //ROBOTTYPE_SAYS: with cargo
+      ELEVATOR_FEED_FORWARD = 0.117;//how much power is needed to keep the elevator at its height?
+      ELEVATOR_MAX_SPEED = 0.70;//how fast can the elevator go?
+      FORWARD_STRAIGHT_SHOULDER = 0.4545366;
+      FORWARD_UP_SHOULDER = 0.47725756;
+      REVERSE_UP_SHOULDER = 0.5379968;
+      REVERSE_STRAIGHT_SHOULDER = 0.5515320;
+      SHOULDER_MAX_SPEED = 0.9;
+      CARGO_PICKUP_SHOULDER = 0.56589;
+      SHOULDER_THRESHOLD = 0.005;
+      JEVOIS_CENTER = 160.0;
+      SHOULDER_FEED_FORWARD = 0.0;
+      //FOR VACUUMS:
+      MIN_LEFT_VACUUM_CURRENT = 2.0;
+      MAX_LEFT_VACUUM_CURRENT = 2.5;
+      MIN_RIGHT_VACUUM_CURRENT = 1.7;
+      MAX_RIGHT_VACUUM_CURRENT = 1.9;
     }
-    public String name = "El Practico Robo";
-    public int numberOfJeVois = 0;
-    //Motor PWMs
-    public int
-    LEFT_DRIVE_PWM = 11, //Motors operating left side of the chassis
-    RIGHT_DRIVE_PWM = 12, //Motors operating right side of the chassis
-    LEFT_ELEVATOR_PWM = 13, //Motor that operates left elevator up and down
-    RIGHT_ELEVATOR_PWM = 16, //Motor that operates right elevator up and down
-    SHOULDER_PWM = 10, //Motor that rotates the arm to face the front and back
-    INTAKE_WHEELS_PWM = 15, //Wheels picking up cargo on the stationary intake
-    INTAKE_BELTS_PWM = 19, //Wheels picking up cargo on the stationary intake
-    CLIMBING_WHEELS_PWM = 14, //Wheels on the rear pneumatic climbing cylinders (PORT = PCM's PWM)
-    //Pneumatic ports
-    INTAKE_JAW_PORT = 6, //Pneumatic cylinders opening the stationary intake (PORT = PCM's PWM)
-    CLIMBER_FRONT_PORT = 4, //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    CLIMBER_REAR_PORT = 5, //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    HATCH_VACUUM = 17, //Suction cup motors
-    //Potentiometer analog input ports
-    SHOULDER_POT_AI = 6,
-    RIGHT_ELEVATOR_POT_AI = 7,
-    LEFT_ELEVATOR_POT_AI = 5,
-    //Servo PWMs
-    TOP_SERVO_RELEASE_PWM = 9,
-    BOTTOM_SERVO_RELEASE_PWM = 18;
-    //Calibration constants
-    public double 
-    RIGHT_ELEVATOR_POT_OFFSET= -0.0541499, //how much smaller is the right side
-    RIGHT_ELEVATOR_OFFSET_SCALE = 6.0,//how much does the elevator try to be balanced
-    RAMP_UP_DISTANCE = 0.06915508,// + 0.08011591,//0.149 is too much
-    RAMP_DOWN_DISTANCE = 0.0306812998,//how far does the elevator ramp drive?
-    LOW_HEIGHT = 0.735012,//for elevator
-    MID_HEIGHT = 0.524817,//for elevator
-    HIGH_HEIGHT = 0.40,//0.3537480,//for elevator
-    ELEVATOR_THRESHOLD = 0.02,//how close to the correct height does the elevator have to be?
-    ELEVATOR_FEED_FORWARD = 0.117,//how much power is needed to keep the elevator at its height?
-    ELEVATOR_MAX_SPEED = 0.70,//how fast can the elevator go?
-    FORWARD_STRAIGHT_SHOULDER = 0.4545366,
-    FORWARD_UP_SHOULDER = 0.47725756,
-    REVERSE_UP_SHOULDER = 0.5379968,
-    REVERSE_STRAIGHT_SHOULDER = 0.5515320,
-    SHOULDER_MAX_SPEED = 0.9,
-    CARGO_PICKUP_SHOULDER = 0.56589,
-    SHOULDER_THRESHOLD = 0.005,
-    JEVOIS_CENTER = 160.0,
-    //FOR VACUUMS:
-    MIN_LEFT_VACUUM_CURRENT = 2.0,
-    MAX_LEFT_VACUUM_CURRENT = 2.5,
-    MIN_RIGHT_VACUUM_CURRENT = 1.7,
-    MAX_RIGHT_VACUUM_CURRENT = 1.9;
   }
   /**
    * Contained in this class are constants used for the old competition robot (for FIRST Power Up).
@@ -221,18 +246,31 @@ public class RobotMap {
     INTAKE_WHEELS_PWM, //Wheels picking up cargo on the stationary intake
     INTAKE_BELTS_PWM, //Wheels picking up cargo on the stationary intake
     CLIMBING_WHEELS_PWM, //Wheels on the rear pneumatic climbing cylinders (PORT = PCM's PWM)
+
+    //FOR CLIMBING
+    FRONT_LEFT_CLIMBING_PWM,
+    FRONT_RIGHT_CLIMBING_PWM,
+    REAR_LEFT_CLIMBING_PWM,
+    REAR_RIGHT_CLIMBING_PWM,
+    FRONT_LEFT_CLIMBING_POT_AI,
+    FRONT_RIGHT_CLIMBING_POT_AI,
+    REAR_LEFT_CLIMBING_POT_AI,
+    REAR_RIGHT_CLIMBING_POT_AI,
+
     //Pneumatic ports
     INTAKE_JAW_PORT, //Pneumatic cylinders opening the stationary intake (PORT = PCM's PWM)
-    CLIMBER_FRONT_PORT, //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    CLIMBER_REAR_PORT, //Pneumatic cylinders to climb (PORT = PCM's PWM)
-    HATCH_VACUUM , //Suction cup motors
+    //DEPRECATED-CLIMBER_FRONT_PORT, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+    //DEPRECATED-CLIMBER_REAR_PORT, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+    HATCH_BEAK_PORT, //Suction cup motors
     //Potentiometer analog input ports
     SHOULDER_POT_AI,
     RIGHT_ELEVATOR_POT_AI,
     LEFT_ELEVATOR_POT_AI,
-    //Servo PWMs
+
+    HATCH_LIMITSWITCH_DIO;
+    /*DEPRECATED-//Servo PWMs
     TOP_SERVO_RELEASE_PWM,
-    BOTTOM_SERVO_RELEASE_PWM;
+    BOTTOM_SERVO_RELEASE_PWM;*/
     //Calibration constants
     public double 
     RIGHT_ELEVATOR_POT_OFFSET, //how much smaller is the right side

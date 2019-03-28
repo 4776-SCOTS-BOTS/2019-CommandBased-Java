@@ -20,6 +20,7 @@ public class CheesyDrive extends Command {
   boolean useRamp;
   double oldOutput;
   double limitChange = 0.10;
+  int i;
   /**
    * To use cheesy drive during teleop/sandstorm/autonomous, make this command the default command for the drivetrain.
    * @param useFieldView - Enable this so when driving backwards, turning left makes the robot turn left (normally it is the opposite).
@@ -33,6 +34,7 @@ public class CheesyDrive extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    i = 0;
     oldOutput = 0;
     //Robot.readData = true;
   }
@@ -44,7 +46,8 @@ public class CheesyDrive extends Command {
     oldOutput += change;
     boolean reverse = ((oldOutput < -0.06) && fieldView);
     double turn = (reverse ? -1 : 1) * Robot.oi.getDriverAxis(XBox.RIGHT_X_AXIS);
-    
+    //i++;
+    //System.out.println("C: " + i);
     //System.out.println("RIGHT: " + turn);
     Robot.driveTrain.cheesyDrive(oldOutput, turn, Robot.oi.getDriverButton(XBox.RIGHT_BUMPER_BUTTON));
     //Robot.driveTrain.cheesyDrive(0, 0, false);

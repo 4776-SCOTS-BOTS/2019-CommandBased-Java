@@ -7,12 +7,16 @@
 
 package frc.robot.commands.operations;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.*;
 import frc.robot.RobotMap.*;
 
 public class SetPickupHeight extends Command {
   RobotType myType;
+
+  Timer timer = new Timer();
+
   boolean usingCargo;
   boolean facingBackwards;
   double threshold;
@@ -20,6 +24,10 @@ public class SetPickupHeight extends Command {
   double maxSpeed;
   boolean needCargo;
   boolean needSide;
+
+  double a = 0.09139;
+  double c = -0.09139;
+  double b = 5;
   /**
    * Set what shoulder height is used: straight (for hatches) or angled up (for cargo)
    * @param useCargo - Set to true when using cargo. Set to false when using hatches.
@@ -74,6 +82,8 @@ public class SetPickupHeight extends Command {
     setTargets(myType);
     Robot.shoulder.angledUp = usingCargo;
     Robot.shoulder.facingBack = facingBackwards;
+    timer.reset();
+    timer.start();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -83,10 +93,11 @@ public class SetPickupHeight extends Command {
     if (Robot.shoulder.getPotValue() > targetAngle) {
       //decrease shoulder
       if (closeEnough()) {
+        
         Robot.shoulder.powerShoulder(-myType.SHOULDER_FEED_FORWARD);
       } else {
 
-        Robot.shoulder.powerShoulder(maxSpeed);
+        Robot.shoulder.powerShoulder(curve(timer.get(), maxSpeed));
       }
     } else {
       //increase shoulder
@@ -94,7 +105,7 @@ public class SetPickupHeight extends Command {
         Robot.shoulder.powerShoulder(myType.SHOULDER_FEED_FORWARD);
       } else {
         
-      Robot.shoulder.powerShoulder(-maxSpeed);
+      Robot.shoulder.powerShoulder(-curve(timer.get(), maxSpeed));
       }
     }
   }
@@ -141,5 +152,8 @@ public class SetPickupHeight extends Command {
         targetAngle = type.FORWARD_STRAIGHT_SHOULDER;
       }
     }
+  }
+  private double curve(double x, double max) {
+    return Math.min(max, a * Math.exp(b * x) + c);
   }
 }

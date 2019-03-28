@@ -67,6 +67,7 @@ public class OI {
     //connectButton = new JoystickButton(driverJoystick, XBox.Y_BUTTON);
     //connectButton.whenPressed(new ReconnectJeVois(false));
 
+    /*DEPRECATED: No more pnuematic climbers! :D
     //robot jumps up
     raiseClimbersButton = new JoystickButton(driverJoystick, XBox.Y_BUTTON);
     raiseClimbersButton.whenActive(new RaiseClimbers());
@@ -79,7 +80,7 @@ public class OI {
     //jaw side
     toggleRearClimbersButton = new JoystickButton(driverJoystick, XBox.X_BUTTON);
     toggleRearClimbersButton.whenActive(new ToggleRear());
-
+    */
 
     if (useSinglePlayer) {
       //No manipulator!
@@ -92,7 +93,7 @@ public class OI {
 
       //Toggle mouth
       toggleMouthButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_START_BUTTON);
-      toggleMouthButton.whenPressed(new ToggleMouthOpen(true, type));
+      toggleMouthButton.whenPressed(new ToggleMouthOpen(false, type));
 
       //Make robot place cargo
       setCargoHeightButton = new JoystickButton(manipulatorJoystick, XBox.RIGHT_START_BUTTON);

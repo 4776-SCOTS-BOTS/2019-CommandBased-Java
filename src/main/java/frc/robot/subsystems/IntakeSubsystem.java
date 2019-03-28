@@ -21,19 +21,21 @@ public class IntakeSubsystem extends Subsystem {
   PowerDistributionPanel pdp;
   Solenoid jaw;
   PWMVictorSPX intakeWheels;
-  PWMVictorSPX hatchVacuum;
+  Solenoid heatchBeak;
+  //DEPRECATED-PWMVictorSPX hatchVacuum;
   PWMVictorSPX newIntakeBelts;//the belts holding/shooting cargo
   DigitalInput limitSwitch;
-  Servo topServoRelease;
-  Servo bottomServoRelease;
-  double currentAngle;
+  //DEPRECATED-Servo topServoRelease;
+  //DEPRECATED-Servo bottomServoRelease;
+  //DEPRECATED-double currentAngle;
 
   double minLeftVacuumCurrent;
   double maxLeftVacuumCurrent;
   double minRightVacuumCurrent;
   double maxRightVacuumCurrent;
 
-  public boolean isOpen;
+  public boolean isOpen = false;
+  private boolean isBeakOpen = false;
 
   //Blank Constructor: Do not use naything.
   public IntakeSubsystem () {
@@ -47,9 +49,10 @@ public class IntakeSubsystem extends Subsystem {
     
     jaw = new Solenoid(type.INTAKE_JAW_PORT);
     intakeWheels = new PWMVictorSPX(type.INTAKE_WHEELS_PWM);
-    hatchVacuum = new PWMVictorSPX(type.HATCH_VACUUM);
-    topServoRelease = new Servo(type.TOP_SERVO_RELEASE_PWM);
-    bottomServoRelease = new Servo(type.BOTTOM_SERVO_RELEASE_PWM);
+    //DEPRECATED-hatchVacuum = new PWMVictorSPX(type.HATCH_VACUUM);
+    //DEPRECATED-topServoRelease = new Servo(type.TOP_SERVO_RELEASE_PWM);
+    //DEPRECATED-bottomServoRelease = new Servo(type.BOTTOM_SERVO_RELEASE_PWM);
+    heatchBeak = new Solenoid(type.HATCH_BEAK_PORT);
     compressor = new Compressor(0);
     //pdp = new PowerDistributionPanel();
     enableCompressor(enableCompressor);
@@ -76,7 +79,9 @@ public class IntakeSubsystem extends Subsystem {
       }
     }
   }
+  @Deprecated
   public void powerVacuum(double power, boolean autoDisable, boolean useRumble) {
+    /*
     //autoDisable = false;
     if (hatchVacuum != null) {
       hatchVacuum.set(power);
@@ -92,6 +97,7 @@ public class IntakeSubsystem extends Subsystem {
     } else {
       Robot.oi.rumble(0);
     }
+    */
   }
   public void powerIntake(double power, boolean autoDisable) {
     if (intakeWheels != null) {
@@ -141,31 +147,61 @@ public class IntakeSubsystem extends Subsystem {
       jaw.set(isOpen);
     }
   }
+  /**
+   * Open/Close the hatch-beak based on the power given.
+   * @param power - If power is greater than 0.1, it opens. Otherwise, it's closed.
+   */
+  public void powerBeak(double power) {
+    isBeakOpen = (power > 0.1);
+    heatchBeak.set(isBeakOpen);
+  }
+  public void toggleBeak() {
+    isBeakOpen = !isBeakOpen;
+    heatchBeak.set(isBeakOpen);
+  }
+  public void openBeak(boolean open) {
+    isBeakOpen = open;
+    heatchBeak.set(isBeakOpen);
+  }
+  @Deprecated
   public void closeServos() {
+    /*DEPRECATED
     currentAngle = 0;
     if (topServoRelease != null && bottomServoRelease != null) {
       topServoRelease.setAngle(currentAngle);
       bottomServoRelease.setAngle(currentAngle);
     }
+    */
   }
+  @Deprecated
   public void openServos() {
+    /*DEPRECATED
     currentAngle = 90;
     if (topServoRelease != null && bottomServoRelease != null) {
       topServoRelease.setAngle(currentAngle);
       bottomServoRelease.setAngle(currentAngle);
     }
+    */
   }
+  @Deprecated
   public void setServoAngle(double angle) {
+    /*DEPRECATED
     currentAngle = angle;
     topServoRelease.setAngle(currentAngle);
     bottomServoRelease.setAngle(currentAngle);
+    */
   }
+  @Deprecated
   public void rotateServoAngle(double rotation) {
+    /*DEPRECATED
     currentAngle += rotation;
     topServoRelease.setAngle(currentAngle);
     bottomServoRelease.setAngle(currentAngle);
+    */
   }
+  @Deprecated
   public void toggleServos() {
+    /*DEPRECATED
     //90=open
     //0=close
     currentAngle = Math.min((currentAngle + 90) % 180, 170);
@@ -173,6 +209,7 @@ public class IntakeSubsystem extends Subsystem {
     bottomServoRelease.setAngle(currentAngle);
     System.out.println("Servos toggled to " + currentAngle + " degrees.");
     System.out.println("TOP SERVOS are acutally " + topServoRelease.get() + ", bottom: " + bottomServoRelease.get());
+    */
   }
 
 

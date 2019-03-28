@@ -33,13 +33,14 @@ public class ToggleMouthOpen extends Command {
   @Override
   protected void initialize() {
     Robot.intake.toggleMouth();//toggle the mouth open / closed
-    System.out.println("TOGGLED MOUTH");
+    //System.out.println("TOGGLED MOUTH");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    System.out.println("Target(toPickUpCargo): " + targetAngle + "PotPickupCargo: " + Robot.shoulder.getPotValue());
+    //System.out.println("EXEC");
+    //System.out.println("Target(toPickUpCargo): " + targetAngle + "PotPickupCargo: " + Robot.shoulder.getPotValue());
     if (Robot.shoulder.getPotValue() > targetAngle) {
       //decrease shoulder
       Robot.shoulder.powerShoulder(shoulderMaxSpeed);

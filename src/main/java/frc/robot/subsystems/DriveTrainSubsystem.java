@@ -32,8 +32,8 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
   }
   public DriveTrainSubsystem (RobotType type) {
     //Instantiate the driveTrain based on which robot we are using
+    System.out.println(type.name + "\'s DriveTrainSubsystem correctly instantiated (With ports " + type.LEFT_DRIVE_PWM + " and " + type.RIGHT_DRIVE_PWM + ").");
     driveWheels = new DifferentialDrive(new PWMVictorSPX(type.LEFT_DRIVE_PWM), new PWMVictorSPX(type.RIGHT_DRIVE_PWM));
-    System.out.println(type.name + "\'s DriveTrainSubsystem correctly instantiated.");
   }
   /**
    * Tank Drive on the <b>DriveTrainSubsystem</b>.

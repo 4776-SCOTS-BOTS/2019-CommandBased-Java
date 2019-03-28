@@ -37,19 +37,11 @@ public class IntakeManipulator extends Command {
     //Power intake wheels
     Robot.intake.powerIntake(Robot.oi.getManipulatorAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getManipulatorAxis(XBox.LEFT_TRIGGER_AXIS), true);
     //Power vacuum motors and detach servos if needed
-    Robot.intake.powerVacuum(Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS), true, true);
+    //DEPRECATED-Robot.intake.powerVacuum(Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS), true, true);
     
-    /*//Operate closing / opening of intake jaw
-    if (Robot.oi.getManipulatorPOV() == XBox.TOP_POV) {
-      Robot.intake.setClosed(false);
-    } else if (Robot.oi.getManipulatorPOV() == XBox.BOTTOM_POV) {
-      Robot.intake.setClosed(true);
-    }*/
-      /*if (Robot.oi.getDriverButtonDown(XBox.RIGHT_BUMPER_BUTTON) && (timer.get() - backTime > waitTime)) {
-        backTime = timer.get();
-        System.out.println("PRESSED RIGHT BUMPER");
-      }*/
-    }
+    //NEW HATCH MECHANISM- The Beak!
+    Robot.intake.openBeak(Robot.oi.getDriverButton(XBox.LEFT_BUMPER_BUTTON));
+  }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override

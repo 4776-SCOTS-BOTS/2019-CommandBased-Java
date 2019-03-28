@@ -38,9 +38,9 @@ public class ElevatorManipulator extends Command {
     double change = -Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS) - oldOutput;
     change = Math.max(-limitChange, Math.min(change, limitChange));//clamp change
     oldOutput += change;
-    oldOutput = Math.min(0.70, Math.max(oldOutput, -0.70));
+    oldOutput = Math.min(0.99, Math.max(oldOutput, -0.99));
     Robot.elevator.setPower(oldOutput);
-    System.out.println(t.get() + " " + oldOutput + " " + Robot.elevator.getRightPot());
+    //System.out.println(t.get() + " " + oldOutput + " " + Robot.elevator.getRightPot());
     
     
     }
