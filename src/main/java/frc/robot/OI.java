@@ -49,7 +49,7 @@ public class OI {
     //If this is used, then "just in case" use competition settings
     //this(false, RobotName.CompBot);
   }
-  public OI (boolean useSinglePlayer, RobotType type) {
+  public OI (boolean useSinglePlayer) {
     singlePlayer = useSinglePlayer;
     //DRIVER COMMANDS--------------------------------------------------------------------------------
     driverJoystick = new Joystick(XBox.DRIVER);
@@ -68,6 +68,7 @@ public class OI {
     //connectButton.whenPressed(new ReconnectJeVois(false));
 
     /*DEPRECATED: No more pnuematic climbers! :D
+    //TODO: Add this back!
     //robot jumps up
     raiseClimbersButton = new JoystickButton(driverJoystick, XBox.Y_BUTTON);
     raiseClimbersButton.whenActive(new RaiseClimbers());
@@ -93,25 +94,25 @@ public class OI {
 
       //Toggle mouth
       toggleMouthButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_START_BUTTON);
-      toggleMouthButton.whenPressed(new ToggleMouthOpen(false, type));
+      toggleMouthButton.whenPressed(new ToggleMouthOpen(false));
 
       //Make robot place cargo
       setCargoHeightButton = new JoystickButton(manipulatorJoystick, XBox.RIGHT_START_BUTTON);
-      setCargoHeightButton.whenPressed(new SetPickupHeight(true, type));
+      setCargoHeightButton.whenPressed(new SetPickupHeight(GamePiece.Cargo));
       //Make robot place hatches
       setHatchHeightButton = new JoystickButton(manipulatorJoystick, XBox.X_BUTTON);
-      setHatchHeightButton.whenPressed(new SetPickupHeight(false, type));
+      setHatchHeightButton.whenPressed(new SetPickupHeight(GamePiece.Hatch));
 
       //Make elevator go to low level on rocket
       setLowHeightButton = new JoystickButton(manipulatorJoystick, XBox.A_BUTTON);
-      setLowHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.Low, type));
-
+      setLowHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.Low));
       //Make elevator go to medium level on rocket
       setMediumHeightButton = new JoystickButton(manipulatorJoystick, XBox.B_BUTTON);
-      setMediumHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.Medium, type));
+      setMediumHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.Medium));
       //Make elevator go to high level on rocket
       setHighHeightButton = new JoystickButton(manipulatorJoystick, XBox.Y_BUTTON);
-      setHighHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.High, type));
+      setHighHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.High));
+
       //Override HoldElevator/MoveElevator Commands to allow driver control
       overrideElevatorButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_STICK_BUTTON);
       overrideElevatorButton.whenPressed(new ElevatorManipulator());
@@ -121,11 +122,11 @@ public class OI {
       
       //Make shoulder face the front
       setFaceFrontButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_BUMPER_BUTTON);
-      setFaceFrontButton.whenPressed(new SetPickupHeight(type, false));
+      setFaceFrontButton.whenPressed(new SetPickupHeight(false));
       //setFaceFrontButton.whenPressed(new ToggleMouthOpen(true, robot));
       //Make shoulder face the back
       setFaceBackButton = new JoystickButton(manipulatorJoystick, XBox.RIGHT_BUMPER_BUTTON);
-      setFaceBackButton.whenPressed(new SetPickupHeight(type, true));
+      setFaceBackButton.whenPressed(new SetPickupHeight(true));
     }
   }
   public void rumble(double power) {

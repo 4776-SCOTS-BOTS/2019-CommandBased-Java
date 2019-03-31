@@ -13,22 +13,21 @@ import frc.robot.Robot;
  * <b>This</b> is the <i>TEST COMMAND</i> for testing!
  */
 public class RaiseClimbers extends Command {
+  double height = 0.5;
   public RaiseClimbers() {
-    //requires(Robot.climber);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.climber);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.climber.raiseAllClimbers();
-    System.out.println("RAISE ALL CLIMBERS");
+    System.out.println("ABOUT TO PUT DOWN THE CLIMBERS - starting climb sequence!");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.climber.powerClimbWheels(0.7);
     //SmartDashboard.putNumber("Left Joystick Y Value", -Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS));
     //Robot.driveTrain.stop();
     //Robot.shoulder.power(Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS));

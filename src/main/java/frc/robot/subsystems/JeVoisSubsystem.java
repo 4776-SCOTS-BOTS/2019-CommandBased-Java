@@ -121,23 +121,19 @@ public class JeVoisSubsystem extends Subsystem{// implements PIDSource{
   public int getBytes() {
     return jeVoisCam0.getBytesReceived();
   }
-  public JeVoisSubsystem (RobotType type, boolean enableSystem) {
+  public JeVoisSubsystem (boolean enableSystem) {
     if (enableSystem) {
-      if (type.numberOfJeVois > 0) {
-        createSystem(type.numberOfJeVois > 1);
+      if (Robot.robotType.numberOfJeVois > 0) {
+        createSystem(Robot.robotType.numberOfJeVois > 1);
       }
-      System.out.println(type.name + "\'s JeVoisSubsystem correctly instantiated and ENABLED.");
+      System.out.println(Robot.robotType.name + "\'s JeVoisSubsystem correctly instantiated and ENABLED.");
     } else {
-      System.out.println(type.name + "\'s JeVoisSubsystem \'correctly\' instantiated and DISABLED.");
+      System.out.println(Robot.robotType.name + "\'s JeVoisSubsystem \'correctly\' instantiated and DISABLED.");
     }
   }
   //Default Constructor: Use main constructor with only 1 camera
   public JeVoisSubsystem () {
     System.out.println("Blank Subsystem for JeVoisSubsystem was instantiated.");
-  }
-  //Main Constructor runs main "constructor"
-  public JeVoisSubsystem (boolean _doubleCams) {
-    createSystem(_doubleCams);
   }
   //Main "Contstructor": Create 1 or 2 cameras
   public void createSystem (boolean _doubleCams) {

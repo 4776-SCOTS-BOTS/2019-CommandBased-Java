@@ -18,14 +18,14 @@ public class ToggleMouthOpen extends Command {
   double threshold;
   double targetAngle;
   double shoulderMaxSpeed;
-  public ToggleMouthOpen(boolean moveShoulderToPickup, RobotType type) {
+  public ToggleMouthOpen(boolean moveShoulderToPickup) {
     movingShoulderAlso = moveShoulderToPickup;
     if (movingShoulderAlso) {
       requires(Robot.shoulder);
       //determine what the target is and the thresholds
-      threshold = type.SHOULDER_THRESHOLD;
-      targetAngle = type.CARGO_PICKUP_SHOULDER;
-      shoulderMaxSpeed = type.SHOULDER_MAX_SPEED;
+      threshold = Robot.robotType.SHOULDER_THRESHOLD;
+      targetAngle = Robot.robotType.CARGO_PICKUP_SHOULDER;
+      shoulderMaxSpeed = Robot.robotType.SHOULDER_MAX_SPEED;
     }
   }
 

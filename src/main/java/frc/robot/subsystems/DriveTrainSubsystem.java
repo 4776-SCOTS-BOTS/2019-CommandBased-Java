@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.Robot;
 import frc.robot.RobotMap.*;
 import frc.robot.commands.drivetrain.*;
 import edu.wpi.first.wpilibj.*;
@@ -26,15 +27,15 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
   }
   *///END OF REQUIREMENTS
 
-  //Blank Subsystem: Do not create anything
   public DriveTrainSubsystem () {
-    System.out.println("Blank Subsystem for DriveTrainSubsystem was instantiated.");
-  }
-  public DriveTrainSubsystem (RobotType type) {
     //Instantiate the driveTrain based on which robot we are using
-    System.out.println(type.name + "\'s DriveTrainSubsystem correctly instantiated (With ports " + type.LEFT_DRIVE_PWM + " and " + type.RIGHT_DRIVE_PWM + ").");
-    driveWheels = new DifferentialDrive(new PWMVictorSPX(type.LEFT_DRIVE_PWM), new PWMVictorSPX(type.RIGHT_DRIVE_PWM));
-  }
+      if (Robot.robotType.hasADriveTrain) {
+        System.out.println(Robot.robotType.name + "\'s DriveTrainSubsystem correctly instantiated.");
+        driveWheels = new DifferentialDrive(new PWMVictorSPX(Robot.robotType.LEFT_DRIVE_PWM), new PWMVictorSPX(Robot.robotType.RIGHT_DRIVE_PWM));
+      } else {
+        System.out.println("Blank Subsystem for DriveTrainSubsystem was instantiated.");
+      }
+    }
   /**
    * Tank Drive on the <b>DriveTrainSubsystem</b>.
    * @param leftSpeed - the left side's speed (-1.0 to 1.0).
@@ -75,6 +76,10 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new CheesyDrive(false, true));
+    if (Robot.robotType.hasADriveTrain) {
+      setDefaultCommand(new CheesyDrive(false, true));
+    } else {
+      setDefaultCommand(null);
+    }
   }
 }

@@ -35,27 +35,27 @@ public class ElevatorToHeight extends Command {
   double rampUp;
   double rampDown;
 
-  public ElevatorToHeight(RobotMap.ElevatorHeight newHeight, MoveElevator base, RobotType type) {
+  public ElevatorToHeight(RobotMap.ElevatorHeight newHeight, MoveElevator base) {
     requires(Robot.elevator);
     myBase = base;
     timer = new Timer();
     
-    maxSpeed = type.ELEVATOR_MAX_SPEED;
-    highHeight = type.HIGH_HEIGHT;
-    lowHeight = type.LOW_HEIGHT;
-    rampUp = type.RAMP_UP_DISTANCE;
-    rampDown = type.RAMP_DOWN_DISTANCE;
+    maxSpeed = Robot.robotType.ELEVATOR_MAX_SPEED;
+    highHeight = Robot.robotType.HIGH_HEIGHT;
+    lowHeight = Robot.robotType.LOW_HEIGHT;
+    rampUp = Robot.robotType.RAMP_UP_DISTANCE;
+    rampDown = Robot.robotType.RAMP_DOWN_DISTANCE;
     switch(newHeight) {
       case Low: {
-        myTarget = type.LOW_HEIGHT;
+        myTarget = Robot.robotType.LOW_HEIGHT;
       }
       break;
       case Medium: {
-        myTarget = type.MID_HEIGHT;
+        myTarget = Robot.robotType.MID_HEIGHT;
       }
       break;
       case High: {
-        myTarget = type.HIGH_HEIGHT;
+        myTarget = Robot.robotType.HIGH_HEIGHT;
       }
       break;
     }

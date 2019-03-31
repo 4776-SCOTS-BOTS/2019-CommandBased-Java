@@ -34,10 +34,6 @@ public class ElevatorSusbsystem extends Subsystem {
   RobotMap.ElevatorHeight currentHeight;
   double oldHeight;
 
-  //Blank Constructor: Do not create anything for this subsytem.
-  public ElevatorSusbsystem () {
-    System.out.println("Blank Subsystem for ElevatorSubsystem was instantiated.");
-  }
   public double getLeftPot() {
     return leftElevatorPot.get();
   }
@@ -78,13 +74,16 @@ public class ElevatorSusbsystem extends Subsystem {
     leftElevatorMotor.stopMotor();
     rightElevatorMotor.stopMotor();
   }
-  public ElevatorSusbsystem (RobotType type) {//Instantiate the driveTrain based on which robot we are using
-    
-    leftElevatorMotor = new PWMVictorSPX(type.LEFT_ELEVATOR_PWM);
-    rightElevatorMotor = new PWMVictorSPX(type.RIGHT_ELEVATOR_PWM);
-    leftElevatorPot = new AnalogPotentiometer(type.LEFT_ELEVATOR_POT_AI);
-    rightElevatorPot = new AnalogPotentiometer(type.RIGHT_ELEVATOR_POT_AI);
-    System.out.println(type.name + "\'s ElevatorSubsystem correctly instantiated.");
+  public ElevatorSusbsystem () {//Instantiate the driveTrain based on which robot we are using
+    if (Robot.robotType.hasAnElevator) {
+      leftElevatorMotor = new PWMVictorSPX(Robot.robotType.LEFT_ELEVATOR_PWM);
+      rightElevatorMotor = new PWMVictorSPX(Robot.robotType.RIGHT_ELEVATOR_PWM);
+      leftElevatorPot = new AnalogPotentiometer(Robot.robotType.LEFT_ELEVATOR_POT_AI);
+      rightElevatorPot = new AnalogPotentiometer(Robot.robotType.RIGHT_ELEVATOR_POT_AI);
+      System.out.println(Robot.robotType.name + "\'s ElevatorSubsystem correctly instantiated.");
+    } else {
+      System.out.println("Blank Subsystem for ElevatorSubsystem was instantiated.");
+    }
   }
 
   @Override

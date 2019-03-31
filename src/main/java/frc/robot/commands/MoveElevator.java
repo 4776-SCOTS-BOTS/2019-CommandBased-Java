@@ -19,15 +19,15 @@ public class MoveElevator extends CommandGroup {
    * Move the ELEVATOR
    * <p>Input what new height you want to go to.
    */
-  public MoveElevator(RobotMap.ElevatorHeight newElevatorHeight, RobotType type) {
+  public MoveElevator(RobotMap.ElevatorHeight newElevatorHeight) {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
     
-    addSequential(new ElevatorToHeight(newElevatorHeight, this, type));
-    addSequential(new RampElevatorDown(this, type));
-    addSequential(new HoldElevatorHeight(this, type));
+    addSequential(new ElevatorToHeight(newElevatorHeight, this));
+    addSequential(new RampElevatorDown(this));
+    addSequential(new HoldElevatorHeight(this));
 
     // To run multiple commands at the same time,
     // use addParallel()

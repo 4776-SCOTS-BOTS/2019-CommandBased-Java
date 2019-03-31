@@ -12,7 +12,7 @@ import frc.robot.Robot;
 import frc.robot.OI.XBox;
 
 public class InitIntake extends Command {
-  public InitIntake() {
+  public InitIntake(boolean a) {
     requires(Robot.intake);
   }
 

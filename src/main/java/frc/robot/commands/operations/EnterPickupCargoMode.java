@@ -16,13 +16,13 @@ public class EnterPickupCargoMode extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public EnterPickupCargoMode(RobotType type) {
+  public EnterPickupCargoMode() {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());
     // these will run in order.
-    addParallel(new MoveElevator(RobotMap.ElevatorHeight.Low, type));
-    addParallel(new ToggleMouthOpen(true, type));
+    addParallel(new MoveElevator(RobotMap.ElevatorHeight.Low));
+    addParallel(new ToggleMouthOpen(true));
     // To run multiple commands at the same time,
     // use addParallel()
     // e.g. addParallel(new Command1());

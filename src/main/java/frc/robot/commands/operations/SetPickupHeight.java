@@ -32,10 +32,10 @@ public class SetPickupHeight extends Command {
    * Set what shoulder height is used: straight (for hatches) or angled up (for cargo)
    * @param useCargo - Set to true when using cargo. Set to false when using hatches.
    */
-  public SetPickupHeight(boolean useCargo, RobotType type) {
-    myType = type;
+  public SetPickupHeight(GamePiece gamePiece) {
+    myType = Robot.robotType;
     requires(Robot.shoulder);
-    usingCargo = useCargo;
+    usingCargo = gamePiece==GamePiece.Cargo;
     facingBackwards = Robot.shoulder.facingBack;
     
     needCargo = false;
@@ -46,10 +46,10 @@ public class SetPickupHeight extends Command {
    * @param useCargo - Set to true when using cargo. Set to false when using hatches.
    * @param faceBack - Set what side you want to face
    */
-  public SetPickupHeight(boolean useCargo, RobotType type, boolean faceBack) {
-    myType = type;
+  public SetPickupHeight(GamePiece gamePiece, boolean faceBack) {
+    myType = Robot.robotType;
     requires(Robot.shoulder);
-    usingCargo = useCargo;
+    usingCargo = gamePiece==GamePiece.Cargo;
     facingBackwards = faceBack;
     
     needCargo = false;
@@ -59,8 +59,8 @@ public class SetPickupHeight extends Command {
    * Set what shoulder height is used: straight (for hatches) or angled up (for cargo)
    * @param faceBack - Set what side you want to face
    */
-  public SetPickupHeight(RobotType type, boolean faceBack) {
-    myType = type;
+  public SetPickupHeight(boolean faceBack) {
+    myType = Robot.robotType;
     requires(Robot.shoulder);
     usingCargo = Robot.shoulder.angledUp;
     facingBackwards = faceBack;

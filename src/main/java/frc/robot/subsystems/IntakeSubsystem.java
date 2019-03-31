@@ -29,45 +29,33 @@ public class IntakeSubsystem extends Subsystem {
   //DEPRECATED-Servo bottomServoRelease;
   //DEPRECATED-double currentAngle;
 
-  double minLeftVacuumCurrent;
-  double maxLeftVacuumCurrent;
-  double minRightVacuumCurrent;
-  double maxRightVacuumCurrent;
-
   public boolean isOpen = false;
   private boolean isBeakOpen = false;
 
-  //Blank Constructor: Do not use naything.
-  public IntakeSubsystem () {
-    //this(RobotName.CompBot);
-    //this(RobotName.TestBoard, false, false);
-    System.out.println("Blank Subsystem for IntakeSubsystem was instantiated.");
-  }
-
-  public IntakeSubsystem (RobotType type, boolean enableCompressor, boolean closeServos) {
-    newIntakeBelts = new PWMVictorSPX(type.INTAKE_BELTS_PWM);
-    
-    jaw = new Solenoid(type.INTAKE_JAW_PORT);
-    intakeWheels = new PWMVictorSPX(type.INTAKE_WHEELS_PWM);
-    //DEPRECATED-hatchVacuum = new PWMVictorSPX(type.HATCH_VACUUM);
-    //DEPRECATED-topServoRelease = new Servo(type.TOP_SERVO_RELEASE_PWM);
-    //DEPRECATED-bottomServoRelease = new Servo(type.BOTTOM_SERVO_RELEASE_PWM);
-    heatchBeak = new Solenoid(type.HATCH_BEAK_PORT);
-    compressor = new Compressor(0);
-    //pdp = new PowerDistributionPanel();
-    enableCompressor(enableCompressor);
-    
-    if (!enableCompressor) {
-      compressor.stop();
+  public IntakeSubsystem (boolean enableCompressor, boolean closeServos) {
+    if (Robot.robotType.hasAnIntake) {
+      newIntakeBelts = new PWMVictorSPX(Robot.robotType.INTAKE_BELTS_PWM);
+      jaw = new Solenoid(Robot.robotType.INTAKE_JAW_PORT);
+      intakeWheels = new PWMVictorSPX(Robot.robotType.INTAKE_WHEELS_PWM);
+      //DEPRECATED-hatchVacuum = new PWMVictorSPX(type.HATCH_VACUUM);
+      //DEPRECATED-topServoRelease = new Servo(type.TOP_SERVO_RELEASE_PWM);
+      //DEPRECATED-bottomServoRelease = new Servo(type.BOTTOM_SERVO_RELEASE_PWM);
+      heatchBeak = new Solenoid(Robot.robotType.HATCH_BEAK_PORT);
+      compressor = new Compressor(0);
+      //pdp = new PowerDistributionPanel();
+      enableCompressor(enableCompressor);
+      
+      if (!enableCompressor) {
+        compressor.stop();
+      }
+      if (closeServos) {
+        closeServos();
+      }
+      System.out.println(Robot.robotType.name + "\'s IntakeSubsystem correctly instantiated.");
+    } else {
+      System.out.println("Blank Subsystem for IntakeSubsystem was instantiated.");
     }
-    if (closeServos) {
-      closeServos();
-    }
-    minLeftVacuumCurrent = type.MIN_LEFT_VACUUM_CURRENT;
-    maxLeftVacuumCurrent = type.MAX_LEFT_VACUUM_CURRENT;
-    minRightVacuumCurrent = type.MIN_RIGHT_VACUUM_CURRENT;
-    maxRightVacuumCurrent = type.MAX_RIGHT_VACUUM_CURRENT;
-    System.out.println(type.name + "\'s IntakeSubsystem correctly instantiated.");
+    
   }
   public void enableCompressor(boolean enable) {
     if (compressor != null) {

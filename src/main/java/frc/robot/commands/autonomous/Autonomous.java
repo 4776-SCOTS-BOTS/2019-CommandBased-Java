@@ -18,7 +18,7 @@ public class Autonomous extends CommandGroup {
     // Add Commands here:
     // e.g. addSequential(new Command1());
     
-    addParallel(new InitIntake());
+    //addParallel(new InitIntake());
     //addSequential(new Launch());
     
     // these will run in order.

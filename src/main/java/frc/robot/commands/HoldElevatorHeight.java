@@ -21,15 +21,15 @@ public class HoldElevatorHeight extends Command {
   double threshold;
   double feed;
 
-  public HoldElevatorHeight(MoveElevator base, RobotType type) {
+  public HoldElevatorHeight(MoveElevator base) {
     requires(Robot.elevator);
     myBase = base;
     
-    lowHeight = type.HIGH_HEIGHT;
-    midHeight = type.MID_HEIGHT;
-    highHeight = type.LOW_HEIGHT;
-    threshold = type.ELEVATOR_THRESHOLD;
-    feed = type.ELEVATOR_FEED_FORWARD;
+    lowHeight = Robot.robotType.HIGH_HEIGHT;
+    midHeight = Robot.robotType.MID_HEIGHT;
+    highHeight = Robot.robotType.LOW_HEIGHT;
+    threshold = Robot.robotType.ELEVATOR_THRESHOLD;
+    feed = Robot.robotType.ELEVATOR_FEED_FORWARD;
   }
 
   // Called just before this Command runs the first time

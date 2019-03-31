@@ -27,7 +27,7 @@ import frc.robot.subsystems.*;
  */
 public class Robot extends TimedRobot {
   //DEPRECATED-private RobotName currentRobot = RobotName.CompBot;
-  private static RobotType robotType = new PracticeBot();
+  public static final RobotType robotType = new CompBot();
   
   public static JeVoisSubsystem jeVois;
   public static DriveTrainSubsystem driveTrain;
@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     t = new Timer();
-    CameraServer.getInstance().startAutomaticCapture();
+    //CameraServer.getInstance().startAutomaticCapture();
     //CameraServer.getInstance().addAxisCamera("basic-cam", "10.47.76.5");
     //Add camera streams
     //CameraServer.getInstance().addAxisCamera("super-cam", "10.47.76.4");
@@ -68,27 +68,27 @@ public class Robot extends TimedRobot {
 
     //SUBSYSTEMS: (Please note: when switching robots, change the currentRobot variable, not the subsystem constructors)
     //PLEASE NOTE!!!!! Currently, cheesydrive only using left joystick on driver (turning isnt on right joystick)
-    driveTrain = new DriveTrainSubsystem(robotType);
+    driveTrain = new DriveTrainSubsystem();
     //driveTrain = new DriveTrainSubsystem();//blank subsystem
 
-    jeVois = new JeVoisSubsystem(robotType, true); //Proper subsystem (doesn't require different constructors for different robots)
+    jeVois = new JeVoisSubsystem(true); //Proper subsystem (doesn't require different constructors for different robots)
     //jeVois = new JeVoisSubsystem(); //Blank subsystem for jevois
     //jeVois = new JeVoisSubsystem(false); //Actual subsystem for jevois - boolean= use two cameras?
 
-    elevator = new ElevatorSusbsystem(robotType);
+    elevator = new ElevatorSusbsystem();
     //elevator = new ElevatorSusbsystem();//blank subsystem
 
-    intake = new IntakeSubsystem(robotType, true, true);
+    intake = new IntakeSubsystem(true, true);
     //intake = new IntakeSubsystem();//blank subsystem
 
-    shoulder = new ShoulderSubsystem(robotType);
+    shoulder = new ShoulderSubsystem();
     //shoulder = new ShoulderSubsystem();//blank subsystem
 
-    climber = new ClimberSubsystem(robotType);
+    climber = new ClimberSubsystem();
     //climber = new ClimberSubsystem();//blank subsystem
-    oi = new OI(false, robotType);//false = doubleplayer, true = singleplayer
+    oi = new OI(false);//false = doubleplayer, true = singleplayer
     
-    dPadLeftCommand = new EnterPickupCargoMode(robotType);
+    dPadLeftCommand = new EnterPickupCargoMode();
     //Create chooser tool for different autonomouses
     chooser.setDefaultOption("Default Auto", new Autonomous());
     //chooser.addOption("Basic Autonomous", new SuperAutonomous());
@@ -117,7 +117,8 @@ public class Robot extends TimedRobot {
     Command reverse = new ReverseShoulder();
     SmartDashboard.putData("REVERSE SHOULDER", reverse);*/
     
-    myAuto = new InitIntake();
+    //myAuto = new InitIntake();
+    myAuto = null;
   }
 
   /**

@@ -36,15 +36,15 @@ public class RampElevatorDown extends Command {
   double highHeight;
   double lowHeight;
 
-  public RampElevatorDown(MoveElevator base, RobotType type) {
+  public RampElevatorDown(MoveElevator base) {
     requires(Robot.elevator);
     timer = new Timer();
     //goUp = base.goingUp;
     myBase = base;
     
-    maxSpeed = type.ELEVATOR_MAX_SPEED;
-    highHeight = type.HIGH_HEIGHT;
-    lowHeight = type.LOW_HEIGHT;
+    maxSpeed = Robot.robotType.ELEVATOR_MAX_SPEED;
+    highHeight = Robot.robotType.HIGH_HEIGHT;
+    lowHeight = Robot.robotType.LOW_HEIGHT;
   }
 
   // Called just before this Command runs the first time

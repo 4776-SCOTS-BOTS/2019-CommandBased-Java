@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.manipulators.*;
 
@@ -57,17 +58,16 @@ public class ShoulderSubsystem extends Subsystem {
     }
   }
 
-  //Blank constructor: Do not use anything
-  public ShoulderSubsystem () {
-    System.out.println("Blank Subsystem for ShoulderSubsystem was instantiated.");
-  }
-
-  public ShoulderSubsystem(RobotMap.RobotType type) {
-    facingBack = false;
-    shoulderMotor = new PWMVictorSPX(type.SHOULDER_PWM);
-    shoulderPot = new AnalogPotentiometer(type.SHOULDER_POT_AI);
-    hatchLimit = new DigitalInput(type.HATCH_LIMITSWITCH_DIO);
-    System.out.println(type.name + "\'s ShoulderSubsystem correctly instantiated.");
+  public ShoulderSubsystem() {
+    if (Robot.robotType.hasAShoulder) {
+      facingBack = false;
+      shoulderMotor = new PWMVictorSPX(Robot.robotType.SHOULDER_PWM);
+      shoulderPot = new AnalogPotentiometer(Robot.robotType.SHOULDER_POT_AI);
+      hatchLimit = new DigitalInput(Robot.robotType.HATCH_LIMITSWITCH_DIO);
+      System.out.println(Robot.robotType.name + "\'s ShoulderSubsystem correctly instantiated.");
+    } else {
+      System.out.println("Blank Subsystem for ShoulderSubsystem was instantiated.");
+    }
   }
 
   @Override

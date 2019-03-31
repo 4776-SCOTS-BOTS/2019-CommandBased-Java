@@ -35,14 +35,23 @@ public class RobotMap {
     Medium,
     Low;
   }
+  public enum GamePiece {
+    Cargo,
+    Hatch;
+  }
   /**
    * Contained in this class are constants used for the competition robot (for Deep Space).
    */
   public static class CompBot extends RobotType {
     public CompBot() {
       super();
-      name = "LazerShark McGee";
+      name = "Montgomery Scottie";
       numberOfJeVois = 0;
+      canClimb = true;
+      hasADriveTrain = true;
+      hasAnElevator = true;
+      hasAnIntake = true;
+      hasAShoulder = true;
       //Motor PWMs
       LEFT_DRIVE_PWM = 10; //Motors operating left side of the chassis
       RIGHT_DRIVE_PWM = 11; //Motors operating right side of the chassis
@@ -51,16 +60,16 @@ public class RobotMap {
       SHOULDER_PWM = 15; //Motor that rotates the arm to face the front and back
       INTAKE_WHEELS_PWM = 16; //Wheels picking up cargo on the stationary intake
       INTAKE_BELTS_PWM = 13; //Wheels picking up cargo on the stationary intake
-      CLIMBING_WHEELS_PWM = 14; //Wheels on the rear pneumatic climbing cylinders (PORT = PCM's PWM)
+      CLIMBING_WHEELS_PWM = 6; //Wheels on the rear pneumatic climbing cylinders (PORT = PCM's PWM)
       
       //FOR CLIMBING
-      FRONT_LEFT_CLIMBING_PWM = 0;
-      FRONT_RIGHT_CLIMBING_PWM = 0;
-      REAR_LEFT_CLIMBING_PWM = 0;
-      REAR_RIGHT_CLIMBING_PWM = 0;
-      FRONT_LEFT_CLIMBING_POT_AI = 0;
-      FRONT_RIGHT_CLIMBING_POT_AI = 0;
-      REAR_LEFT_CLIMBING_POT_AI = 0;
+      FRONT_LEFT_CLIMBING_PWM = 12;
+      FRONT_RIGHT_CLIMBING_PWM = 7;
+      REAR_LEFT_CLIMBING_PWM = 14;
+      REAR_RIGHT_CLIMBING_PWM = 19;
+      FRONT_LEFT_CLIMBING_POT_AI = 1;
+      FRONT_RIGHT_CLIMBING_POT_AI = 2;
+      REAR_LEFT_CLIMBING_POT_AI = 7;
       REAR_RIGHT_CLIMBING_POT_AI = 0;
       
       //Pneumatic ports
@@ -99,11 +108,18 @@ public class RobotMap {
       JEVOIS_CENTER = 160.0;
       SHOULDER_FEED_FORWARD = 0.0;
 
-      //FOR VACUUMS:
-      MIN_LEFT_VACUUM_CURRENT = 0;
-      MAX_LEFT_VACUUM_CURRENT = 0;
-      MIN_RIGHT_VACUUM_CURRENT = 0;
-      MAX_RIGHT_VACUUM_CURRENT = 0;
+      FRONT_LEFT_CLIMBING_IN=0.41576655654592964;
+      FRONT_RIGHT_CLIMBING_IN=0.47490972104585316;
+      REAR_LEFT_CLIMBING_IN=0.45816943387262665;
+      REAR_RIGHT_CLIMBING_IN=0.5060114355311496;
+      FRONT_LEFT_CLIMBING_MID=0.2;
+      FRONT_RIGHT_CLIMBING_MID=0.6;
+      REAR_LEFT_CLIMBING_MID=0.29752023560161434;
+      REAR_RIGHT_CLIMBING_MID=0.707211930242816;
+      FRONT_LEFT_CLIMBING_OUT=0.042298625821150654;
+      FRONT_RIGHT_CLIMBING_OUT=0.8490119386377065;
+      REAR_LEFT_CLIMBING_OUT=0.11792405069904675;
+      REAR_RIGHT_CLIMBING_OUT=0.8867369064483859;
     }
     
   }
@@ -127,13 +143,18 @@ public class RobotMap {
       super();
       name = "El Practico Robo";
       numberOfJeVois = 0;
+      canClimb = false;
+      hasADriveTrain = true;
+      hasAnElevator = true;
+      hasAnIntake = true;
+      hasAShoulder = true;
       //Motor PWMs
       LEFT_DRIVE_PWM = 11; //Motors operating left side of the chassis
       RIGHT_DRIVE_PWM = 12; //Motors operating right side of the chassis
       LEFT_ELEVATOR_PWM = 13; //Motor that operates left elevator up and down
       RIGHT_ELEVATOR_PWM = 16; //Motor that operates right elevator up and down
       SHOULDER_PWM = 10; //Motor that rotates the arm to face the front and back
-      INTAKE_WHEELS_PWM = 15; //Wheels picking up cargo on the stationary intake
+      INTAKE_WHEELS_PWM = 17; //Wheels picking up cargo on the stationary intake
       INTAKE_BELTS_PWM = 19; //Wheels picking up cargo on the stationary intake
       CLIMBING_WHEELS_PWM = 14; //Wheels on the rear pneumatic climbing cylinders (PORT = PCM's PWM)
       
@@ -182,11 +203,7 @@ public class RobotMap {
       SHOULDER_THRESHOLD = 0.005;
       JEVOIS_CENTER = 160.0;
       SHOULDER_FEED_FORWARD = 0.0;
-      //FOR VACUUMS:
-      MIN_LEFT_VACUUM_CURRENT = 2.0;
-      MAX_LEFT_VACUUM_CURRENT = 2.5;
-      MIN_RIGHT_VACUUM_CURRENT = 1.7;
-      MAX_RIGHT_VACUUM_CURRENT = 1.9;
+      
     }
   }
   /**
@@ -236,6 +253,11 @@ public class RobotMap {
     }
     public String name;
     public int numberOfJeVois;
+    public boolean canClimb;
+    public boolean hasADriveTrain;
+    public boolean hasAnElevator;
+    public boolean hasAnIntake;
+    public boolean hasAShoulder;
     //Motor PWMs
     public int 
     LEFT_DRIVE_PWM, //Motors operating left side of the chassis
@@ -256,6 +278,8 @@ public class RobotMap {
     FRONT_RIGHT_CLIMBING_POT_AI,
     REAR_LEFT_CLIMBING_POT_AI,
     REAR_RIGHT_CLIMBING_POT_AI,
+    
+    
 
     //Pneumatic ports
     INTAKE_JAW_PORT, //Pneumatic cylinders opening the stationary intake (PORT = PCM's PWM)
@@ -294,11 +318,18 @@ public class RobotMap {
     JEVOIS_CENTER,
     SHOULDER_FEED_FORWARD,
 
-    //FOR VACUUMS:
-    MIN_LEFT_VACUUM_CURRENT,
-    MAX_LEFT_VACUUM_CURRENT,
-    MIN_RIGHT_VACUUM_CURRENT,
-    MAX_RIGHT_VACUUM_CURRENT;
+    FRONT_LEFT_CLIMBING_IN,
+    FRONT_RIGHT_CLIMBING_IN,
+    REAR_LEFT_CLIMBING_IN,
+    REAR_RIGHT_CLIMBING_IN,
+    FRONT_LEFT_CLIMBING_MID,
+    FRONT_RIGHT_CLIMBING_MID,
+    REAR_LEFT_CLIMBING_MID,
+    REAR_RIGHT_CLIMBING_MID,
+    FRONT_LEFT_CLIMBING_OUT,
+    FRONT_RIGHT_CLIMBING_OUT,
+    REAR_LEFT_CLIMBING_OUT,
+    REAR_RIGHT_CLIMBING_OUT;
   
   }
 }
