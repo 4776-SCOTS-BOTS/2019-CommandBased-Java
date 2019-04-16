@@ -14,8 +14,8 @@ import frc.robot.OI.XBox;
 
 public class ElevatorManipulator extends Command {
   double limitChange = 0.10;
-  double oldOutput;
-  boolean ramp = true;
+  double oldOutput = 0;
+  boolean useRamp = true;
   
   Timer t;
   public ElevatorManipulator() {
@@ -39,7 +39,13 @@ public class ElevatorManipulator extends Command {
     change = Math.max(-limitChange, Math.min(change, limitChange));//clamp change
     oldOutput += change;
     oldOutput = Math.min(0.99, Math.max(oldOutput, -0.99));
-    Robot.elevator.setPower(oldOutput);
+    
+    if (Robot.oi.getDriverButton(XBox.RIGHT_BUMPER_BUTTON)) {
+      Robot.elevator.setPower(0);
+    } else {
+
+      Robot.elevator.setPower(oldOutput);
+    }
     //System.out.println(t.get() + " " + oldOutput + " " + Robot.elevator.getRightPot());
     
     

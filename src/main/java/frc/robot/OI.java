@@ -97,13 +97,13 @@ public class OI {
       toggleMouthButton.whenPressed(new ToggleMouthOpen(false));
 
       //Make robot place cargo
-      setCargoHeightButton = new JoystickButton(manipulatorJoystick, XBox.RIGHT_START_BUTTON);
-      setCargoHeightButton.whenPressed(new SetPickupHeight(GamePiece.Cargo));
+      //setCargoHeightButton = new JoystickButton(manipulatorJoystick, XBox.RIGHT_START_BUTTON);
+      //setCargoHeightButton.whenPressed(new SetPickupHeight(GamePiece.Cargo));
       //Make robot place hatches
-      setHatchHeightButton = new JoystickButton(manipulatorJoystick, XBox.X_BUTTON);
-      setHatchHeightButton.whenPressed(new SetPickupHeight(GamePiece.Hatch));
+      //setHatchHeightButton = new JoystickButton(manipulatorJoystick, XBox.X_BUTTON);
+      //setHatchHeightButton.whenPressed(new SetPickupHeight(GamePiece.Hatch));
 
-      //Make elevator go to low level on rocket
+      /*//Make elevator go to low level on rocket
       setLowHeightButton = new JoystickButton(manipulatorJoystick, XBox.A_BUTTON);
       setLowHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.Low));
       //Make elevator go to medium level on rocket
@@ -112,7 +112,7 @@ public class OI {
       //Make elevator go to high level on rocket
       setHighHeightButton = new JoystickButton(manipulatorJoystick, XBox.Y_BUTTON);
       setHighHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.High));
-
+*/
       //Override HoldElevator/MoveElevator Commands to allow driver control
       overrideElevatorButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_STICK_BUTTON);
       overrideElevatorButton.whenPressed(new ElevatorManipulator());
@@ -121,12 +121,12 @@ public class OI {
       overrideShoulderButton.whenPressed(new ShoulderManipulator());
       
       //Make shoulder face the front
-      setFaceFrontButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_BUMPER_BUTTON);
-      setFaceFrontButton.whenPressed(new SetPickupHeight(false));
+      //setFaceFrontButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_BUMPER_BUTTON);
+      //setFaceFrontButton.whenPressed(new SetPickupHeight(false));
       //setFaceFrontButton.whenPressed(new ToggleMouthOpen(true, robot));
       //Make shoulder face the back
-      setFaceBackButton = new JoystickButton(manipulatorJoystick, XBox.RIGHT_BUMPER_BUTTON);
-      setFaceBackButton.whenPressed(new SetPickupHeight(true));
+      //setFaceBackButton = new JoystickButton(manipulatorJoystick, XBox.RIGHT_BUMPER_BUTTON);
+      //setFaceBackButton.whenPressed(new SetPickupHeight(true));
     }
   }
   public void rumble(double power) {

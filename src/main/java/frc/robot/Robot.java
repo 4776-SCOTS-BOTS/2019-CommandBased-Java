@@ -61,8 +61,8 @@ public class Robot extends TimedRobot {
     //Add camera streams
     //CameraServer.getInstance().addAxisCamera("super-cam", "10.47.76.4");
     //CameraServer.getInstance().addAxisCamera("bob-cam", "10.47.76.6");
-    
-    System.out.println("BEGINNING_ROBOT_INIT - Instantiating subsystems for \'" + robotType.name + "\'!");
+    CameraServer.getInstance().startAutomaticCapture();
+    System.out.println("BEGINNING_ROBOT_INIT finaly!!!- Instantiating subsystems for \'" + robotType.name + "\'!");
     readData = false; //Reading data every loop is VERY performance heavy, so make sure readData is off when not needed!
     debugJeVois = false;
 

@@ -41,17 +41,29 @@ public class CheesyDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double change = -Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS) - oldOutput;
-    change = Math.max(-limitChange, Math.min(change, limitChange));//clamp change
-    oldOutput += change;
-    boolean reverse = ((oldOutput < -0.06) && fieldView);
-    double turn = (reverse ? -1 : 1) * Robot.oi.getDriverAxis(XBox.RIGHT_X_AXIS);
+    
     //i++;
     //System.out.println("C: " + i);
     //System.out.println("RIGHT: " + turn);
-    Robot.driveTrain.cheesyDrive(oldOutput, turn, Robot.oi.getDriverButton(XBox.RIGHT_BUMPER_BUTTON));
+    if (false && Robot.oi.getDriverButton(XBox.RIGHT_BUMPER_BUTTON)) {
+
+      double change = -Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS) - oldOutput;
+      change = Math.max(-limitChange, Math.min(change, limitChange));//clamp change
+      oldOutput += change;
+      boolean reverse = ((oldOutput < -0.06) && fieldView);
+      double turn = (reverse ? -1 : 1) * Robot.oi.getManipulatorAxis(XBox.RIGHT_X_AXIS);
+      Robot.driveTrain.cheesyDrive(oldOutput, turn, false);
+    } else {
+
+      double change = -Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS) - oldOutput;
+      change = Math.max(-limitChange, Math.min(change, limitChange));//clamp change
+      oldOutput += change;
+      boolean reverse = ((oldOutput < -0.06) && fieldView);
+      double turn = (reverse ? -1 : 1) * Robot.oi.getDriverAxis(XBox.RIGHT_X_AXIS);
+      Robot.driveTrain.cheesyDrive(oldOutput, turn, false);
+    }
     //Robot.driveTrain.cheesyDrive(0, 0, false);
-    SmartDashboard.putBoolean("GoingReverse", reverse);
+    //SmartDashboard.putBoolean("GoingReverse", reverse);
     //System.out.println(Robot.jeVois.getXAvg(false) +" "+-Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS));
 
   }

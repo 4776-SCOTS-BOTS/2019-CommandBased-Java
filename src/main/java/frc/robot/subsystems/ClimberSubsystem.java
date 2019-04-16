@@ -25,7 +25,7 @@ public class ClimberSubsystem extends Subsystem {
   double min=0;
   double max=1;
   PWMVictorSPX climbWheels;
-  SpeedControllerGroup frontLeftClimbMotor;
+  PWMVictorSPX frontLeftClimbMotor;
   PWMVictorSPX frontRightClimbMotor;
   PWMVictorSPX rearLeftClimbMotor;
   PWMVictorSPX rearRightClimbMotor;
@@ -43,11 +43,11 @@ public class ClimberSubsystem extends Subsystem {
   public final double brokenPot = -0.1;
 
   private boolean motorsConnected() {
-    //if (climbWheels == null) return false;
-    //if (frontLeftClimbMotor == null) return false;
-    //if (frontRightClimbMotor == null) return false;
-    //if (rearLeftClimbMotor == null) return false;
-    //if (rearRightClimbMotor == null) return false;
+    if (climbWheels == null) return false;
+    if (frontLeftClimbMotor == null) return false;
+    if (frontRightClimbMotor == null) return false;
+    if (rearLeftClimbMotor == null) return false;
+    if (rearRightClimbMotor == null) return false;
 
     return true;
   }
@@ -69,8 +69,10 @@ public class ClimberSubsystem extends Subsystem {
       oldRearLeftValue=0;
       oldRearRightValue=0;
       climbWheels = new PWMVictorSPX(Robot.robotType.CLIMBING_WHEELS_PWM);
-      frontLeftClimbMotor = new SpeedControllerGroup(new PWMVictorSPX(Robot.robotType.FRONT_LEFT_CLIMBING_PWM), new PWMVictorSPX(Robot.robotType.FRONT_RIGHT_CLIMBING_PWM));
-      frontRightClimbMotor = null;
+      //frontLeftClimbMotor = new SpeedControllerGroup(
+      //  new PWMVictorSPX(Robot.robotType.FRONT_LEFT_CLIMBING_PWM), new PWMVictorSPX(Robot.robotType.FRONT_RIGHT_CLIMBING_PWM));
+      frontLeftClimbMotor = new PWMVictorSPX(Robot.robotType.FRONT_LEFT_CLIMBING_PWM);
+      frontRightClimbMotor = new PWMVictorSPX(Robot.robotType.FRONT_RIGHT_CLIMBING_PWM);//front right doesn't exist, there only is front, which is called frontLeft
       rearLeftClimbMotor = new PWMVictorSPX(Robot.robotType.REAR_LEFT_CLIMBING_PWM);
       rearRightClimbMotor = new PWMVictorSPX(Robot.robotType.REAR_RIGHT_CLIMBING_PWM);
       frontLeftClimbPot = new AnalogPotentiometer(Robot.robotType.FRONT_LEFT_CLIMBING_POT_AI);
@@ -122,7 +124,7 @@ public class ClimberSubsystem extends Subsystem {
   public double getRawRearLeftPot() {
     if (rearLeftClimbPot!=null)
     {
-      return rearRightClimbPot.get();
+      return rearLeftClimbPot.get();
     } else {
       return 0;
     }
@@ -210,12 +212,14 @@ public class ClimberSubsystem extends Subsystem {
   }
   /**
    * Power the mini wheels on the climber to drive onto the HAB.
-   * @param power - how much power - positive drives torward to HAB platform.
+   * @param power - how much power
    */
   public void powerClimbWheels(double power) {
     if (motorsConnected()) {
       //System.out.println("POWWW: " + power);
       climbWheels.set(power);
+    } else {
+      climbWheels.set(0);
     }
   }
   /**
@@ -252,10 +256,12 @@ public class ClimberSubsystem extends Subsystem {
    */
   public void powerClimbers(double frontLeftPower, double frontRightPower, double rearLeftPower, double rearRightPower) {
     if (motorsConnected()) {
+      System.out.println("flPow: "+frontLeftPower+", frPow: "+frontRightPower+", rlPow: "+rearLeftPower+", rrPow: "+rearRightPower+", flSca: "+getFrontLeftPot(true)+", frSca: "+getFrontRightPot(true)+", rlSca: "+getRearLeftPot(true)+", rrSca: "+getRearRightPot(true));
       frontLeftClimbMotor.set(frontLeftPower);
-      //frontRightClimbMotor.set(frontRightPower);
-      rearLeftClimbMotor.set(rearLeftPower);
-      rearRightClimbMotor.set(rearRightPower);
+      //frontRightClimbMotor.set(Math.max(-1, Math.min(1, frontLeftPower*1.3)));
+      frontRightClimbMotor.set(frontRightPower/1);//10
+      rearLeftClimbMotor.set(-rearLeftPower);
+      rearRightClimbMotor.set(-rearRightPower/1);//13
     }else {
     }
   }
@@ -268,7 +274,7 @@ public class ClimberSubsystem extends Subsystem {
   public void stopClimbers() {
     if (motorsConnected()) {
       frontLeftClimbMotor.stopMotor();
-      frontRightClimbMotor.stopMotor();
+      //frontRightClimbMotor.stopMotor();
       rearLeftClimbMotor.stopMotor();
       rearRightClimbMotor.stopMotor();
     }
