@@ -78,8 +78,6 @@ public class DriveTrainSubsystem extends Subsystem{// implements PIDOutput{
     // setDefaultCommand(new MySpecialCommand());
     if (Robot.robotType.hasADriveTrain) {
       setDefaultCommand(new CheesyDrive(false, true));
-    } else {
-      setDefaultCommand(null);
     }
   }
 }

@@ -43,6 +43,7 @@ public class OI {
   setFaceBackButton,
   overrideElevatorButton,
   overrideShoulderButton,
+  overrideClimberButton,
   toggleMouthButton;
 
   public OI () {
@@ -113,12 +114,15 @@ public class OI {
       setHighHeightButton = new JoystickButton(manipulatorJoystick, XBox.Y_BUTTON);
       setHighHeightButton.whenPressed(new MoveElevator(RobotMap.ElevatorHeight.High));
 */
-      //Override HoldElevator/MoveElevator Commands to allow driver control
+      //Override HoldElevator/MoveElevator Commands to allow manipulator control
       overrideElevatorButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_STICK_BUTTON);
       overrideElevatorButton.whenPressed(new ElevatorManipulator());
-      //Override the SetPickupHeight Commands to allow driver control
+      //Override the SetPickupHeight Commands to allow manipulator control
       overrideShoulderButton = new JoystickButton(manipulatorJoystick, XBox.RIGHT_STICK_BUTTON);
       overrideShoulderButton.whenPressed(new ShoulderManipulator());
+      //Override the SetPickupHeight Commands to allow manipulator control
+      overrideClimberButton = new JoystickButton(manipulatorJoystick, XBox.RIGHT_STICK_BUTTON);
+      overrideClimberButton.whenPressed(new ClimberManipulator());
       
       //Make shoulder face the front
       //setFaceFrontButton = new JoystickButton(manipulatorJoystick, XBox.LEFT_BUMPER_BUTTON);

@@ -39,6 +39,90 @@ public class RobotMap {
     Cargo,
     Hatch;
   }
+  public static class SteveBot extends RobotType {
+    public SteveBot() {
+      super();
+      name = "Stevie O'Brien";
+      numberOfJeVois = 0;
+      hasAClimber = false;
+      hasADriveTrain = true;
+      hasAnElevator = false;
+      hasAnIntake = false;
+      hasAShoulder = false;
+      //Motor PWMs
+      LEFT_DRIVE_PWM = 1; //Motors operating left side of the chassis
+      RIGHT_DRIVE_PWM = 3; //Motors operating right side of the chassis
+      LEFT_ELEVATOR_PWM = 17; //Motor that operates left elevator up and down
+      RIGHT_ELEVATOR_PWM = 18; //Motor that operates right elevator up and down
+      SHOULDER_PWM = 15; //Motor that rotates the arm to face the front and back
+      INTAKE_WHEELS_PWM = 16; //Wheels picking up cargo on the stationary intake
+      INTAKE_BELTS_PWM = 13; //Wheels picking up cargo on the stationary intake
+      CLIMBING_WHEELS_PWM = 6; //Wheels on the rear pneumatic climbing cylinders (PORT = PCM's PWM)
+      
+      //FOR CLIMBING
+      FRONT_LEFT_CLIMBING_PWM = 12;
+      FRONT_RIGHT_CLIMBING_PWM = 7;
+      REAR_LEFT_CLIMBING_PWM = 14;
+      REAR_RIGHT_CLIMBING_PWM = 19;
+      FRONT_LEFT_CLIMBING_POT_AI = 1;
+      FRONT_RIGHT_CLIMBING_POT_AI = 2;
+      REAR_LEFT_CLIMBING_POT_AI = 7;
+      REAR_RIGHT_CLIMBING_POT_AI = 0;
+      
+      //Pneumatic ports
+      INTAKE_JAW_PORT = 0; //Pneumatic cylinders opening the stationary intake (PORT = PCM's PWM)
+      //DEPRECATED-CLIMBER_FRONT_PORT = 1, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+      //DEPRECATED-CLIMBER_REAR_PORT = 2, //Pneumatic cylinders to climb (PORT = PCM's PWM)
+      HATCH_BEAK_PORT = 1; //Suction cup motors
+      //Potentiometer analog input ports
+      SHOULDER_POT_AI = 6;
+      RIGHT_ELEVATOR_POT_AI = 4;
+      LEFT_ELEVATOR_POT_AI = 5;
+      
+      HATCH_LIMITSWITCH_DIO = 0;
+      /*DEPRECATED-//Servo PWMs
+      TOP_SERVO_RELEASE_PWM = 9,
+      BOTTOM_SERVO_RELEASE_PWM = 8;*/
+      //Calibration constants
+      RIGHT_ELEVATOR_POT_OFFSET= 0.0; //how much smaller is the right side
+      RIGHT_ELEVATOR_OFFSET_SCALE = 0.0;//how much does the elevator try to be balanced
+      RAMP_UP_DISTANCE = 0.00031; // + 0.08011591,//0.149 is too much
+      RAMP_DOWN_DISTANCE = 0.011; //how far does the elevator ramp drive?
+      LOW_HEIGHT = 0.3235; //for elevator
+      MID_HEIGHT = 0.5237330478733418; //for elevator
+      HIGH_HEIGHT = 0.685; //0.3537480,//for elevator
+      ELEVATOR_THRESHOLD = 0.02;//how close to the correct height does the elevator have to be?
+      //with cargo
+      ELEVATOR_FEED_FORWARD = 0.109375;//how much power is needed to keep the elevator at its height?
+      ELEVATOR_MAX_SPEED = 0.70;//how fast can the elevator go?
+      FORWARD_STRAIGHT_SHOULDER = 0.6284652728011417;
+      FORWARD_UP_SHOULDER = 0.6479153636394408;
+      REVERSE_UP_SHOULDER = 0.7340199673988977;
+      REVERSE_STRAIGHT_SHOULDER = 0.7517071955289918;
+      SHOULDER_MAX_SPEED = 0.8;
+      CARGO_PICKUP_SHOULDER = 0.76486;//when jaw is open, pick cargo off the ground
+      SHOULDER_THRESHOLD = 0.0025;
+      JEVOIS_CENTER = 160.0;
+      SHOULDER_FEED_FORWARD = 0.0;
+
+      //Normal Driving
+      FRONT_LEFT_CLIMBING_IN=0.9836282941356109;
+      FRONT_RIGHT_CLIMBING_IN=0.5870896944673571;
+      REAR_LEFT_CLIMBING_IN=0.3255430802497138;
+      REAR_RIGHT_CLIMBING_IN=0.9684238752837594;
+      //Level 2 climb
+      FRONT_LEFT_CLIMBING_MID=0.4608398542935644;
+      FRONT_RIGHT_CLIMBING_MID=0.9493989084264447;
+      REAR_LEFT_CLIMBING_MID=0.26419036251031075;
+      REAR_RIGHT_CLIMBING_MID=0.504593470158582;
+      //Level 3 Climb
+      FRONT_LEFT_CLIMBING_OUT=0.5962728411842683;
+      FRONT_RIGHT_CLIMBING_OUT=0.9522150930070368;
+      REAR_LEFT_CLIMBING_OUT=0.7060259687775545;
+      REAR_RIGHT_CLIMBING_OUT=0.5949344274537745;
+    }
+    
+  }
   /**
    * Contained in this class are constants used for the competition robot (for Deep Space).
    */
@@ -47,7 +131,7 @@ public class RobotMap {
       super();
       name = "Montgomery Scottie";
       numberOfJeVois = 0;
-      canClimb = true;
+      hasAClimber = true;
       hasADriveTrain = true;
       hasAnElevator = true;
       hasAnIntake = true;
@@ -146,7 +230,7 @@ public class RobotMap {
       super();
       name = "El Practico Robo";
       numberOfJeVois = 0;
-      canClimb = false;
+      hasAClimber = false;
       hasADriveTrain = true;
       hasAnElevator = true;
       hasAnIntake = true;
@@ -256,7 +340,7 @@ public class RobotMap {
     }
     public String name;
     public int numberOfJeVois;
-    public boolean canClimb;
+    public boolean hasAClimber;
     public boolean hasADriveTrain;
     public boolean hasAnElevator;
     public boolean hasAnIntake;

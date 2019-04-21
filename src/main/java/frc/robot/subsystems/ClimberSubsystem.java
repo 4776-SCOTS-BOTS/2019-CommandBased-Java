@@ -63,7 +63,7 @@ public class ClimberSubsystem extends Subsystem {
    * Please remember, <b>FRONT=BEAK/BATTERY, REAR=JAW/CARGO</b>
    */
   public ClimberSubsystem() {
-    if (Robot.robotType.canClimb) {
+    if (Robot.robotType.hasAClimber) {
       oldFrontLeftValue=0;
       oldFrontRightValue=0;
       oldRearLeftValue=0;
@@ -284,7 +284,9 @@ public class ClimberSubsystem extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new ClimberManipulator());
+    if (Robot.robotType.hasAClimber){
+      setDefaultCommand(new ClimberManipulator());
+    }
   }
   //Map is a helpful command. Here it is:
   double map(double x, double in_min, double in_max, double out_min, double out_max) {

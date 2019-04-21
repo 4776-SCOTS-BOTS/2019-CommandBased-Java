@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import java.io.IOException;
+
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.interfaces.Potentiometer;
@@ -85,11 +87,12 @@ public class ElevatorSusbsystem extends Subsystem {
       System.out.println("Blank Subsystem for ElevatorSubsystem was instantiated.");
     }
   }
-
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
-    setDefaultCommand(new ElevatorManipulator());
+    if (Robot.robotType.hasAnElevator) {
+      setDefaultCommand(new ElevatorManipulator());
+    }
   }
 }
