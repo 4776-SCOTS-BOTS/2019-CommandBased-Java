@@ -61,12 +61,13 @@ public class ClimberManipulator extends Command {
   double rrMax;
   //#endregion
   double max = 0.98;
-  double min = 0.02;
+  double min = 0.0;
   //Ramping:
-  double limitChange;//0.05;
+  double limitChange=0.05; //The how much to ramp (small amount = large ramp) - increase each loop
   double frontOldOutput = 0;
   double rearOldOutput = 0;
   boolean useRamp = true;
+  boolean halfRamp = true;//only ramp when pushing
   double slowedSpeed = 0.1;
   boolean independence = true;
   boolean slowMax = true;
@@ -76,12 +77,17 @@ public class ClimberManipulator extends Command {
   double rightFeedPoint=map(0.9404858708145847, Robot.robotType.FRONT_RIGHT_CLIMBING_IN, Robot.robotType.FRONT_RIGHT_CLIMBING_OUT, 0, 1);
   
   //For Worlds:
+  boolean adjustPower = false;//set power to a constant power (limit power)
+  double adjustingThreshold = 0.15;//at what power is up enough
+  double adjustingMaxSpeed = 0.5;
   boolean useScale = true;//true=states,false=worlds
   double rampAffect = 3.6;
   double maxSpeed = 1.0;
   double basicSpeed = 0.2;
   double slope = 3.886;
   double minVelocity = 0.38;//Units: scaledPotValue per frame
+
+  boolean stopBrokenPots = true;
   
   /**
   * Please remember, <b>FRONT=BEAK/BATTERY, REAR=JAW/CARGO</b>
@@ -396,27 +402,49 @@ public class ClimberManipulator extends Command {
             double frontDown = -Robot.oi.getManipulatorAxis(XBox.RIGHT_Y_AXIS);
             //double favorFrontLeft = Robot.oi.getDriverAxis(XBox.RIGHT_X_AXIS);
             double rearDown = -Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS);
+            if (adjustPower){
+              //front
+              if (Math.abs(frontDown)>adjustingThreshold){
+                frontDown=Math.signum(frontDown)*adjustingMaxSpeed;//so positive is positive and negative is negative
+              } else {
+                frontDown=0;
+              }
+              //rear
+              if (Math.abs(rearDown)>adjustingThreshold){
+                rearDown=Math.signum(rearDown)*adjustingMaxSpeed;//so positive is positive and negative is negative
+              } else {
+                rearDown=0;
+              }
+            }
             //double favorRearLeft = Robot.oi.getDriverAxis(XBox.LEFT_X_AXIS);
-            double frontChange = frontDown - frontOldOutput;
-            frontChange = Math.max(-limitChange, Math.min(frontChange, limitChange));//clamp change
-            frontOldOutput += frontChange;
-            frontOldOutput = Math.min(0.99, Math.max(frontOldOutput, -0.99));
-            double rearChange = rearDown - rearOldOutput;
-            rearChange = Math.max(-limitChange, Math.min(rearChange, rearChange));//clamp change
-            rearOldOutput += rearChange;
-            rearOldOutput = Math.min(0.99, Math.max(rearOldOutput, -0.99));
+            if (halfRamp && frontDown>0){//ramp when only pushing the ground
+              frontOldOutput=frontDown;
+            }else{
+              double frontChange = frontDown - frontOldOutput;
+              frontChange = Math.max(-limitChange, Math.min(frontChange, limitChange));//clamp change
+              frontOldOutput += frontChange;
+              frontOldOutput = Math.min(0.99, Math.max(frontOldOutput, -0.99));
+            }
+            if (halfRamp && rearDown>0){
+              rearOldOutput=rearDown;
+            } else {
+              double rearChange = rearDown - rearOldOutput;
+              rearChange = Math.max(-limitChange, Math.min(rearChange, rearChange));//clamp change
+              rearOldOutput += rearChange;
+              rearOldOutput = Math.min(0.99, Math.max(rearOldOutput, -0.99));
+            }
           } else {
             frontOldOutput=-Robot.oi.getManipulatorAxis(XBox.RIGHT_Y_AXIS);
             rearOldOutput=-Robot.oi.getManipulatorAxis(XBox.LEFT_Y_AXIS);
           }
           //#endregion
           //ramping:
-          double flSpeed,frSpeed,rlSpeed,rrSpeed;
+          /*double flSpeed,frSpeed,rlSpeed,rrSpeed;
           boolean flTouchingTheGround = Robot.climber.getFrontLeftPot(true)>flMid;
           boolean frTouchingTheGround = Robot.climber.getFrontRightPot(true)>frMid;
           boolean rlTouchingTheGround = Robot.climber.getRearLeftPot(true)>rlMid;
           boolean rrTouchingTheGround = Robot.climber.getRearRightPot(true)>rrMid;
-          
+          */
           //flSpeed = (flTouchingTheGround)? basicSpeed: (1 - Math.pow(2*Robot.climber.getFrontLeftPot(true), rampAffect));
           //frSpeed = (frTouchingTheGround)? basicSpeed: (1 - Math.pow(2*Robot.climber.getFrontRightPot(true), rampAffect));
           //rlSpeed = (rlTouchingTheGround)? basicSpeed: (1 - Math.pow(2*Robot.climber.getRearLeftPot(true), rampAffect));
@@ -427,10 +455,10 @@ public class ClimberManipulator extends Command {
           boolean frontRightMaxed=(Robot.climber.getFrontRightPot(true)>max);
           boolean rearLeftMaxed = ((Robot.climber.getRearLeftPot(true))>max);
           boolean rearRightMaxed = (Robot.climber.getRearRightPot(true)>max);
-          boolean frontLeftMinned=((Robot.climber.getFrontLeftPot(true))<min);
-          boolean frontRightMinned=(Robot.climber.getFrontRightPot(true)<min);
-          boolean rearLeftMinned = ((Robot.climber.getRearLeftPot(true))<min);
-          boolean rearRightMinned = ((Robot.climber.getRearRightPot(true))<min);
+          boolean frontLeftMinned=((Robot.climber.getFrontLeftPot(true))<0);
+          boolean frontRightMinned=(Robot.climber.getFrontRightPot(true)<0);
+          boolean rearLeftMinned = ((Robot.climber.getRearLeftPot(true))<0.02);
+          boolean rearRightMinned = ((Robot.climber.getRearRightPot(true))<0.02);
           frontLeftMinned = frontLeftMinned && (frontOldOutput>0);
           frontRightMinned = frontRightMinned && (frontOldOutput>0);
           rearLeftMinned = rearLeftMinned && (rearOldOutput>0);
@@ -439,19 +467,26 @@ public class ClimberManipulator extends Command {
           frontRightMaxed = frontRightMaxed && (frontOldOutput<0);
           rearLeftMaxed = rearLeftMaxed && (rearOldOutput<0);
           rearRightMaxed = rearRightMaxed && (rearOldOutput<0);
-          boolean frontAlmost=((Robot.climber.getFrontLeftPot(true))>leftFeedPoint||(Robot.climber.getFrontRightPot(true)>rightFeedPoint));
   
           double frontLeftSlowDown = (slowMax && frontLeftMaxed) || (slowMin && frontLeftMinned) ? 0 : 1;
           double frontRightSlowDown = (slowMax && frontRightMaxed) || (slowMin && frontRightMinned) ? 0 : 1;
           double rearLeftSlowDown = (slowMax && rearLeftMaxed) || (slowMin && rearLeftMinned) ? 0 : 1;
           double rearRightSlowDown = (slowMax && rearRightMaxed) || (slowMin && rearRightMinned) ? 0 : 1;
+
+          boolean isBroken = (stopBrokenPots && (
+            Robot.climber.getFrontLeftPot(false)<0.1 ||
+            Robot.climber.getFrontRightPot(false)<0.1 ||
+            Robot.climber.getRearLeftPot(false)<0.1 ||
+            Robot.climber.getRearRightPot(false)<0.1
+          ));
+          double stopMotors = (isBroken)? 0:1;
           //#endregion
           //System.out.println("frontleft- "+frontLeftMinned+frontLeftSlowDown+":"+fl+", frontright- "+frontRightMinned+frontRightSlowDown+":"+fr);
           //System.out.println("frMin: "+frontMinned+", frMax: "+frontMaxed+", reMin: "+rearMinned+", reMax: "+rearMaxed);
-          fl=frontOldOutput*1*frontLeftSlowDown;
-          fr=frontOldOutput*1*frontRightSlowDown;
-          rl=rearOldOutput*1*rearLeftSlowDown;
-          rr=rearOldOutput*1*rearRightSlowDown;
+          fl=frontOldOutput*frontLeftSlowDown*stopMotors;
+          fr=frontOldOutput*frontRightSlowDown*stopMotors;
+          rl=rearOldOutput*rearLeftSlowDown*stopMotors;
+          rr=rearOldOutput*rearRightSlowDown*stopMotors;
           //System.out.println("AAAAAA"+rearOldOutput);
           //System.out.println("frontleft- "+rearLeftMinned+rearLeftSlowDown+":"+rl+", reantright- "+rearRightMinned+rearRightSlowDown+":"+rr);
         } else {
@@ -472,8 +507,8 @@ public class ClimberManipulator extends Command {
     
     
     //System.out.println("Right Left Power:"+rl + " and the real is "+Robot.climber.getRawRearLeftPot()+" and rr="+rr);
-    System.out.println("FL: "+Robot.climber.getRawFrontLeftPot()+", FR: "+Robot.climber.getRawFrontRightPot()+
-          ", RL: "+Robot.climber.getRawRearLeftPot()+", RR: "+Robot.climber.getRawRearRightPot());
+    //System.out.println("FL: "+Robot.climber.getRawFrontLeftPot()+", FR: "+Robot.climber.getRawFrontRightPot()+
+      //    ", RL: "+Robot.climber.getRawRearLeftPot()+", RR: "+Robot.climber.getRawRearRightPot());
     //System.out.println("fl="+moveFrontLeft+", fr="+moveFrontRight+", rl="+moveRearLeft+", rr"+moveRearRight);
     Robot.climber.powerClimbers(fl, fr, rl, rr);
     if (Robot.oi.getDriverButton(XBox.RIGHT_BUMPER_BUTTON)) {
@@ -590,6 +625,7 @@ public class ClimberManipulator extends Command {
   }
   void joystick(){
     autoDisable=false;
+    //joystickInput=true;
     joystickInput=Robot.oi.getDriverButton(XBox.RIGHT_BUMPER_BUTTON);
   }
   void button(){

@@ -40,6 +40,9 @@ public class IntakeManipulator extends Command {
     //DEPRECATED-Robot.intake.powerVacuum(Robot.oi.getDriverAxis(XBox.RIGHT_TRIGGER_AXIS) - Robot.oi.getDriverAxis(XBox.LEFT_TRIGGER_AXIS), true, true);
     
     //NEW HATCH MECHANISM- The Beak!
+    //NOTE: inverted input because the comp bot's pnuematics to the beak had to be reversed to improve strength of 
+    //opening/closing for IRI (7/10/19)
+    //EXTRA NOTE: Just kidding! We didnt swap the pnuematics, and the input isnt inverted!
     Robot.intake.openBeak(Robot.oi.getDriverButton(XBox.LEFT_BUMPER_BUTTON));
   }
 

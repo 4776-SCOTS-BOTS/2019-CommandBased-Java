@@ -27,7 +27,7 @@ public class ArcadeDrive extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveTrain.arcadeDrive(-Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS), Robot.oi.getDriverAxis(XBox.RIGHT_X_AXIS));
+    Robot.driveTrain.arcadeDrive(0.5*-Robot.oi.getDriverAxis(XBox.LEFT_Y_AXIS), 0.5*Robot.oi.getDriverAxis(XBox.RIGHT_X_AXIS));
   }
 
   // Make this return true when this Command no longer needs to run execute()

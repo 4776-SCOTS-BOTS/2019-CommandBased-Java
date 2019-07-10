@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
     //CameraServer.getInstance().addAxisCamera("super-cam", "10.47.76.4");
     //CameraServer.getInstance().addAxisCamera("bob-cam", "10.47.76.6");
     CameraServer.getInstance().startAutomaticCapture();
-    System.out.println("BEGINNING_ROBOT_INIT finaly!!!- Instantiating subsystems for \'" + robotType.name + "\'!");
+    System.out.println("Hello, \'" + robotType.name + "\' is ready to go to IRI (Last pushed to robot: 7/10/19)!");
     readData = false; //Reading data every loop is VERY performance heavy, so make sure readData is off when not needed!
     debugJeVois = false;
 
@@ -78,7 +78,7 @@ public class Robot extends TimedRobot {
     elevator = new ElevatorSusbsystem();
     //elevator = new ElevatorSusbsystem();//blank subsystem
 
-    intake = new IntakeSubsystem(true, true);
+    intake = new IntakeSubsystem(true, false);
     //intake = new IntakeSubsystem();//blank subsystem
 
     shoulder = new ShoulderSubsystem();

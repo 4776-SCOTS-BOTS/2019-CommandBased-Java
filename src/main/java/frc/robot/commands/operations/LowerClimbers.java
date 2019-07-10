@@ -158,7 +158,7 @@ public class LowerClimbers extends Command {
       powerFR= potSlope * Robot.climber.getFrontRightPot(false);
       powerRL= potSlope * Robot.climber.getRearLeftPot(false);
       powerRR= potSlope * Robot.climber.getRearLeftPot(false);
-      rampingdown= true;
+      rampingdown= true;//you are ramping down
       speed1FL= Robot.climber.getFrontLeftPot(false)-prevFL;
       speed1FR= Robot.climber.getFrontRightPot(false)-prevFL;
       speed1RL= Robot.climber.getRearLeftPot(false)-prevFL;

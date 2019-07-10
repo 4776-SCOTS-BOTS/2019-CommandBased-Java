@@ -48,9 +48,6 @@ public class IntakeSubsystem extends Subsystem {
       if (!enableCompressor) {
         compressor.stop();
       }
-      if (closeServos) {
-        closeServos();
-      }
       System.out.println(Robot.robotType.name + "\'s IntakeSubsystem correctly instantiated.");
     } else {
       System.out.println("Blank Subsystem for IntakeSubsystem was instantiated.");

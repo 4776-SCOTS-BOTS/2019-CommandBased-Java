@@ -256,16 +256,19 @@ public class ClimberSubsystem extends Subsystem {
    */
   public void powerClimbers(double frontLeftPower, double frontRightPower, double rearLeftPower, double rearRightPower) {
     if (motorsConnected()) {
-      System.out.println("flPow: "+frontLeftPower+", frPow: "+frontRightPower+", rlPow: "+rearLeftPower+", rrPow: "+rearRightPower+", flSca: "+getFrontLeftPot(true)+", frSca: "+getFrontRightPot(true)+", rlSca: "+getRearLeftPot(true)+", rrSca: "+getRearRightPot(true));
+      //System.out.println("flPow: "+frontLeftPower+", frPow: "+frontRightPower+", rlPow: "+rearLeftPower+", rrPow: "+rearRightPower+", flSca: "+getFrontLeftPot(true)+", frSca: "+getFrontRightPot(true)+", rlSca: "+getRearLeftPot(true)+", rrSca: "+getRearRightPot(true));
       frontLeftClimbMotor.set(frontLeftPower);
       //frontRightClimbMotor.set(Math.max(-1, Math.min(1, frontLeftPower*1.3)));
       frontRightClimbMotor.set(frontRightPower/1);//10
-      rearLeftClimbMotor.set(-rearLeftPower);
-      rearRightClimbMotor.set(-rearRightPower/1);//13
+      rearLeftClimbMotor.set(rearLeftPower);
+      
+      rearRightClimbMotor.set(clip(rearRightPower*1.1));//13
     }else {
     }
   }
-
+  double clip(double x){
+    return Math.min(1,Math.max(-1,x));
+  }
   public void stopClimbWheels() {
     if (motorsConnected()) {
       climbWheels.stopMotor();
