@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
     //CameraServer.getInstance().addAxisCamera("super-cam", "10.47.76.4");
     //CameraServer.getInstance().addAxisCamera("bob-cam", "10.47.76.6");
     CameraServer.getInstance().startAutomaticCapture();
-    System.out.println("Hello, \'" + robotType.name + "\' is ready to go to IRI (Last pushed to robot: 7/10/19)!");
+    System.out.println("Hello, \'" + robotType.name + "\' is ready to win the Washtenaw Robotics Competition! (Last pushed to robot: 8/3/19)!");
     readData = false; //Reading data every loop is VERY performance heavy, so make sure readData is off when not needed!
     debugJeVois = false;
 

@@ -265,7 +265,7 @@ public class ClimberManipulator extends Command {
               if (Robot.climber.getRawRearLeftPot()<Robot.climber.brokenPot || Math.abs(Robot.climber.getRearLeftPot(true)-rearLeftTarget)<threshold) {
                 //Target met or broken, so stop motors
                 rl=0;
-                //System.out.println("YEET! bcz "+Robot.climber.getRearLeftPot(true)+", so "+rearLeftTarget);
+                //System.out.println("bcz "+Robot.climber.getRearLeftPot(true)+", so "+rearLeftTarget);
                 if (autoDisable) moveRearRight=false;
               }
               else if (Robot.climber.getRearLeftPot(true) > rearLeftTarget){
@@ -507,8 +507,8 @@ public class ClimberManipulator extends Command {
     
     
     //System.out.println("Right Left Power:"+rl + " and the real is "+Robot.climber.getRawRearLeftPot()+" and rr="+rr);
-    //System.out.println("FL: "+Robot.climber.getRawFrontLeftPot()+", FR: "+Robot.climber.getRawFrontRightPot()+
-      //    ", RL: "+Robot.climber.getRawRearLeftPot()+", RR: "+Robot.climber.getRawRearRightPot());
+   System.out.println("FL: "+Robot.climber.getRawFrontLeftPot()+", FR: "+Robot.climber.getRawFrontRightPot()+
+          ", RL: "+Robot.climber.getRawRearLeftPot()+", RR: "+Robot.climber.getRawRearRightPot());
     //System.out.println("fl="+moveFrontLeft+", fr="+moveFrontRight+", rl="+moveRearLeft+", rr"+moveRearRight);
     Robot.climber.powerClimbers(fl, fr, rl, rr);
     if (Robot.oi.getDriverButton(XBox.RIGHT_BUMPER_BUTTON)) {
